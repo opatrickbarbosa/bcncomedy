@@ -122,7 +122,6 @@ body.home .top{position:fixed;left:0;right:0}
 @media (max-width:900px){
   .hero{min-height:0;padding:88px 0 40px}
   .presents,.hero-facts,.hero-ctas{justify-content:center}
-  .presents img{display:none}
   .hero-logo{margin:0 auto;width:min(420px,92%)}
       }
 
@@ -229,6 +228,8 @@ body.home .top{position:fixed;left:0;right:0}
 .venue-txt .btn{margin-top:18px}
 .venue-media{display:grid;grid-template-rows:1.4fr 1fr;min-height:520px}
 .venue-media figure{margin:0;position:relative;min-height:0}
+.venue-media .photo img{width:100%;height:100%;object-fit:cover;display:block}
+.venue-media.no-photo{grid-template-rows:1fr}
 .venue-media iframe{width:100%;height:100%;border:0;display:block}
 .venue-media .map{filter:grayscale(1) invert(.92) contrast(.9)}
 .venue-media figcaption{position:absolute;left:10px;top:10px;padding:4px 10px;border-radius:999px;background:rgba(7,9,9,.8);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
@@ -329,8 +330,9 @@ const SITE={
     // "2026-12-03":"https://www.eventbrite.es/e/....",
   },
   INSTAGRAM:"https://www.instagram.com/bcncomedy/",
-  // Forms: delivered to this inbox by FormSubmit (first message needs a one-time activation click).
   EMAIL:"info@bcncomedy.com",
+  // Forms: Google Apps Script web app running on info@bcncomedy.com (see apps-script/Code.gs).
+  FORM_URL:"https://script.google.com/macros/s/AKfycbyIMRITKG4F2vbANBkS8ikbDcC8wayR51_rBJyu1VpW78ggzIznTRRqyZEEkrfZDECNrw/exec",
   // Ticket sales: the next show is always on sale; later shows open SALES_WINDOW days before.
   // In the last LAST_CALL days the button turns red ("Last tickets").
   SALES_WINDOW:14, LAST_CALL:3,
@@ -341,7 +343,8 @@ const SITE={
   VENUE:{name:"Bar AlgoRitmo",addr:"Carrer de Tordera, 50",area:"Gràcia, 08012 Barcelona",
     maps:"https://www.google.com/maps/place/AlgoRitmo/@41.4018807,2.1620322,17z/data=!4m6!3m5!1s0x12a4a37d0e9cf5d7:0xcf6d82f4f66dcce!8m2!3d41.4018807!4d2.1620322",
     embed:"https://www.google.com/maps?q=AlgoRitmo,+Carrer+de+Tordera+50,+08012+Barcelona&z=16&output=embed",
-    street:"https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sbQNwNQXflcwB9y6HsE-9Hg!2m2!1d41.4019396!2d2.1619563!3f262!4f2!5f0.9"},
+    // Façade photo of the bar. Drop the file in assets/ with this name; until then only the map shows.
+    photo:"assets/algoritmo.jpg"},
   TIME:"20:30"
 };
 // LASC calendar: 3 December editions, winter break, then every Thursday from 21 Jan 2027.
@@ -412,7 +415,7 @@ en:{onsaleB:"On sale",lastB:"Last tickets",tonightB:"Tonight",soonB:"Coming soon
  foot:["Dates","The show","Comedians","Book us","Contact","Privacy"],footAbout:"Comedy production house in Barcelona. Home of the Laughin American Social Club.",partners:"With",follow:"Follow",
  linksSub:"Stand-up in English · Thursdays in Gràcia",nextShow:"Next show",allDatesBtn:"See all dates",bizBtn:"Book a private show",castBtn:"Meet the comedians",
  privH:"Privacy",
- privP:["BCN Comedy only collects the data you send through the forms on this site (name, email and, if you choose, phone and event details).","We use it only to answer you or to send show alerts you asked for. We never sell or share it. Forms are delivered by FormSubmit to info@bcncomedy.com.","This site does not use advertising or tracking cookies. Your language choice is stored on your device.","To have your data removed, write to us via the contact page or Instagram."],
+ privP:["BCN Comedy only collects the data you send through the forms on this site (name, email and, if you choose, phone and event details).","We use it only to answer you or to send show alerts you asked for. We never sell or share it. Forms are sent to info@bcncomedy.com and stored in our private Google account.","This site does not use advertising or tracking cookies. Your language choice is stored on your device.","To have your data removed, write to us via the contact page or Instagram."],
  notFound:"This page walked into a bar and never came back.",home:"Back home"},
 es:{onsaleB:"A la venta",lastB:"Últimas entradas",tonightB:"Hoy",soonB:"Próximamente",soldB:"Agotado",lastBtn:"Últimas entradas",tonightBtn:"Últimas entradas · hoy",soonBtn:d=>`A la venta el ${d}`,soldBtn:"Agotado",emailT:"Email",emailP:"Escríbenos cuando quieras:",
  nav:["Inicio","Fechas","El show","Cómicos","Contrátanos","Contacto"],tickets:"Entradas",closeMenu:"Cerrar menú",openMenu:"Abrir menú",lang:"Idioma",
@@ -450,7 +453,7 @@ es:{onsaleB:"A la venta",lastB:"Últimas entradas",tonightB:"Hoy",soonB:"Próxim
  foot:["Fechas","El show","Cómicos","Contrátanos","Contacto","Privacidad"],footAbout:"Productora de comedia en Barcelona. Casa del Laughin American Social Club.",partners:"Con",follow:"Síguenos",
  linksSub:"Stand-up en inglés · jueves en Gràcia",nextShow:"Próximo show",allDatesBtn:"Ver todas las fechas",bizBtn:"Contratar un show privado",castBtn:"Conoce a los cómicos",
  privH:"Privacidad",
- privP:["BCN Comedy solo recoge los datos que envías por los formularios de esta web (nombre, email y, si quieres, teléfono y datos del evento).","Los usamos únicamente para responderte o enviarte los avisos que pediste. Nunca los vendemos ni compartimos. Los formularios se envían a info@bcncomedy.com mediante FormSubmit.","Esta web no usa cookies de publicidad ni de seguimiento. Tu idioma se guarda en tu dispositivo.","Para borrar tus datos, escríbenos desde la página de contacto o por Instagram."],
+ privP:["BCN Comedy solo recoge los datos que envías por los formularios de esta web (nombre, email y, si quieres, teléfono y datos del evento).","Los usamos únicamente para responderte o enviarte los avisos que pediste. Nunca los vendemos ni compartimos. Los formularios se envían a info@bcncomedy.com y se guardan en nuestra cuenta privada de Google.","Esta web no usa cookies de publicidad ni de seguimiento. Tu idioma se guarda en tu dispositivo.","Para borrar tus datos, escríbenos desde la página de contacto o por Instagram."],
  notFound:"Esta página entró en un bar y nunca volvió.",home:"Volver al inicio"},
 ca:{onsaleB:"A la venda",lastB:"Últimes entrades",tonightB:"Avui",soonB:"Aviat",soldB:"Exhaurit",lastBtn:"Últimes entrades",tonightBtn:"Últimes entrades · avui",soonBtn:d=>`A la venda el ${d}`,soldBtn:"Exhaurit",emailT:"Email",emailP:"Escriu-nos quan vulguis:",
  nav:["Inici","Dates","El show","Còmics","Contracta'ns","Contacte"],tickets:"Entrades",closeMenu:"Tanca el menú",openMenu:"Obre el menú",lang:"Idioma",
@@ -488,7 +491,7 @@ ca:{onsaleB:"A la venda",lastB:"Últimes entrades",tonightB:"Avui",soonB:"Aviat"
  foot:["Dates","El show","Còmics","Contracta'ns","Contacte","Privacitat"],footAbout:"Productora de comèdia a Barcelona. Casa del Laughin American Social Club.",partners:"Amb",follow:"Segueix-nos",
  linksSub:"Stand-up en anglès · dijous a Gràcia",nextShow:"Proper show",allDatesBtn:"Totes les dates",bizBtn:"Contracta un show privat",castBtn:"Coneix els còmics",
  privH:"Privacitat",
- privP:["BCN Comedy només recull les dades que envies pels formularis d'aquest web (nom, email i, si vols, telèfon i dades de l'esdeveniment).","Les fem servir només per respondre't o enviar-te els avisos que has demanat. Mai no les venem ni les compartim. Els formularis s'envien a info@bcncomedy.com amb FormSubmit.","Aquest web no fa servir galetes de publicitat ni de seguiment. El teu idioma es desa al teu dispositiu.","Per esborrar les teves dades, escriu-nos des de la pàgina de contacte o per Instagram."],
+ privP:["BCN Comedy només recull les dades que envies pels formularis d'aquest web (nom, email i, si vols, telèfon i dades de l'esdeveniment).","Les fem servir només per respondre't o enviar-te els avisos que has demanat. Mai no les venem ni les compartim. Els formularis s'envien a info@bcncomedy.com i es desen al nostre compte privat de Google.","Aquest web no fa servir galetes de publicitat ni de seguiment. El teu idioma es desa al teu dispositiu.","Per esborrar les teves dades, escriu-nos des de la pàgina de contacte o per Instagram."],
  notFound:"Aquesta pàgina va entrar en un bar i no va tornar mai.",home:"Torna a l'inici"},
 pt:{onsaleB:"Vendas abertas",lastB:"Últimos ingressos",tonightB:"É hoje",soonB:"Em breve",soldB:"Esgotado",lastBtn:"Últimos ingressos",tonightBtn:"Últimos ingressos · hoje",soonBtn:d=>`Vendas a partir de ${d}`,soldBtn:"Esgotado",emailT:"E-mail",emailP:"Escreva quando quiser:",
  nav:["Início","Datas","O show","Comediantes","Contrate","Contato"],tickets:"Ingressos",closeMenu:"Fechar menu",openMenu:"Abrir menu",lang:"Idioma",
@@ -526,7 +529,7 @@ pt:{onsaleB:"Vendas abertas",lastB:"Últimos ingressos",tonightB:"É hoje",soonB
  foot:["Datas","O show","Comediantes","Contrate","Contato","Privacidade"],footAbout:"Produtora de comédia em Barcelona. Casa do Laughin American Social Club.",partners:"Com",follow:"Siga",
  linksSub:"Stand-up em inglês · quintas em Gràcia",nextShow:"Próximo show",allDatesBtn:"Ver todas as datas",bizBtn:"Contratar show privado",castBtn:"Conheça os comediantes",
  privH:"Privacidade",
- privP:["A BCN Comedy só coleta os dados que você envia pelos formulários deste site (nome, e-mail e, se quiser, telefone e dados do evento).","Usamos apenas para responder você ou enviar os avisos que você pediu. Nunca vendemos nem compartilhamos. Os formulários são enviados para info@bcncomedy.com pelo FormSubmit.","Este site não usa cookies de publicidade nem de rastreamento. Sua escolha de idioma fica salva no seu aparelho.","Para apagar seus dados, escreva pela página de contato ou pelo Instagram."],
+ privP:["A BCN Comedy só coleta os dados que você envia pelos formulários deste site (nome, e-mail e, se quiser, telefone e dados do evento).","Usamos apenas para responder você ou enviar os avisos que você pediu. Nunca vendemos nem compartilhamos. Os formulários são enviados para info@bcncomedy.com e guardados na nossa conta privada do Google.","Este site não usa cookies de publicidade nem de rastreamento. Sua escolha de idioma fica salva no seu aparelho.","Para apagar seus dados, escreva pela página de contato ou pelo Instagram."],
  notFound:"Esta página entrou num bar e nunca mais voltou.",home:"Voltar ao início"}
 };
 Object.entries({en:"Message",es:"Mensaje",ca:"Missatge",pt:"Mensagem"}).forEach(([k,v])=>T[k].message=v);
@@ -583,7 +586,7 @@ function socials(S){return `<div class="socials">${Object.keys(S).map(k=>`<a cla
 function langSwitch(cls){const cur=LANGS.find(l=>l[0]===LANG);
   return `<details class="ldd ${cls||""}"><summary aria-label="${t("lang")}: ${cur[2]}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>${cur[1]}</span></summary>
   <div class="ldd-menu">${LANGS.map(([k,c,n])=>`<button type="button" data-lang="${k}" lang="${k}" aria-current="${k===LANG}"><b>${c}</b>${n}</button>`).join("")}</div></details>`}
-function alertsForm(id){return `<form class="form" data-alert="${id}" novalidate>
+function alertsForm(id){return `<form class="form" data-alert="${id}" novalidate style="position:relative"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
   <div class="vm-row"><input name="name" autocomplete="given-name" placeholder="${t("name")}" aria-label="${t("name")}"><input name="email" type="email" inputmode="email" autocomplete="email" placeholder="${t("email")}" aria-label="${t("email")}"><button class="btn btn-sun btn-sm" type="submit">${t("notify")}</button></div>
   <label class="ok-line"><input type="checkbox" name="ok"><span>${t("consent")}</span></label><p class="err" hidden></p></form>`}
 function alertsBlock(){return `<section class="section" style="padding-top:20px"><div class="wrap"><div class="stamp"><div class="in panel alerts">
@@ -616,12 +619,10 @@ function pHome(){
   const facts=[I_MIC,I_CAL,I_PIN];
   return `<section class="hero"><div class="wrap">
    <div class="hero-copy">
-     <div class="presents"><img src="assets/bcn-logo-s.webp" alt="BCN Comedy"><span>${t("presents")}</span></div>
+     <div class="presents"><span>${t("presents")}</span></div>
      <h1 style="margin:0"><img class="hero-logo" src="assets/lasc-logo.webp" alt="Laughin American Social Club" width="1200" height="921"></h1>
      <p class="hero-tag">${t("tag")}</p>
      <div class="hero-facts">${t("facts").map((f,i)=>`<span class="chip">${facts[i]}${f}</span>`).join("")}</div>
-     <div class="hero-ctas">${next?buy(next):""}<a class="btn btn-line" href="${href("agenda")}" data-r="agenda">${t("allDates")}</a></div>
-     ${next?`<p class="hero-next tnum">${t("nextIs")} <b>${fmt({weekday:"long",day:"numeric",month:"long"},nd)} · ${hour(next)}</b></p>`:""}
    </div>
    </div></section>
   <div class="ticker" aria-hidden="true"><div class="ticker-track">${[...t("ticker"),...t("ticker"),...t("ticker"),...t("ticker")].map(c=>`<span>${c}</span>`).join("")}</div></div>
@@ -659,7 +660,7 @@ function venue(){const V=SITE.VENUE;return `<section class="section reveal" styl
    <div class="venue-txt"><p class="eyebrow">${t("venueT")}</p><h3>${V.name}</h3><p><b style="color:var(--paper)">${V.addr}</b><br>${V.area}</p><p>${t("venueP")}</p>
    <a class="btn btn-line btn-sm" href="${V.maps}" target="_blank" rel="noopener">${I_PIN.replace('aria-hidden="true"','aria-hidden="true" width="18" height="18"')} ${t("directions")}</a></div>
    <div class="venue-media">
-     <figure><iframe title="Street View: ${V.name}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="${V.street}"></iframe><figcaption>Street View</figcaption></figure>
+     ${V.photo?`<figure class="photo"><img src="${V.photo}" alt="${V.name} – ${V.addr}" loading="lazy" onerror="this.closest('.venue-media').classList.add('no-photo');this.parentNode.remove()"></figure>`:""}
      <figure><iframe class="map" title="Map: ${V.name}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${V.embed}"></iframe></figure>
    </div>
   </div></div></section>`}
@@ -685,7 +686,7 @@ function pBook(){const F=t("F");
   return phero(t("bizH"),t("bizP"))+`<section class="section" style="padding-top:20px"><div class="wrap">
    <div class="formats">${F.map(([k,h,p])=>`<div class="fmt"><div class="k">${k}</div><h3>${h}</h3><p>${p}</p></div>`).join("")}</div>
    <div class="panel"><h2 style="font-size:2rem;margin-bottom:18px">${t("quoteH")}</h2>
-   <form class="form" data-form="book" novalidate>
+   <form class="form" data-form="book" novalidate style="position:relative"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
     <div class="grid2"><label class="f">${t("name")}<input name="name" autocomplete="name" required></label><label class="f">${t("email")}<input name="email" type="email" autocomplete="email" required></label></div>
     <div class="grid2"><label class="f">${t("company")}<input name="company" autocomplete="organization"></label><label class="f">${t("phone")}<input name="phone" type="tel" autocomplete="tel"></label></div>
     <div class="grid2"><label class="f">${t("evDate")}<input name="date" type="date"></label><label class="f">${t("guests")}<input name="guests" inputmode="numeric"></label></div>
@@ -700,7 +701,7 @@ function pContact(){const S=t("contactSide");
     <div class="panel"><h3>${t("emailT")}</h3><p>${t("emailP")}</p><p style="margin-top:8px"><a href="mailto:${SITE.EMAIL}" style="color:var(--sun);font-weight:700">${SITE.EMAIL}</a></p></div>
     <div class="panel"><h3>${S[1][0]}</h3><p>${S[1][1]}</p></div>
    </div>
-   <div class="panel"><form class="form" data-form="contact" novalidate>
+   <div class="panel"><form class="form" data-form="contact" novalidate style="position:relative"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
     <div class="grid2"><label class="f">${t("name")}<input name="name" autocomplete="name" required></label><label class="f">${t("email")}<input name="email" type="email" autocomplete="email" required></label></div>
     <label class="f">${t("message")}<textarea name="message" required></textarea></label>
     <p class="err" hidden></p><div><button class="btn btn-sun" type="submit">${t("send")}</button></div>
@@ -719,9 +720,13 @@ function pLinks(){const next=upcoming()[0],nd=next?dt(next):null;
   </div></div>`}
 
 /* ---------- forms ---------- */
-async function sendForm(subject,data){
-  const r=await fetch("https://formsubmit.co/ajax/"+SITE.EMAIL,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({_subject:subject,_template:"table",_captcha:"false",_replyto:data.email||"",...data})});
-  const j=await r.json().catch(()=>({}));if(!r.ok||!(j.success===true||j.success==="true"))throw new Error("send");return j}
+async function sendForm(type,data){
+  if(!SITE.FORM_URL)throw new Error("no endpoint");
+  const nx=upcoming().find(x=>{const st=status(x);return st!=="soon"&&st!=="sold"});
+  const payload={type,lang:LANG,...data};
+  if(nx){payload.nextShow=fmt({weekday:"long",day:"numeric",month:"long"},dt(nx))+" · "+hour(nx);payload.nextUrl=nx.url}
+  const r=await fetch(SITE.FORM_URL,{method:"POST",body:JSON.stringify(payload)});
+  const j=await r.json().catch(()=>({}));if(!r.ok||!j.ok)throw new Error("send");return j}
 const okMail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 function wireForms(){
   document.querySelectorAll("form[data-alert]").forEach(f=>f.addEventListener("submit",async e=>{e.preventDefault();
@@ -729,13 +734,13 @@ function wireForms(){
     if(!okMail(fd.email||"")){err.textContent=t("errMail");err.hidden=false;return}
     if(!f.ok.checked){err.textContent=t("errOk");err.hidden=false;return}
     err.hidden=true;btn.disabled=true;btn.textContent=t("sending");
-    try{await sendForm("BCN Comedy · show alerts signup",{name:fd.name||"",email:fd.email,language:LANG,source:f.dataset.alert});f.outerHTML=`<div class="done">${t("alertDone")}</div>`}
+    try{await sendForm("alerts",{name:fd.name||"",email:fd.email,source:f.dataset.alert,website:fd.website||""});f.outerHTML=`<div class="done">${t("alertDone")}</div>`}
     catch(_){err.textContent=t("sendFail");err.hidden=false;btn.disabled=false;btn.textContent=t("notify")}}));
   document.querySelectorAll("form[data-form]").forEach(f=>f.addEventListener("submit",async e=>{e.preventDefault();
     const err=f.querySelector(".err"),btn=f.querySelector("button[type=submit]");const fd=Object.fromEntries(new FormData(f));
     if(!fd.name||!okMail(fd.email||"")||!fd.message){err.textContent=t("errReq");err.hidden=false;return}
     err.hidden=true;btn.disabled=true;btn.textContent=t("sending");const book=f.dataset.form==="book";
-    try{await sendForm(book?"BCN Comedy · booking request":"BCN Comedy · contact",{...fd,language_site:LANG});f.outerHTML=`<div class="done">${t(book?"bizDone":"contactDone")}</div>`}
+    try{await sendForm(book?"book":"contact",fd);f.outerHTML=`<div class="done">${t(book?"bizDone":"contactDone")}</div>`}
     catch(_){err.textContent=t("sendFail");err.hidden=false;btn.disabled=false;btn.textContent=t("send")}}));
 }
 
