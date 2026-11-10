@@ -1,4 +1,1 @@
-{
-  "cleanUrls": true,
-  "rewrites": [{ "source": "/((?!assets/|robots.txt|sitemap.xml).*)", "destination": "/index.html" }]
-}
+{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
