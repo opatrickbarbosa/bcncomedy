@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.bcncomedy.com/assets/og.jpg">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.bcncomedy.com/#org","name":"BCN Comedy","url":"https://www.bcncomedy.com/","logo":"https://www.bcncomedy.com/assets/apple-touch-icon.png","sameAs":["https://www.instagram.com/bcncomedy/"]},{"@type":"WebSite","url":"https://www.bcncomedy.com/","name":"BCN Comedy","inLanguage":["en","es","pt-BR","ca"],"publisher":{"@id":"https://www.bcncomedy.com/#org"}}]}
+{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.bcncomedy.com/#org","name":"BCN Comedy","url":"https://www.bcncomedy.com/","logo":"https://www.bcncomedy.com/assets/apple-touch-icon.png","email":"info@bcncomedy.com","sameAs":["https://www.instagram.com/bcncomedy/"]},{"@type":"WebSite","url":"https://www.bcncomedy.com/","name":"BCN Comedy","inLanguage":["en","es","pt-BR","ca"],"publisher":{"@id":"https://www.bcncomedy.com/#org"}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -106,10 +106,12 @@ body.home .top{position:fixed;left:0;right:0}
 /* hero */
 .hero{position:relative;min-height:min(100svh,940px);display:flex;align-items:center;padding:120px 0 72px;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 55% at 28% 45%,rgba(236,193,34,.10),transparent 70%),radial-gradient(40% 40% at 85% 70%,rgba(223,38,14,.12),transparent 70%)}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%}
+.hero .wrap{position:relative;display:flex;justify-content:center;width:100%}
+.hero-copy{text-align:center;max-width:760px}
+.hero .presents,.hero .hero-facts,.hero .hero-ctas{justify-content:center}
 .presents{display:flex;align-items:center;gap:12px;margin-bottom:18px;color:var(--muted);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
 .presents img{height:46px;width:auto}
-.hero-logo{width:min(500px,100%);height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,.6))}
+.hero-logo{margin:0 auto;width:min(560px,100%);height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,.6))}
 .hero-tag{font-family:var(--script);color:var(--lime);font-size:clamp(1.35rem,2.6vw,1.8rem);line-height:1.15;margin:18px 0 14px}
 .hero-facts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);font-weight:600;font-size:.9rem}
@@ -117,26 +119,12 @@ body.home .top{position:fixed;left:0;right:0}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .hero-next{margin-top:16px;color:var(--muted);font-size:.95rem}
 .hero-next b{color:var(--paper)}
-.polas{position:relative;height:560px}
-.pola{position:absolute;margin:0;background:#f4f1e6;padding:10px 10px 38px;box-shadow:0 24px 50px rgba(0,0,0,.55);width:44%;transition:transform .4s}
-.pola img{aspect-ratio:4/5;object-fit:cover;width:100%;height:auto;filter:contrast(1.05)}
-.pola figcaption{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-family:var(--script);color:var(--ink);font-size:1.15rem}
-.pola:nth-child(1){left:4%;top:4%;transform:rotate(-7deg)}
-.pola:nth-child(2){right:4%;top:0;transform:rotate(5deg);z-index:2}
-.pola:nth-child(3){left:28%;bottom:0;transform:rotate(-1.5deg);z-index:3}
-.polas:hover .pola:nth-child(1){transform:rotate(-9deg) translate(-8px,-4px)}
-.polas:hover .pola:nth-child(2){transform:rotate(7deg) translate(8px,-6px)}
 @media (max-width:900px){
   .hero{min-height:0;padding:88px 0 40px}
-  .hero .wrap{grid-template-columns:1fr;gap:28px}
-  .hero-copy{text-align:center}
   .presents,.hero-facts,.hero-ctas{justify-content:center}
   .presents img{display:none}
   .hero-logo{margin:0 auto;width:min(420px,92%)}
-  .polas{height:400px;max-width:420px;margin:0 auto;width:100%}
-  .pola{padding:7px 7px 30px;width:46%}
-  .pola figcaption{font-size:.95rem;bottom:5px}
-}
+      }
 
 /* ticker */
 .ticker{background:var(--sun);color:var(--sun-ink);overflow:hidden;border-block:3px solid var(--ink);transform:rotate(-1.2deg);margin:0 -10px;position:relative;z-index:2}
@@ -180,6 +168,16 @@ body.home .top{position:fixed;left:0;right:0}
   .date{width:70px;height:80px}.date .d{font-size:2rem}
   .show h3{font-size:1.1rem}
 }
+/* ticket states */
+.btn-hot{background:var(--red);color:#fff;box-shadow:0 4px 0 #8a1606;animation:pulse 1.6s ease-in-out infinite}
+.btn-hot:hover{transform:translateY(-1px);box-shadow:0 5px 0 #8a1606}
+@keyframes pulse{0%,100%{box-shadow:0 4px 0 #8a1606,0 0 0 0 rgba(223,38,14,.55)}50%{box-shadow:0 4px 0 #8a1606,0 0 0 10px rgba(223,38,14,0)}}
+.btn-soon{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 2px var(--line);cursor:default}
+.btn-out{background:#2a2f2f;color:var(--dim);cursor:not-allowed}
+.show.is-soon .date{background:#2a2f2f;color:var(--muted);box-shadow:4px 4px 0 #1b1f1f}
+.show.is-hot{border-color:rgba(223,38,14,.6)}
+.badge.soon{background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.btn-hot{animation:none}}
 .break{display:flex;gap:14px;align-items:center;padding:18px;border-radius:var(--r);border:2px dashed rgba(110,230,255,.45);color:var(--sky);font-weight:600}
 .break svg{width:28px;height:28px;flex:none}
 .break b{color:var(--paper)}
@@ -191,12 +189,6 @@ body.home .top{position:fixed;left:0;right:0}
 .mtab{flex:none;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:rgba(19,23,23,.8);color:var(--paper);font:700 .95rem var(--body);cursor:pointer}
 .mtab[aria-selected="true"]{background:var(--sun);color:var(--sun-ink);border-color:var(--sun)}
 
-/* schedule strip */
-.sched{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
-.sched div{padding:18px;border-radius:var(--r);background:rgba(19,23,23,.85);border:1px solid var(--line)}
-.sched b{display:block;font-family:var(--display);text-transform:uppercase;font-size:1.3rem;color:var(--sun);margin-bottom:4px}
-.sched span{color:var(--muted);font-size:.95rem}
-@media (max-width:760px){.sched{grid-template-columns:1fr}}
 
 /* show feature */
 .feature{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center}
@@ -228,20 +220,19 @@ body.home .top{position:fixed;left:0;right:0}
 .soc svg{width:20px;height:20px}
 @media (max-width:700px){.cast{grid-template-columns:1fr}}
 
-/* gallery */
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.gallery figure{margin:0;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;background:#000}
-.gallery img{width:100%;height:100%;object-fit:cover}
-@media (max-width:700px){.gallery{grid-template-columns:repeat(3,72%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.gallery figure{scroll-snap-align:start}}
 
 /* venue */
-.venue{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.venue{display:grid;grid-template-columns:1fr 1.3fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--card)}
 .venue-txt{padding:32px}
 .venue-txt h3{font-size:2rem;margin-bottom:10px}
 .venue-txt p{color:var(--muted);margin-bottom:6px}
 .venue-txt .btn{margin-top:18px}
-.venue iframe{width:100%;height:100%;min-height:300px;border:0;filter:grayscale(1) invert(.92) contrast(.9)}
-@media (max-width:760px){.venue{grid-template-columns:1fr}}
+.venue-media{display:grid;grid-template-rows:1.4fr 1fr;min-height:520px}
+.venue-media figure{margin:0;position:relative;min-height:0}
+.venue-media iframe{width:100%;height:100%;border:0;display:block}
+.venue-media .map{filter:grayscale(1) invert(.92) contrast(.9)}
+.venue-media figcaption{position:absolute;left:10px;top:10px;padding:4px 10px;border-radius:999px;background:rgba(7,9,9,.8);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+@media (max-width:760px){.venue{grid-template-columns:1fr}.venue-media{min-height:560px}}
 
 /* hub / about */
 .hub{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center}
@@ -338,11 +329,19 @@ const SITE={
     // "2026-12-03":"https://www.eventbrite.es/e/....",
   },
   INSTAGRAM:"https://www.instagram.com/bcncomedy/",
-  // Forms are delivered by Web3Forms (same account as brasileuros.com).
-  W3F_KEY:"fca24820-a244-4164-835b-04a2b443891d",
+  // Forms: delivered to this inbox by FormSubmit (first message needs a one-time activation click).
+  EMAIL:"info@bcncomedy.com",
+  // Ticket sales: the next show is always on sale; later shows open SALES_WINDOW days before.
+  // In the last LAST_CALL days the button turns red ("Last tickets").
+  SALES_WINDOW:14, LAST_CALL:3,
+  // Manual overrides per date: "open" | "closed" | "soldout"
+  STATUS:{
+    // "2026-12-17":"soldout",
+  },
   VENUE:{name:"Bar AlgoRitmo",addr:"Carrer de Tordera, 50",area:"Gràcia, 08012 Barcelona",
-    maps:"https://www.google.com/maps/search/?api=1&query=AlgoRitmo+Carrer+de+Tordera+50+Barcelona",
-    embed:"https://www.google.com/maps?q=Carrer+de+Tordera+50,+08012+Barcelona&output=embed"},
+    maps:"https://www.google.com/maps/place/AlgoRitmo/@41.4018807,2.1620322,17z/data=!4m6!3m5!1s0x12a4a37d0e9cf5d7:0xcf6d82f4f66dcce!8m2!3d41.4018807!4d2.1620322",
+    embed:"https://www.google.com/maps?q=AlgoRitmo,+Carrer+de+Tordera+50,+08012+Barcelona&z=16&output=embed",
+    street:"https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sbQNwNQXflcwB9y6HsE-9Hg!2m2!1d41.4019396!2d2.1619563!3f262!4f2!5f0.9"},
   TIME:"20:30"
 };
 // LASC calendar: 3 December editions, winter break, then every Thursday from 21 Jan 2027.
@@ -357,6 +356,11 @@ function buildDates(){const out=[...DEC];const x=new Date(WEEKLY_FROM+"T12:00:00
   const endW=new Date(WEEKLY_FROM+"T12:00:00");endW.setDate(endW.getDate()+7*20);const lim=end>endW?end:endW;
   while(x<=lim){out.push(ymd(x));x.setDate(x.getDate()+7)}return out}
 const SHOWS=buildDates().map(dd=>({id:"lasc-"+dd,data:dd,hora:SITE.TIME,url:SITE.EB[dd]||SITE.TICKETS,special:SPECIAL[dd]||null}));
+function status(s){const o=SITE.STATUS[s.data];if(o==="soldout")return "sold";
+  const n=daysTo(s);const isNext=upcoming()[0]===s;
+  if(o!=="closed"&&(o==="open"||isNext||n<=SITE.SALES_WINDOW)){if(n<=0)return "tonight";if(n<=SITE.LAST_CALL)return "last";return "open"}
+  return "soon"}
+function opensOn(s){const d=dt(s);d.setDate(d.getDate()-SITE.SALES_WINDOW);return d}
 function upcoming(){const t=todayStr();return SHOWS.filter(s=>s.data>=t)}
 function dt(s){const[y,m,d]=s.data.split("-").map(Number);return new Date(y,m-1,d)}
 function daysTo(s){const x=new Date();x.setHours(0,0,0,0);return Math.round((dt(s)-x)/864e5)}
@@ -372,15 +376,14 @@ let LANG=pickLang();
 const fmt=(o,d)=>new Intl.DateTimeFormat(LOCALE[LANG],o).format(d).replace(".","");
 
 const T={
-en:{nav:["Home","Dates","The show","Comedians","Book us","Contact"],tickets:"Tickets",closeMenu:"Close menu",openMenu:"Open menu",lang:"Language",
+en:{onsaleB:"On sale",lastB:"Last tickets",tonightB:"Tonight",soonB:"Coming soon",soldB:"Sold out",lastBtn:"Last tickets",tonightBtn:"Last tickets · tonight",soonBtn:d=>`On sale ${d}`,soldBtn:"Sold out",emailT:"Email",emailP:"Write to us anytime:",
+ nav:["Home","Dates","The show","Comedians","Book us","Contact"],tickets:"Tickets",closeMenu:"Close menu",openMenu:"Open menu",lang:"Language",
  presents:"BCN Comedy presents",tag:"“A North American and a South American walk into a bar…”",
  facts:["Live stand-up in English","Thursdays · 8:30PM","AlgoRitmo · Gràcia"],
  buy:"Get tickets",allDates:"All dates",nextIs:"Next show:",
  ticker:["Laughin American Social Club","Stand-up in English","Every Thursday","8:30PM","Bar AlgoRitmo","Gràcia · Barcelona"],
  onStage:"On stage",nextShows:"Next shows",fullAgenda:"Full calendar →",
- sched:[["3 · 10 · 17 Dec","Three December editions to close 2026."],["Winter break","Back after the holidays."],["From 21 Jan","Every Thursday, all year round."]],
  sp:{back:"Back on stage",lastyear:"Last of 2026",weekly:"Every Thursday again"},tonight:"Tonight",tomorrow:"Tomorrow",onsale:"On sale",english:"In English",
- breakT:"Winter break",breakD:"<b>See you in January.</b> The show returns every Thursday from 21 January 2027.",
  showT:"The show",showH:"Laughin American Social Club",
  showP:["Two comedians from opposite ends of the Americas host a night of live stand-up comedy in English in the heart of Gràcia.","Patrick Barbosa (Brazil) and Maximilian Robert Lockwood (USA) bring the best English-speaking comics in Barcelona, plus guests passing through town. Grab a drink, sit close and laugh at everything that happens when two continents share one tiny bar."],
  showList:["Stand-up comedy in English, every Thursday","Doors 8:00PM · show 8:30PM","Hosts + rotating line-up of local and touring comics","Natural wine, drinks and food at AlgoRitmo"],
@@ -409,17 +412,16 @@ en:{nav:["Home","Dates","The show","Comedians","Book us","Contact"],tickets:"Tic
  foot:["Dates","The show","Comedians","Book us","Contact","Privacy"],footAbout:"Comedy production house in Barcelona. Home of the Laughin American Social Club.",partners:"With",follow:"Follow",
  linksSub:"Stand-up in English · Thursdays in Gràcia",nextShow:"Next show",allDatesBtn:"See all dates",bizBtn:"Book a private show",castBtn:"Meet the comedians",
  privH:"Privacy",
- privP:["BCN Comedy only collects the data you send through the forms on this site (name, email and, if you choose, phone and event details).","We use it only to answer you or to send show alerts you asked for. We never sell or share it. Forms are delivered by Web3Forms.","This site does not use advertising or tracking cookies. Your language choice is stored on your device.","To have your data removed, write to us via the contact page or Instagram."],
+ privP:["BCN Comedy only collects the data you send through the forms on this site (name, email and, if you choose, phone and event details).","We use it only to answer you or to send show alerts you asked for. We never sell or share it. Forms are delivered by FormSubmit to info@bcncomedy.com.","This site does not use advertising or tracking cookies. Your language choice is stored on your device.","To have your data removed, write to us via the contact page or Instagram."],
  notFound:"This page walked into a bar and never came back.",home:"Back home"},
-es:{nav:["Inicio","Fechas","El show","Cómicos","Contrátanos","Contacto"],tickets:"Entradas",closeMenu:"Cerrar menú",openMenu:"Abrir menú",lang:"Idioma",
+es:{onsaleB:"A la venta",lastB:"Últimas entradas",tonightB:"Hoy",soonB:"Próximamente",soldB:"Agotado",lastBtn:"Últimas entradas",tonightBtn:"Últimas entradas · hoy",soonBtn:d=>`A la venta el ${d}`,soldBtn:"Agotado",emailT:"Email",emailP:"Escríbenos cuando quieras:",
+ nav:["Inicio","Fechas","El show","Cómicos","Contrátanos","Contacto"],tickets:"Entradas",closeMenu:"Cerrar menú",openMenu:"Abrir menú",lang:"Idioma",
  presents:"BCN Comedy presenta",tag:"“Un norteamericano y un sudamericano entran en un bar…”",
  facts:["Stand-up en inglés","Jueves · 20:30","AlgoRitmo · Gràcia"],
  buy:"Comprar entradas",allDates:"Todas las fechas",nextIs:"Próximo show:",
  ticker:["Laughin American Social Club","Stand-up en inglés","Todos los jueves","20:30","Bar AlgoRitmo","Gràcia · Barcelona"],
  onStage:"En cartel",nextShows:"Próximos shows",fullAgenda:"Calendario completo →",
- sched:[["3 · 10 · 17 dic","Tres ediciones en diciembre para cerrar 2026."],["Pausa de invierno","Volvemos después de las fiestas."],["Desde el 21 ene","Todos los jueves, todo el año."]],
  sp:{back:"Volvemos",lastyear:"Último de 2026",weekly:"Vuelven los jueves"},tonight:"Hoy",tomorrow:"Mañana",onsale:"A la venta",english:"En inglés",
- breakT:"Pausa de invierno",breakD:"<b>Nos vemos en enero.</b> El show vuelve todos los jueves a partir del 21 de enero de 2027.",
  showT:"El show",showH:"Laughin American Social Club",
  showP:["Dos cómicos de los extremos opuestos de América presentan una noche de stand-up en inglés en pleno Gràcia.","Patrick Barbosa (Brasil) y Maximilian Robert Lockwood (EE. UU.) traen a los mejores cómicos de habla inglesa de Barcelona y a invitados de paso por la ciudad. Pide algo, siéntate cerca y ríete de todo lo que pasa cuando dos continentes comparten un bar pequeñito."],
  showList:["Stand-up en inglés, todos los jueves","Puertas 20:00 · show 20:30","Presentadores + cartel rotativo de cómicos locales e internacionales","Vino natural, bebidas y comida en AlgoRitmo"],
@@ -448,17 +450,16 @@ es:{nav:["Inicio","Fechas","El show","Cómicos","Contrátanos","Contacto"],ticke
  foot:["Fechas","El show","Cómicos","Contrátanos","Contacto","Privacidad"],footAbout:"Productora de comedia en Barcelona. Casa del Laughin American Social Club.",partners:"Con",follow:"Síguenos",
  linksSub:"Stand-up en inglés · jueves en Gràcia",nextShow:"Próximo show",allDatesBtn:"Ver todas las fechas",bizBtn:"Contratar un show privado",castBtn:"Conoce a los cómicos",
  privH:"Privacidad",
- privP:["BCN Comedy solo recoge los datos que envías por los formularios de esta web (nombre, email y, si quieres, teléfono y datos del evento).","Los usamos únicamente para responderte o enviarte los avisos que pediste. Nunca los vendemos ni compartimos. Los formularios se entregan mediante Web3Forms.","Esta web no usa cookies de publicidad ni de seguimiento. Tu idioma se guarda en tu dispositivo.","Para borrar tus datos, escríbenos desde la página de contacto o por Instagram."],
+ privP:["BCN Comedy solo recoge los datos que envías por los formularios de esta web (nombre, email y, si quieres, teléfono y datos del evento).","Los usamos únicamente para responderte o enviarte los avisos que pediste. Nunca los vendemos ni compartimos. Los formularios se envían a info@bcncomedy.com mediante FormSubmit.","Esta web no usa cookies de publicidad ni de seguimiento. Tu idioma se guarda en tu dispositivo.","Para borrar tus datos, escríbenos desde la página de contacto o por Instagram."],
  notFound:"Esta página entró en un bar y nunca volvió.",home:"Volver al inicio"},
-ca:{nav:["Inici","Dates","El show","Còmics","Contracta'ns","Contacte"],tickets:"Entrades",closeMenu:"Tanca el menú",openMenu:"Obre el menú",lang:"Idioma",
+ca:{onsaleB:"A la venda",lastB:"Últimes entrades",tonightB:"Avui",soonB:"Aviat",soldB:"Exhaurit",lastBtn:"Últimes entrades",tonightBtn:"Últimes entrades · avui",soonBtn:d=>`A la venda el ${d}`,soldBtn:"Exhaurit",emailT:"Email",emailP:"Escriu-nos quan vulguis:",
+ nav:["Inici","Dates","El show","Còmics","Contracta'ns","Contacte"],tickets:"Entrades",closeMenu:"Tanca el menú",openMenu:"Obre el menú",lang:"Idioma",
  presents:"BCN Comedy presenta",tag:"“Un nord-americà i un sud-americà entren en un bar…”",
  facts:["Stand-up en anglès","Dijous · 20:30","AlgoRitmo · Gràcia"],
  buy:"Compra entrades",allDates:"Totes les dates",nextIs:"Proper show:",
  ticker:["Laughin American Social Club","Stand-up en anglès","Cada dijous","20:30","Bar AlgoRitmo","Gràcia · Barcelona"],
  onStage:"En cartell",nextShows:"Propers shows",fullAgenda:"Calendari complet →",
- sched:[["3 · 10 · 17 des","Tres edicions al desembre per tancar el 2026."],["Pausa d'hivern","Tornem després de les festes."],["Des del 21 gen","Cada dijous, tot l'any."]],
  sp:{back:"Tornem",lastyear:"Últim del 2026",weekly:"Tornen els dijous"},tonight:"Avui",tomorrow:"Demà",onsale:"A la venda",english:"En anglès",
- breakT:"Pausa d'hivern",breakD:"<b>Ens veiem al gener.</b> El show torna cada dijous a partir del 21 de gener de 2027.",
  showT:"El show",showH:"Laughin American Social Club",
  showP:["Dos còmics dels extrems oposats d'Amèrica presenten una nit de stand-up en anglès al cor de Gràcia.","Patrick Barbosa (Brasil) i Maximilian Robert Lockwood (EUA) porten els millors còmics de parla anglesa de Barcelona i convidats de pas per la ciutat. Demana alguna cosa, seu a prop i riu de tot el que passa quan dos continents comparteixen un bar petitet."],
  showList:["Stand-up en anglès, cada dijous","Portes 20:00 · show 20:30","Presentadors + cartell rotatiu de còmics locals i internacionals","Vi natural, begudes i menjar a AlgoRitmo"],
@@ -487,17 +488,16 @@ ca:{nav:["Inici","Dates","El show","Còmics","Contracta'ns","Contacte"],tickets:
  foot:["Dates","El show","Còmics","Contracta'ns","Contacte","Privacitat"],footAbout:"Productora de comèdia a Barcelona. Casa del Laughin American Social Club.",partners:"Amb",follow:"Segueix-nos",
  linksSub:"Stand-up en anglès · dijous a Gràcia",nextShow:"Proper show",allDatesBtn:"Totes les dates",bizBtn:"Contracta un show privat",castBtn:"Coneix els còmics",
  privH:"Privacitat",
- privP:["BCN Comedy només recull les dades que envies pels formularis d'aquest web (nom, email i, si vols, telèfon i dades de l'esdeveniment).","Les fem servir només per respondre't o enviar-te els avisos que has demanat. Mai no les venem ni les compartim. Els formularis s'envien amb Web3Forms.","Aquest web no fa servir galetes de publicitat ni de seguiment. El teu idioma es desa al teu dispositiu.","Per esborrar les teves dades, escriu-nos des de la pàgina de contacte o per Instagram."],
+ privP:["BCN Comedy només recull les dades que envies pels formularis d'aquest web (nom, email i, si vols, telèfon i dades de l'esdeveniment).","Les fem servir només per respondre't o enviar-te els avisos que has demanat. Mai no les venem ni les compartim. Els formularis s'envien a info@bcncomedy.com amb FormSubmit.","Aquest web no fa servir galetes de publicitat ni de seguiment. El teu idioma es desa al teu dispositiu.","Per esborrar les teves dades, escriu-nos des de la pàgina de contacte o per Instagram."],
  notFound:"Aquesta pàgina va entrar en un bar i no va tornar mai.",home:"Torna a l'inici"},
-pt:{nav:["Início","Datas","O show","Comediantes","Contrate","Contato"],tickets:"Ingressos",closeMenu:"Fechar menu",openMenu:"Abrir menu",lang:"Idioma",
+pt:{onsaleB:"Vendas abertas",lastB:"Últimos ingressos",tonightB:"É hoje",soonB:"Em breve",soldB:"Esgotado",lastBtn:"Últimos ingressos",tonightBtn:"Últimos ingressos · hoje",soonBtn:d=>`Vendas a partir de ${d}`,soldBtn:"Esgotado",emailT:"E-mail",emailP:"Escreva quando quiser:",
+ nav:["Início","Datas","O show","Comediantes","Contrate","Contato"],tickets:"Ingressos",closeMenu:"Fechar menu",openMenu:"Abrir menu",lang:"Idioma",
  presents:"BCN Comedy apresenta",tag:"“Um norte-americano e um sul-americano entram num bar…”",
  facts:["Stand-up em inglês","Quintas · 20:30","AlgoRitmo · Gràcia"],
  buy:"Garantir ingressos",allDates:"Todas as datas",nextIs:"Próximo show:",
  ticker:["Laughin American Social Club","Stand-up em inglês","Toda quinta","20:30","Bar AlgoRitmo","Gràcia · Barcelona"],
  onStage:"Em cartaz",nextShows:"Próximos shows",fullAgenda:"Agenda completa →",
- sched:[["3 · 10 · 17 dez","Três edições em dezembro para fechar 2026."],["Pausa de inverno","Voltamos depois das festas."],["A partir de 21 jan","Toda quinta, o ano inteiro."]],
  sp:{back:"Estamos de volta",lastyear:"Último de 2026",weekly:"Volta toda quinta"},tonight:"É hoje",tomorrow:"Amanhã",onsale:"Vendas abertas",english:"Em inglês",
- breakT:"Pausa de inverno",breakD:"<b>Nos vemos em janeiro.</b> O show volta toda quinta a partir de 21 de janeiro de 2027.",
  showT:"O show",showH:"Laughin American Social Club",
  showP:["Dois comediantes de pontas opostas das Américas apresentam uma noite de stand-up em inglês no coração de Gràcia.","Patrick Barbosa (Brasil) e Maximilian Robert Lockwood (EUA) trazem os melhores comediantes de língua inglesa de Barcelona e convidados de passagem pela cidade. Pegue uma bebida, sente perto e ria de tudo o que acontece quando dois continentes dividem um barzinho."],
  showList:["Stand-up em inglês, toda quinta","Portas 20:00 · show 20:30","Apresentadores + line-up rotativo de comediantes locais e internacionais","Vinho natural, drinks e comida no AlgoRitmo"],
@@ -526,7 +526,7 @@ pt:{nav:["Início","Datas","O show","Comediantes","Contrate","Contato"],tickets:
  foot:["Datas","O show","Comediantes","Contrate","Contato","Privacidade"],footAbout:"Produtora de comédia em Barcelona. Casa do Laughin American Social Club.",partners:"Com",follow:"Siga",
  linksSub:"Stand-up em inglês · quintas em Gràcia",nextShow:"Próximo show",allDatesBtn:"Ver todas as datas",bizBtn:"Contratar show privado",castBtn:"Conheça os comediantes",
  privH:"Privacidade",
- privP:["A BCN Comedy só coleta os dados que você envia pelos formulários deste site (nome, e-mail e, se quiser, telefone e dados do evento).","Usamos apenas para responder você ou enviar os avisos que você pediu. Nunca vendemos nem compartilhamos. Os formulários são entregues pelo Web3Forms.","Este site não usa cookies de publicidade nem de rastreamento. Sua escolha de idioma fica salva no seu aparelho.","Para apagar seus dados, escreva pela página de contato ou pelo Instagram."],
+ privP:["A BCN Comedy só coleta os dados que você envia pelos formulários deste site (nome, e-mail e, se quiser, telefone e dados do evento).","Usamos apenas para responder você ou enviar os avisos que você pediu. Nunca vendemos nem compartilhamos. Os formulários são enviados para info@bcncomedy.com pelo FormSubmit.","Este site não usa cookies de publicidade nem de rastreamento. Sua escolha de idioma fica salva no seu aparelho.","Para apagar seus dados, escreva pela página de contato ou pelo Instagram."],
  notFound:"Esta página entrou num bar e nunca mais voltou.",home:"Voltar ao início"}
 };
 Object.entries({en:"Message",es:"Mensaje",ca:"Missatge",pt:"Mensagem"}).forEach(([k,v])=>T[k].message=v);
@@ -562,19 +562,23 @@ addEventListener("popstate",render);addEventListener("hashchange",render);
 
 /* ---------- components ---------- */
 const L=(r,label,cls)=>`<a href="${href(r)}" data-r="${r}"${cls?` class="${cls}"`:""}>${label}</a>`;
-function badges(s){const out=[];const n=daysTo(s);
-  if(n===0)out.push(`<span class="badge hot">${t("tonight")}</span>`);else if(n===1)out.push(`<span class="badge hot">${t("tomorrow")}</span>`);
-  if(s.special)out.push(`<span class="badge ${s.special==="weekly"?"sky":"lime"}">${t("sp")[s.special]}</span>`);
+function badges(s){const out=[];const st=status(s);
+  out.push(st==="tonight"?`<span class="badge hot">${t("tonightB")}</span>`:st==="last"?`<span class="badge hot">${t("lastB")}</span>`:st==="sold"?`<span class="badge">${t("soldB")}</span>`:st==="soon"?`<span class="badge soon">${t("soonB")}</span>`:`<span class="badge lime">${t("onsaleB")}</span>`);
+  if(s.special)out.push(`<span class="badge ${s.special==="weekly"?"sky":"lime"}" style="${s.special==="weekly"?"":"background:var(--sun)"}">${t("sp")[s.special]}</span>`);
   out.push(`<span class="badge">${t("english")}</span>`);return out.join("")}
-function buy(s,cls){return `<a class="btn btn-sun ${cls||""}" href="${esc(s.url)}" target="_blank" rel="noopener">${t("buy")}</a>`}
+function buy(s,cls){const st=status(s);cls=cls||"";
+  if(st==="sold")return `<span class="btn btn-out ${cls}" aria-disabled="true">${t("soldBtn")}</span>`;
+  if(st==="soon")return `<span class="btn btn-soon ${cls}" aria-disabled="true">${t("soonBtn")(fmt({day:"numeric",month:"short"},opensOn(s)))}</span>`;
+  const hot=st==="last"||st==="tonight";
+  return `<a class="btn ${hot?"btn-hot":"btn-sun"} ${cls}" href="${esc(s.url)}" target="_blank" rel="noopener">${hot?t(st==="tonight"?"tonightBtn":"lastBtn"):t("buy")}</a>`}
 function showCard(s){const d=dt(s);
-  return `<article class="show">
+  const st=status(s);
+  return `<article class="show${st==="soon"?" is-soon":st==="last"||st==="tonight"?" is-hot":""}">
    <div class="date tnum" aria-label="${fmt({weekday:"long",day:"numeric",month:"long"},d)}"><span class="wd">${fmt({weekday:"short"},d)}</span><span class="d">${d.getDate()}</span><span class="m">${fmt({month:"short"},d)}</span></div>
    <div><div class="badges">${badges(s)}</div><h3>Laughin American Social Club</h3>
    <div class="show-meta tnum"><b>${hour(s)}</b> · ${SITE.VENUE.name}, Gràcia</div></div>
    <div class="show-act">${buy(s,"btn-sm")}</div></article>`}
-function breakRow(){return `<div class="break">${I_SNOW}<div>${t("breakD")}</div></div>`}
-function showList(list){let h="";list.forEach((s,i)=>{h+=showCard(s);const nx=list[i+1];if(nx&&s.data==="2026-12-17"&&nx.data>="2027-01-01")h+=breakRow()});return h}
+function showList(list){return list.map(showCard).join("")}
 function socials(S){return `<div class="socials">${Object.keys(S).map(k=>`<a class="soc" href="${S[k]}" target="_blank" rel="noopener" aria-label="${k}">${ICON[k]}</a>`).join("")}</div>`}
 function langSwitch(cls){const cur=LANGS.find(l=>l[0]===LANG);
   return `<details class="ldd ${cls||""}"><summary aria-label="${t("lang")}: ${cur[2]}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>${cur[1]}</span></summary>
@@ -597,7 +601,7 @@ function header(r){
 function footer(){
   const keys=["agenda","show","comedians","book","contact","privacy"];
   return `<footer class="foot"><div class="wrap"><div class="foot-grid">
-   <div><img class="foot-logo" src="assets/bcn-logo-s.webp" alt="BCN Comedy" loading="lazy"><p>${t("footAbout")}</p>${socials({instagram:SITE.INSTAGRAM})}</div>
+   <div><img class="foot-logo" src="assets/bcn-logo-s.webp" alt="BCN Comedy" loading="lazy"><p>${t("footAbout")}</p><p style="margin-top:8px"><a href="mailto:${SITE.EMAIL}" style="color:var(--sun);text-decoration:none;font-weight:600">${SITE.EMAIL}</a></p>${socials({instagram:SITE.INSTAGRAM})}</div>
    <div><h4>Menu</h4><nav class="foot-links">${keys.map((k,i)=>L(k,t("foot")[i])).join("")}</nav></div>
    <div><h4>${t("partners")}</h4><div class="partners"><img src="assets/chandrio.png" alt="El Chandrío" loading="lazy"><span class="pt">AlgoRitmo</span></div>
      <h4 style="margin-top:22px">Laughin American Social Club</h4><p>${SITE.VENUE.name} · ${SITE.VENUE.addr}<br>${SITE.VENUE.area}</p></div>
@@ -619,17 +623,12 @@ function pHome(){
      <div class="hero-ctas">${next?buy(next):""}<a class="btn btn-line" href="${href("agenda")}" data-r="agenda">${t("allDates")}</a></div>
      ${next?`<p class="hero-next tnum">${t("nextIs")} <b>${fmt({weekday:"long",day:"numeric",month:"long"},nd)} · ${hour(next)}</b></p>`:""}
    </div>
-   <div class="polas" aria-hidden="true">
-     <figure class="pola"><img src="assets/live-1.webp" alt="" width="880" height="1100"><figcaption>Thursday night</figcaption></figure>
-     <figure class="pola"><img src="assets/patrick-live.webp" alt="" width="903" height="1100"><figcaption>Gràcia, BCN</figcaption></figure>
-     <figure class="pola"><img src="assets/live-2.webp" alt="" width="880" height="1100"><figcaption>in English!</figcaption></figure>
-   </div></div></section>
+   </div></section>
   <div class="ticker" aria-hidden="true"><div class="ticker-track">${[...t("ticker"),...t("ticker"),...t("ticker"),...t("ticker")].map(c=>`<span>${c}</span>`).join("")}</div></div>
 
   <section class="section" id="next"><div class="wrap">
    <div class="section-head"><div><p class="eyebrow">${t("onStage")}</p><h2>${t("nextShows")}</h2></div>${L("agenda",t("fullAgenda"),"link-more")}</div>
    <div class="shows">${up.length?showList(up.slice(0,4)):`<div class="empty">${t("noDates")}</div>`}</div>
-   <div class="sched">${t("sched").map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join("")}</div>
   </div></section>
 
   <section class="section reveal" style="padding-top:20px"><div class="wrap feature">
@@ -645,7 +644,6 @@ function pHome(){
    <div class="cast">${COMEDIANS.map(pcard).join("")}</div>
   </div></section>
 
-  ${gallery()}
   ${venue()}
 
   <section class="section reveal"><div class="wrap hub">
@@ -657,14 +655,13 @@ function pHome(){
 function pcard(c){const tx=t("C")[c.key];
   return `<article class="pcard"><div class="pc-img">${c.img?`<img src="${c.img}" alt="${esc(c.name)}" loading="lazy">`:`<div class="pc-ph"><span>${c.initials}</span></div>`}</div>
    <div class="pc-body"><span class="pc-flag">${tx.flag}</span><h3>${esc(c.name)}</h3><p>${tx.bio}</p>${Object.keys(c.social).length?socials(c.social):""}</div></article>`}
-function gallery(){return `<section class="section reveal" style="padding-top:20px"><div class="wrap">
-   <div class="section-head"><div><p class="eyebrow">${t("galT")}</p><h2>${t("galH")}</h2></div></div>
-   <div class="gallery"><figure><img src="assets/live-1.webp" alt="Live at the Laughin American Social Club" loading="lazy"></figure><figure><img src="assets/live-2.webp" alt="Live at the Laughin American Social Club" loading="lazy"></figure><figure><img src="assets/patrick-live.webp" alt="Patrick Barbosa on stage" loading="lazy"></figure></div>
-  </div></section>`}
 function venue(){const V=SITE.VENUE;return `<section class="section reveal" style="padding-top:20px"><div class="wrap"><div class="venue">
    <div class="venue-txt"><p class="eyebrow">${t("venueT")}</p><h3>${V.name}</h3><p><b style="color:var(--paper)">${V.addr}</b><br>${V.area}</p><p>${t("venueP")}</p>
    <a class="btn btn-line btn-sm" href="${V.maps}" target="_blank" rel="noopener">${I_PIN.replace('aria-hidden="true"','aria-hidden="true" width="18" height="18"')} ${t("directions")}</a></div>
-   <iframe title="Map: ${V.name}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${V.embed}"></iframe>
+   <div class="venue-media">
+     <figure><iframe title="Street View: ${V.name}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="${V.street}"></iframe><figcaption>Street View</figcaption></figure>
+     <figure><iframe class="map" title="Map: ${V.name}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${V.embed}"></iframe></figure>
+   </div>
   </div></div></section>`}
 function pAgenda(){
   const up=upcoming();
@@ -673,8 +670,7 @@ function pAgenda(){
   const lab=m=>{const[y,mm]=m.split("-").map(Number);const x=fmt({month:"long",year:"numeric"},new Date(y,mm-1,1));return x.charAt(0).toUpperCase()+x.slice(1)};
   return phero(t("agendaH"),t("agendaP"))+`<section class="section" style="padding-top:20px"><div class="wrap">
    <div class="mtabs" role="tablist">${months.map((m,i)=>`<button type="button" role="tab" class="mtab" data-mtab="${m}" aria-selected="${i===0}">${lab(m)}</button>`).join("")}</div>
-   ${months.map((m,i)=>{const l=up.filter(s=>s.data.startsWith(m));return `<div class="shows" data-mpanel="${m}"${i?" hidden":""}>${showList(l)}${m==="2026-12"?breakRow():""}</div>`}).join("")}
-   <div class="sched">${t("sched").map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join("")}</div>
+   ${months.map((m,i)=>{const l=up.filter(s=>s.data.startsWith(m));return `<div class="shows" data-mpanel="${m}"${i?" hidden":""}>${showList(l)}</div>`}).join("")}
   </div></section>${venue()}${alertsBlock()}`}
 function pShow(){const next=upcoming()[0];
   return phero(t("showH"),t("tag"))+`<section class="section" style="padding-top:10px"><div class="wrap feature">
@@ -683,7 +679,7 @@ function pShow(){const next=upcoming()[0];
    <div class="hero-ctas">${next?buy(next):""}${L("agenda",t("allDates"),"btn btn-line")}</div></div></div></section>
    <section class="section" style="padding-top:20px"><div class="wrap"><div class="section-head"><div><p class="eyebrow">${t("onStage")}</p><h2>${t("nextShows")}</h2></div>${L("agenda",t("fullAgenda"),"link-more")}</div>
    <div class="shows">${showList(upcoming().slice(0,3))}</div></div></section>
-   ${gallery()}${venue()}`}
+   ${venue()}`}
 function pCast(){return phero(t("castH"),t("castP"))+`<section class="section" style="padding-top:20px"><div class="wrap"><div class="cast">${COMEDIANS.map(pcard).join("")}</div></div></section>${alertsBlock()}`}
 function pBook(){const F=t("F");
   return phero(t("bizH"),t("bizP"))+`<section class="section" style="padding-top:20px"><div class="wrap">
@@ -701,6 +697,7 @@ function pContact(){const S=t("contactSide");
   return phero(t("contactH"),t("contactP"))+`<section class="section" style="padding-top:20px"><div class="wrap contact-grid">
    <div style="display:grid;gap:14px;align-content:start">
     <div class="panel"><h3>${S[0][0]}</h3><p>${S[0][1]}</p>${socials({instagram:SITE.INSTAGRAM})}</div>
+    <div class="panel"><h3>${t("emailT")}</h3><p>${t("emailP")}</p><p style="margin-top:8px"><a href="mailto:${SITE.EMAIL}" style="color:var(--sun);font-weight:700">${SITE.EMAIL}</a></p></div>
     <div class="panel"><h3>${S[1][0]}</h3><p>${S[1][1]}</p></div>
    </div>
    <div class="panel"><form class="form" data-form="contact" novalidate>
@@ -723,8 +720,8 @@ function pLinks(){const next=upcoming()[0],nd=next?dt(next):null;
 
 /* ---------- forms ---------- */
 async function sendForm(subject,data){
-  const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:SITE.W3F_KEY,subject,from_name:"Site BCN Comedy",...data})});
-  const j=await r.json().catch(()=>({}));if(!r.ok||!j.success)throw new Error("send");return j}
+  const r=await fetch("https://formsubmit.co/ajax/"+SITE.EMAIL,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({_subject:subject,_template:"table",_captcha:"false",_replyto:data.email||"",...data})});
+  const j=await r.json().catch(()=>({}));if(!r.ok||!(j.success===true||j.success==="true"))throw new Error("send");return j}
 const okMail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 function wireForms(){
   document.querySelectorAll("form[data-alert]").forEach(f=>f.addEventListener("submit",async e=>{e.preventDefault();
@@ -744,7 +741,7 @@ function wireForms(){
 
 /* ---------- SEO: events ---------- */
 function eventsLD(){let el=document.getElementById("ld-events");if(!el){el=document.createElement("script");el.type="application/ld+json";el.id="ld-events";document.head.appendChild(el)}
-  const V=SITE.VENUE;el.textContent=JSON.stringify({"@context":"https://schema.org","@graph":upcoming().slice(0,8).map(s=>({"@type":"ComedyEvent","name":"Laughin American Social Club · Stand-up Comedy in English","startDate":s.data+"T20:30:00+01:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","inLanguage":"en","image":"https://www.bcncomedy.com/assets/og.jpg","location":{"@type":"Place","name":V.name,"address":{"@type":"PostalAddress","streetAddress":V.addr,"addressLocality":"Barcelona","postalCode":"08012","addressCountry":"ES"}},"performer":COMEDIANS.map(c=>({"@type":"Person","name":c.name})),"organizer":{"@type":"Organization","name":"BCN Comedy","url":"https://www.bcncomedy.com/"},"offers":{"@type":"Offer","url":s.url,"availability":"https://schema.org/InStock"}}))})}
+  const V=SITE.VENUE;el.textContent=JSON.stringify({"@context":"https://schema.org","@graph":upcoming().slice(0,8).map(s=>({"@type":"ComedyEvent","name":"Laughin American Social Club · Stand-up Comedy in English","startDate":s.data+"T20:30:00+01:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","inLanguage":"en","image":"https://www.bcncomedy.com/assets/og.jpg","location":{"@type":"Place","name":V.name,"address":{"@type":"PostalAddress","streetAddress":V.addr,"addressLocality":"Barcelona","postalCode":"08012","addressCountry":"ES"}},"performer":COMEDIANS.map(c=>({"@type":"Person","name":c.name})),"organizer":{"@type":"Organization","name":"BCN Comedy","url":"https://www.bcncomedy.com/"},"offers":{"@type":"Offer","url":s.url,"availability":status(s)==="sold"?"https://schema.org/SoldOut":status(s)==="soon"?"https://schema.org/PreOrder":"https://schema.org/InStock","validFrom":ymd(opensOn(s))}}))})}
 
 /* ---------- render ---------- */
 const TITLES={agenda:0,show:1,comedians:2,book:3,contact:4,privacy:5};
