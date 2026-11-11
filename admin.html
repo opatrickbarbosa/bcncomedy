@@ -1,435 +1,770 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>BCN Comedy · Painel</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#070909">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070909'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='26' text-anchor='middle' fill='%23ECC122'%3EBCN%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<title>BCN Comedy · Gestão</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  (function(){try{var t=localStorage.getItem("bcn-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}})();
+</script>
 <style>
-@font-face{font-family:"Panton Rust";src:url(assets/PantonRustHeavy-GrSh.woff) format("woff");font-display:swap}
-:root{--ink:#070909;--ink2:#0d1010;--card:#131717;--card2:#181d1d;--line:#2a2f2f;--paper:#f4f1e6;--muted:#b9b6aa;--dim:#8a877d;--sun:#ECC122;--sunInk:#14120a;--lime:#E6FB94;--red:#DF260E;--sky:#6EE6FF;--ok:#8fd16a;
---display:"Panton Rust","Arial Black",Impact,sans-serif;--body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-*{box-sizing:border-box}html,body{margin:0}
-body{background:var(--ink);color:var(--paper);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased;min-height:100vh}
-body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url(assets/grunge.webp) center/cover;opacity:.25}
+:root{
+  --bg:#f5f5f2;--panel:#ffffff;--panel2:#fafaf8;--line:#e3e3de;--line2:#d4d4ce;
+  --text:#151515;--muted:#6a6a64;--faint:#9a9a93;
+  --accent:#ECC122;--accent-ink:#151515;--accent-text:#8a6a00;--accent-soft:#fbf1cc;
+  --danger:#c8240d;--danger-soft:#fde7e3;--ok:#23824a;--ok-soft:#e1f3e7;
+  --track:#ecece7;--shadow:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1011;--panel:#17181a;--panel2:#1c1d20;--line:#2a2c2f;--line2:#36383c;
+  --text:#f1f1ee;--muted:#a2a29c;--faint:#6f6f6a;
+  --accent:#ECC122;--accent-ink:#151515;--accent-text:#ECC122;--accent-soft:#3a3218;
+  --danger:#ff6a52;--danger-soft:#3b1a14;--ok:#7fd49a;--ok-soft:#183226;
+  --track:#26282b;--shadow:none;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0f1011;--panel:#17181a;--panel2:#1c1d20;--line:#2a2c2f;--line2:#36383c;
+  --text:#f1f1ee;--muted:#a2a29c;--faint:#6f6f6a;
+  --accent:#ECC122;--accent-ink:#151515;--accent-text:#ECC122;--accent-soft:#3a3218;
+  --danger:#ff6a52;--danger-soft:#3b1a14;--ok:#7fd49a;--ok-soft:#183226;
+  --track:#26282b;--shadow:none;color-scheme:dark;}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-feature-settings:"tnum" 1,"cv11" 1;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-text)}
 button,input,select,textarea{font:inherit;color:inherit}
-a{color:var(--sun)}
-[hidden]{display:none!important}
-h1,h2,h3{font-family:var(--display);font-weight:400;text-transform:uppercase;margin:0;line-height:1.05;letter-spacing:.01em}
-.wrap{max-width:1180px;margin:0 auto;padding:0 max(14px,env(safe-area-inset-left)) 0 max(14px,env(safe-area-inset-right))}
-.tnum{font-variant-numeric:tabular-nums}
-/* top */
-.top{position:sticky;top:0;z-index:20;background:rgba(7,9,9,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:12px;padding-block:10px}
-.top img{height:32px}
-.top .ttl{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem;color:var(--dim)}
-.top .sp{flex:1}
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:8px 0 10px}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-weight:700;font-size:.9rem;cursor:pointer;color:#dcd9cd}
-.tab[aria-selected="true"]{background:var(--sun);border-color:var(--sun);color:var(--sunInk)}
-.tab .n{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--red);color:#fff;font-size:.72rem}
-/* ui */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 16px;border-radius:999px;border:0;font-weight:800;cursor:pointer;white-space:nowrap;text-decoration:none}
-.btn-sun{background:var(--sun);color:var(--sunInk);box-shadow:0 3px 0 #9c7e10}
-.btn-line{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 1.5px var(--line)}
-.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--muted)}
-.btn-red{background:transparent;color:#ff8b78;box-shadow:inset 0 0 0 1.5px rgba(223,38,14,.5)}
-.btn-sm{min-height:34px;padding:0 12px;font-size:.85rem}
-.ico{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;display:inline-grid;place-items:center;color:var(--muted)}
-main{padding:26px 0 80px}
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:6px 0 16px}
-.head h2{font-size:clamp(1.7rem,4vw,2.4rem)}
-.head p{color:var(--muted);margin:6px 0 0;max-width:640px}
-.grid{display:grid;gap:12px}
-.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
-@media (max-width:900px){.g4{grid-template-columns:1fr 1fr}.g3,.g2{grid-template-columns:1fr}}
-.card{background:rgba(19,23,23,.94);border:1px solid var(--line);border-radius:14px;padding:16px}
-.card h3{font-size:1.1rem;margin-bottom:10px}
-.kpi .l{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:800}
-.kpi .v{font-family:var(--display);font-size:1.9rem;color:var(--sun);margin-top:4px}
-.kpi .s{color:var(--muted);font-size:.85rem}
-.v.neg{color:#ff8b78}.v.pos{color:var(--ok)}
-.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:rgba(255,255,255,.08);color:#dcd9cd;white-space:nowrap}
-.c-lineup{background:rgba(110,230,255,.14);color:var(--sky)}
-.c-tickets{background:rgba(236,193,34,.16);color:var(--sun)}
-.c-sponsor{background:rgba(230,251,148,.14);color:var(--lime)}
-.c-instagram{background:rgba(223,38,14,.18);color:#ff8b78}
-.c-design{background:rgba(190,150,255,.16);color:#cdb4ff}
-.c-finance{background:rgba(143,209,106,.16);color:var(--ok)}
-.c-other{background:rgba(255,255,255,.08)}
-.late{color:#ff8b78;font-weight:700}
-.muted{color:var(--muted)}.dim{color:var(--dim)}
-/* lists */
-.list{display:grid;gap:6px}
-.item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
-.item.done{opacity:.55}.item.done .t{text-decoration:line-through}
-.item.overdue{border-color:rgba(223,38,14,.55)}
-.item .t{font-weight:600}
-.item .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:3px;font-size:.82rem;color:var(--muted)}
-.chk{appearance:none;width:24px;height:24px;border-radius:7px;border:2px solid var(--muted);background:transparent;cursor:pointer;display:grid;place-items:center;margin:0}
-.chk:checked{background:var(--sun);border-color:var(--sun)}
-.chk:checked::after{content:"";width:7px;height:12px;border:solid var(--sunInk);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.wk{margin:18px 0 8px;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:800}
-select.mini{min-height:32px;border-radius:8px;border:1px solid var(--line);background:var(--ink2);padding:0 8px;font-size:.82rem}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.filters select,.filters label{min-height:38px;border-radius:999px;border:1px solid var(--line);background:var(--card);padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:.88rem}
-/* tables */
-.tw{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:rgba(19,23,23,.94)}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-td.r,th.r{text-align:right}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em}
+h1{font-size:22px}h2{font-size:17px}h3{font-size:14px}
+.muted{color:var(--muted)}.faint{color:var(--faint)}.small{font-size:12.5px}
+.row{display:flex;align-items:center;gap:8px}.grow{flex:1}.wrap{flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line2);background:var(--panel);cursor:pointer;font-weight:500;white-space:nowrap}
+.btn:hover{border-color:var(--faint)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(.96)}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.ghost:hover{background:var(--panel2)}
+.btn.danger{color:var(--danger)}
+.btn.sm{height:28px;padding:0 10px;font-size:12.5px}
+.btn:disabled{opacity:.55;cursor:default}
+.chip{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:500;background:var(--panel2);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.chip.warn{background:var(--accent-soft);border-color:transparent;color:var(--accent-text)}
+.chip.bad{background:var(--danger-soft);border-color:transparent;color:var(--danger)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.pad{padding:16px}
+input[type=text],input[type=email],input[type=password],input[type=date],input[type=time],input[type=number],input[type=url],select,textarea{width:100%;height:36px;padding:0 10px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);outline:none}
+textarea{height:auto;min-height:72px;padding:8px 10px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+label.f{display:block;font-size:12.5px;color:var(--muted);font-weight:500}
+label.f>span{display:block;margin-bottom:4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.full{grid-column:1/-1}
+.bar{height:6px;border-radius:99px;background:var(--track);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.bar.done>i{background:var(--ok)}
+table{width:100%;border-collapse:collapse}
+th{font-size:12px;font-weight:500;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
 tr:last-child td{border-bottom:0}
-tbody tr{cursor:pointer}tbody tr:hover{background:rgba(255,255,255,.03)}
-tfoot td{font-weight:800;border-top:1px solid var(--line)}
-/* show cards */
-.show{border:1px solid var(--line);border-radius:14px;background:rgba(19,23,23,.94);overflow:hidden}
-.show-h{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px;cursor:pointer}
-.dbox{width:64px;height:70px;border-radius:10px;background:var(--sun);color:var(--sunInk);display:grid;place-items:center;text-align:center;line-height:1;box-shadow:3px 3px 0 var(--red)}
-.dbox b{font-family:var(--display);font-size:1.8rem;font-weight:400}.dbox span{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.show.past .dbox{background:#2a2f2f;color:var(--muted);box-shadow:3px 3px 0 #1b1f1f}
-.bar{height:6px;border-radius:9px;background:#2a2f2f;overflow:hidden;margin-top:6px;max-width:260px}.bar i{display:block;height:100%;background:var(--sun)}
-.show-b{border-top:1px solid var(--line);padding:14px;display:grid;gap:16px}
-.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-@media (max-width:760px){.slots{grid-template-columns:1fr}}
-.slot{border:1px dashed var(--line);border-radius:12px;padding:10px;min-height:78px;cursor:pointer}
-.slot.f{border-style:solid;background:var(--card2)}
-.slot .n{font-weight:700}.slot .r{font-size:.8rem;color:var(--muted)}
+td.num,th.num{text-align:right}
+.tablewrap{overflow-x:auto}
+/* auth */
+.auth{min-height:100vh;display:grid;place-items:center;padding:24px}
+.auth .card{width:100%;max-width:380px;padding:28px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:-.01em}
+.brand i{width:10px;height:10px;border-radius:3px;background:var(--accent);display:inline-block}
+.auth h1{margin:18px 0 4px}
+.auth form{display:grid;gap:12px;margin-top:18px}
+.msg{font-size:13px;padding:8px 10px;border-radius:8px}
+.msg.err{background:var(--danger-soft);color:var(--danger)}
+.msg.ok{background:var(--ok-soft);color:var(--ok)}
+/* shell */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1280px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:16px}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{height:32px;padding:0 12px;border:0;background:transparent;border-radius:8px;color:var(--muted);font-weight:500;cursor:pointer;white-space:nowrap}
+.nav button:hover{color:var(--text);background:var(--panel2)}
+.nav button.on{color:var(--text);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line)}
+.main{max-width:1280px;margin:0 auto;padding:20px 20px 80px}
+.sec{margin-top:28px}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+/* timeline */
+.tl{position:relative;display:flex;gap:14px;overflow-x:auto;padding:30px 2px 14px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.tl-axis{position:absolute;left:0;top:14px;height:1px;background:var(--line2)}
+.tl-today{position:relative;flex:0 0 28px;scroll-snap-align:start;display:flex;justify-content:center}
+.tl-today:before{content:"";width:2px;border-radius:2px;background:var(--accent)}
+.tl-today span{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:11.5px;font-weight:600;color:var(--accent-text);white-space:nowrap}
+.sc{flex:0 0 248px;scroll-snap-align:start;cursor:pointer;padding:14px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,transform .15s}
+.sc:hover{border-color:var(--faint)}
+.sc.next{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.sc.past{opacity:.6}
+.sc-date b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.sc-date span{display:block;margin-top:2px}
+.sc-title{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-rows{display:grid;gap:7px}
+.sc-row{display:grid;grid-template-columns:78px 1fr 34px;align-items:center;gap:8px;font-size:12.5px}
+.sc-row em{font-style:normal;color:var(--faint);text-align:right;font-size:11.5px}
+.sc-foot{display:flex;gap:6px;flex-wrap:wrap}
+.tl-add{flex:0 0 140px;display:grid;place-items:center;border:1px dashed var(--line2);border-radius:12px;color:var(--muted);cursor:pointer;background:transparent}
+.tl-add:hover{color:var(--text);border-color:var(--faint)}
+/* week */
+.week{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:10px;overflow-x:auto}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:12px;min-height:150px;display:flex;flex-direction:column}
+.day.today{border-color:var(--accent)}
+.day-h{padding:10px 12px;border-bottom:1px solid var(--line);font-size:12.5px;font-weight:600;display:flex;justify-content:space-between}
+.day-b{padding:8px;display:grid;gap:6px;align-content:start}
+.task{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;border-radius:8px;background:var(--panel2);font-size:12.5px;line-height:1.35}
+.task input{margin:2px 0 0;accent-color:var(--ok);width:15px;height:15px;flex:0 0 auto;cursor:pointer}
+.task .t-sub{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
+.task.done .t-main{text-decoration:line-through;color:var(--faint)}
+.task.late{background:var(--danger-soft)}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:1px}
+/* event */
+.ev-head{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:20px 0 18px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{border:0;background:none;padding:10px 12px;color:var(--muted);font-weight:500;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button.on{color:var(--text);border-bottom-color:var(--accent)}
+.tabs button .chip{margin-left:6px;height:18px;padding:0 6px;font-size:11px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.list{display:grid;gap:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{padding:14px}
+.kpi b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
+.sectors{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.sector{padding:12px;cursor:pointer}
+.sector:hover{border-color:var(--faint)}
+.empty{padding:18px;text-align:center;color:var(--faint);font-size:13px}
 /* modal */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:50;display:grid;place-items:end center}
-@media (min-width:700px){.ov{place-items:center}}
-.modal{width:min(560px,100%);max-height:92vh;overflow:auto;background:var(--ink2);border:1px solid var(--line);border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom))}
-@media (min-width:700px){.modal{border-radius:18px}}
-.modal h3{font-size:1.4rem;margin-bottom:14px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.fields .full{grid-column:1/-1}
-@media (max-width:520px){.fields{grid-template-columns:1fr}}
-label.f{display:grid;gap:4px;font-size:.78rem;font-weight:700;color:var(--muted)}
-label.f input,label.f select,label.f textarea{min-height:42px;border-radius:10px;border:1px solid var(--line);background:#0a0d0d;color:var(--paper);padding:8px 10px;font-weight:500;font-size:.95rem}
-label.f textarea{min-height:90px;resize:vertical}
-label.f input:focus,label.f select:focus,label.f textarea:focus{outline:none;border-color:var(--sun)}
-label.cb{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.9rem}
-.mact{display:flex;gap:8px;justify-content:space-between;margin-top:16px;flex-wrap:wrap}
-/* login */
-.login{min-height:100vh;display:grid;place-items:center;padding:20px}
-.login .card{width:min(380px,100%);text-align:center;padding:26px}
-.login img{width:140px;margin:0 auto 14px;display:block}
-.login input{width:100%;min-height:48px;border-radius:12px;border:1px solid var(--line);background:#0a0d0d;padding:0 14px;margin:14px 0 10px;font-size:1rem}
-.err{color:#ff8b78;font-weight:600;font-size:.9rem}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--card2);border:1px solid var(--line);padding:10px 16px;border-radius:999px;z-index:60;font-weight:600;font-size:.9rem}
-.bal{font-size:1.05rem;font-weight:700}
-.bal b{color:var(--sun)}
-.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
-.lang{min-height:34px;border-radius:999px;border:1px solid var(--line);background:var(--card);padding:0 10px;font-weight:800;font-size:.8rem;cursor:pointer}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:16px;z-index:50}
+.modal{width:100%;max-width:520px;max-height:90vh;overflow:auto;padding:20px}
+.modal form{display:grid;gap:12px;margin-top:14px}
+.modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 14px;border-radius:8px;font-size:13px;z-index:60}
+.loading{min-height:60vh;display:grid;place-items:center;color:var(--muted)}
+@media (max-width:760px){
+  .top-in{padding:10px 14px;gap:10px;flex-wrap:wrap}
+  .top-in .nav{order:3;width:100%}
+  .main{padding:14px 14px 80px}
+  .cols,.grid2{grid-template-columns:1fr}
+  .sc{flex-basis:78vw}
+  .week{grid-template-columns:repeat(7,78vw);scroll-snap-type:x mandatory}
+  .day{scroll-snap-align:start}
+  .hide-m{display:none}
+}
 </style>
 </head>
 <body>
-<div id="app"></div>
-<script>
-/* ================= config ================= */
-const API="https://script.google.com/macros/s/AKfycbyIMRITKG4F2vbANBkS8ikbDcC8wayR51_rBJyu1VpW78ggzIznTRRqyZEEkrfZDECNrw/exec";
-const PARTNERS=["Patrick","Max"];
-const SHARE_PATRICK=0.5, FUND_PCT=0.2;
-// Standard checklist created for every show. d = days relative to show date (negative = before).
-const TEMPLATE=[
- {k:"lineup",s:"lineup",d:-21,pt:"Definir lineup (3 comediantes convidados)",en:"Confirm line-up (3 guest comedians)"},
- {k:"eb",s:"tickets",d:-21,pt:"Criar evento no Eventbrite + cupom BCNCOMEDY25",en:"Create Eventbrite event + BCNCOMEDY25 code"},
- {k:"flyer",s:"design",d:-18,pt:"Flyer da data pronto (feed + stories)",en:"Date flyer ready (feed + stories)"},
- {k:"sales",s:"tickets",d:-14,pt:"Abrir vendas (publicar evento)",en:"Open sales (publish event)"},
- {k:"ig_date",s:"instagram",d:-14,pt:"Post no feed anunciando a data",en:"Feed post announcing the date"},
- {k:"ig_lineup",s:"instagram",d:-7,pt:"Post de conteúdo / apresentação do lineup",en:"Content post / line-up reveal"},
- {k:"st3",s:"instagram",d:-3,pt:"Stories com link do ingresso",en:"Stories with ticket link"},
- {k:"st1",s:"instagram",d:-1,pt:"Stories: é amanhã + link do ingresso",en:"Stories: tomorrow + ticket link"},
- {k:"st0",s:"instagram",d:0,pt:"Stories no dia: últimos ingressos + link",en:"Show-day stories: last tickets + link"},
- {k:"cash",s:"finance",d:1,pt:"Lançar bilheteria, cachês e quem ficou com o dinheiro",en:"Log box office, fees and who holds the cash"},
- {k:"pay",s:"finance",d:2,pt:"Pagar os comediantes",en:"Pay the comedians"},
- {k:"clips",s:"instagram",d:4,pt:"Postar clipes / fotos do show",en:"Post show clips / photos"}
+<div id="app"><div class="loading">Carregando...</div></div>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://ootfzgsoreeicehgbucc.supabase.co";
+const SUPABASE_KEY = "sb_publishable_xGA5ESfmSrY9N0PAVFDxPA_cEfaUNhN";
+const PARTNERS = ["Patrick", "Max"];
+const SHARE = { Patrick: .5, Max: .5 };
+
+// read the auth callback type before the client consumes the URL hash
+const HASH = new URLSearchParams(location.hash.slice(1));
+let AUTH_TYPE = HASH.get("type");            // invite | recovery | signup | magiclink
+const AUTH_ERR = HASH.get("error_description");
+
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, detectSessionInUrl: true } });
+
+/* ---------------- i18n ---------------- */
+let LANG = localStorage.getItem("bcn-lang") || ((navigator.language || "").startsWith("pt") ? "pt" : "en");
+const L = (pt, en) => LANG === "en" ? en : pt;
+const SECTORS = [
+  ["Show", "Show", "Show", "#ECC122"],
+  ["Instagram", "Instagram", "Instagram", "#d4569b"],
+  ["Anuncios", "Anúncios", "Ads", "#4c7bd9"],
+  ["Cupons", "Cupons", "Coupons", "#2f9e8f"],
+  ["Ingressos", "Ingressos", "Tickets", "#8a63d2"],
+  ["Financeiro", "Financeiro", "Finance", "#5f8f3a"],
 ];
-const SECTORS={lineup:["Lineup","Line-up"],tickets:["Ingressos","Tickets"],sponsor:["Patrocínio","Sponsor"],instagram:["Instagram","Instagram"],design:["Arte","Design"],finance:["Financeiro","Finance"],other:["Outros","Other"]};
+const SECTOR_NAME = k => { const s = SECTORS.find(x => x[0] === k); return s ? L(s[1], s[2]) : (k === "Patrocinio" ? L("Patrocínio", "Sponsor") : (k || "")); };
+const SECTOR_COLOR = k => (SECTORS.find(x => x[0] === k) || [0, 0, 0, "#9a9a93"])[3];
+const TASK_EN = { lineup: "Lock the lineup (3 guests)", eb: "Create the Eventbrite event", flyer: "Flyer ready", sales: "Open sales on the site", ig_date: "Date post", coupons: "Comedian coupons sent", ad_create: "Create Facebook/Instagram ad", ad_live: "Ad running", ig_lineup: "Lineup post", st3: "Stories D-3 with ticket link", st1: "Stories D-1 with ticket link", st0: "Stories on the day", cash: "Close the night's cash", ad_report: "Ad report", pay: "Pay the comedians", clips: "Post show clips", chandrio: "Send the month's flyers to Chandrío" };
+const taskTitle = t => LANG === "en" && TASK_EN[t.template_key] ? TASK_EN[t.template_key] + (t.template_key === "chandrio" ? " (" + String(t.id).split(":")[1] + ")" : "") : t.title;
 
-/* ================= state ================= */
-let LANG="pt",KEY="",S={shows:[],lineup:[],tasks:[],expenses:[],payments:[],coupons:[],instagram:[],igstats:[],signups:[]},SHEET="",VIEW="dash",OPEN={},F={sector:"",owner:"",done:false};
-try{LANG=localStorage.getItem("bcn-admin-lang")||"pt";KEY=localStorage.getItem("bcn-admin-key")||""}catch(_){}
-const L=(pt,en)=>LANG==="en"?en:pt;
-const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
-const num=v=>{const n=parseFloat(String(v==null?"":v).replace(",","."));return isNaN(n)?0:n};
-const yes=v=>v===true||/^(true|yes|sim|1|paid)$/i.test(String(v));
-const eur=n=>(n<0?"-":"")+"€"+Math.abs(n).toFixed(2).replace(".",",");
-const uid=p=>(p||"x")+"-"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-const pd=s=>{const[y,m,d]=String(s).slice(0,10).split("-").map(Number);return new Date(y,(m||1)-1,d||1)};
-const addDays=(s,n)=>{const d=pd(s);d.setDate(d.getDate()+n);return ymd(d)};
-const today=()=>ymd(new Date());
-const fdate=(s,o)=>s?new Intl.DateTimeFormat(LANG==="en"?"en-GB":"pt-BR",o||{weekday:"short",day:"numeric",month:"short"}).format(pd(s)).replace(".",""):"";
-const sec=k=>(SECTORS[k]||SECTORS.other)[LANG==="en"?1:0];
+/* ---------------- utils ---------------- */
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
+const ymd = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const pd = s => { const [y, m, d] = String(s).slice(0, 10).split("-").map(Number); return new Date(y, m - 1, d); };
+const today = () => ymd(new Date());
+const addDays = (s, n) => { const d = pd(s); d.setDate(d.getDate() + n); return ymd(d); };
+const fdate = (s, o) => s ? new Intl.DateTimeFormat(LANG === "en" ? "en-GB" : "pt-BR", o || { weekday: "short", day: "numeric", month: "short" }).format(pd(s)).replace(/\./g, "") : "";
+const eur = v => new Intl.NumberFormat(LANG === "en" ? "en-GB" : "pt-BR", { style: "currency", currency: "EUR" }).format(num(v));
+const daysTo = s => Math.round((pd(s) - pd(today())) / 864e5);
+function toast(m) { const t = document.createElement("div"); t.className = "toast"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); }
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()).replace(/-/g, "").slice(0, 12);
 
-/* ================= API ================= */
-async function api(body){
-  const r=await fetch(API,{method:"POST",body:JSON.stringify({key:KEY,...body})});
-  const j=await r.json().catch(()=>({ok:false,error:"net"}));
-  if(!j.ok)throw new Error(j.error||"error");return j}
-async function load(){const j=await api({action:"load"});S=Object.assign(S,j.data);SHEET=j.sheet||"";}
-async function save(table,row){
-  const list=S[table];const i=list.findIndex(x=>String(x.id)===String(row.id));
-  if(i>=0)list[i]={...list[i],...row};else list.push(row);
-  render();
-  try{await api({action:"save",collection:table,row})}catch(e){toast(L("Erro ao salvar","Save failed")+": "+e.message)}}
-async function del(table,id){S[table]=S[table].filter(x=>String(x.id)!==String(id));render();
-  try{await api({action:"delete",collection:table,id})}catch(e){toast(L("Erro ao apagar","Delete failed"))}}
-function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+/* ---------------- state ---------------- */
+const TABLES = ["shows", "tasks", "lineup", "comedians", "coupons", "ads", "expenses", "payments", "instagram", "orders", "signups", "settings", "profiles"];
+let S = Object.fromEntries(TABLES.map(t => [t, []]));
+let ME = null, PROFILE = null;
+let R = { view: "home", showId: null, tab: "overview", weekStart: null, mine: false };
 
-/* ================= derived ================= */
-const shows=()=>S.shows.slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-const showById=id=>S.shows.find(s=>String(s.id)===String(id));
-const lineupOf=id=>{const s=showById(id);return s?S.lineup.filter(l=>String(l.date)===String(s.date)):[]};
-const booked=l=>/confirm|paid|pago/i.test(String(l.payment));
-function showTitle(s){return s.title||"Laughin American Social Club"}
-function income(s){return num(s.cashTickets)*num(s.cashPrice)+num(s.bizumTickets)*num(s.bizumPrice)+num(s.ebNet)}
-function fees(s){return num(s.headliners)*num(s.headlinerFee)+num(s.guests)*num(s.guestFee)}
-function chandrioReceived(s){return yes(s.sponsorPaid)?num(s.sponsor):0}
-function net(s){return income(s)+chandrioReceived(s)-fees(s)}
-function allTasks(){
-  const out=[];const st={};S.tasks.forEach(t=>st[t.id]=t);
-  shows().forEach(s=>{if(s.status==="cancelled")return;
-    TEMPLATE.forEach(tp=>{const id=s.id+":"+tp.k,o=st[id]||{};
-      let done=yes(o.done);
-      if(tp.k==="lineup"&&lineupOf(s.id).filter(booked).length>=3)done=true;
-      out.push({id,showId:s.id,k:tp.k,title:L(tp.pt,tp.en),sector:tp.s,due:o.due||addDays(s.date,tp.d),owner:o.owner||"",done,auto:true})});
-  });
-  // monthly: flyers to the sponsor on the 10th of the month before
-  const months=[...new Set(shows().filter(s=>s.status!=="cancelled").map(s=>String(s.date).slice(0,7)))];
-  months.forEach(m=>{const d=pd(m+"-01");d.setMonth(d.getMonth()-1);d.setDate(10);const id="chandrio:"+m,o=st[id]||{};
-    const label=new Intl.DateTimeFormat(LANG==="en"?"en-GB":"pt-BR",{month:"long"}).format(pd(m+"-01"));
-    out.push({id,showId:"",k:"chandrio",title:L("Enviar flyers dos shows de "+label+" ao Chandrío","Send "+label+" flyers to Chandrío"),sector:"sponsor",due:o.due||ymd(d),owner:o.owner||"",done:yes(o.done),auto:true})});
-  S.tasks.filter(t=>yes(t.custom)).forEach(t=>out.push({...t,done:yes(t.done),custom:true}));
-  return out.sort((a,b)=>String(a.due).localeCompare(String(b.due)))}
-function finance(){
-  const P={},T=today();PARTNERS.forEach(p=>P[p]={paid:0,kept:0,held:0,out:0,in:0});
-  let shared=0,fundIn=0,fundOut=0,profit=0;
-  S.expenses.forEach(e=>{const a=num(e.amount);
-    if(e.paidBy==="Caixa"){fundOut+=a;return}
-    if(P[e.paidBy])P[e.paidBy].paid+=a;
-    if(P[e.keeper])P[e.keeper].kept+=a;else shared+=a});
-  shows().forEach(s=>{if(String(s.date)>T&&!income(s))return;const n=net(s);
-    if(s.heldBy==="Caixa")fundIn+=n;else if(P[s.heldBy]){P[s.heldBy].held+=n;profit+=n}});
-  S.payments.forEach(t=>{const a=num(t.amount);if(t.from==="Caixa")fundOut+=a;if(t.to==="Caixa")fundIn+=a;if(P[t.from])P[t.from].out+=a;if(P[t.to])P[t.to].in+=a});
-  const share={Patrick:SHARE_PATRICK,Max:1-SHARE_PATRICK};
-  PARTNERS.forEach(p=>{const x=P[p];x.bal=x.paid-x.kept-shared*share[p]+(profit*share[p]-x.held)+x.out-x.in});
-  const pending=shows().filter(s=>s.date<=T&&s.status!=="cancelled").reduce((a,s)=>a+(yes(s.sponsorPaid)?0:num(s.sponsor)),0);
-  const totIncome=shows().reduce((a,s)=>a+income(s)+chandrioReceived(s),0),totFees=shows().reduce((a,s)=>a+fees(s),0),totExp=S.expenses.reduce((a,e)=>a+num(e.amount),0);
-  return{P,shared,fund:fundIn-fundOut,profit,pending,totIncome,totFees,totExp}}
+async function loadAll() {
+  const res = await Promise.all(TABLES.map(t => sb.from(t).select("*")));
+  res.forEach((r, i) => { if (r.error) throw r.error; S[TABLES[i]] = r.data || []; });
+}
+async function save(table, row) {
+  const { data, error } = await sb.from(table).upsert(row).select().single();
+  if (error) { toast(L("Erro ao salvar: ", "Save error: ") + error.message); throw error; }
+  const key = table === "settings" ? "key" : "id";
+  const i = S[table].findIndex(x => x[key] === data[key]);
+  if (i >= 0) S[table][i] = data; else S[table].push(data);
+  return data;
+}
+async function del(table, id) {
+  const { error } = await sb.from(table).delete().eq("id", id);
+  if (error) { toast(error.message); throw error; }
+  S[table] = S[table].filter(x => x.id !== id);
+}
+function logAct(action, detail) { sb.from("activity_log").insert({ action, detail }).then(() => {}); }
 
-/* ================= views ================= */
-const VIEWS=[["dash",["Painel","Overview"]],["plan",["Cronograma","Timeline"]],["shows",["Shows","Shows"]],["ig",["Instagram","Instagram"]],["fin",["Financeiro","Finance"]],["coupons",["Cupons","Coupons"]],["artists",["Comediantes","Comedians"]]];
-function render(){
-  const app=document.getElementById("app");
-  if(!KEY){app.innerHTML=loginView();wireLogin();return}
-  const late=allTasks().filter(t=>!t.done&&t.due<today()).length;
-  app.innerHTML=`<header class="top"><div class="wrap"><img src="assets/bcn-logo-s.webp" alt="BCN Comedy"><span class="ttl">${L("Painel do projeto","Project hub")}</span><span class="sp"></span>
-   <button class="lang" data-lang>${LANG==="en"?"PT":"EN"}</button>${SHEET?`<a class="ico" href="${SHEET}" target="_blank" rel="noopener" title="Google Sheet">&#8599;</a>`:""}<button class="ico" data-reload title="Reload">&#8635;</button><button class="ico" data-logout title="Logout">&#x2715;</button></div>
-   <div class="wrap tabs" role="tablist">${VIEWS.map(([k,l])=>`<button class="tab" role="tab" data-view="${k}" aria-selected="${VIEW===k}">${l[LANG==="en"?1:0]}${k==="plan"&&late?`<span class="n">${late}</span>`:""}</button>`).join("")}</div></header>
-   <main class="wrap">${({dash:vDash,plan:vPlan,shows:vShows,ig:vIG,fin:vFin,coupons:vCoupons,artists:vArtists}[VIEW]||vDash)()}</main>`;
-  wire()}
-function loginView(){return `<div class="login"><div class="card"><img src="assets/bcn-logo.webp" alt="BCN Comedy"><h2 style="font-size:1.5rem">${L("Painel do projeto","Project hub")}</h2>
-  <form id="lf"><input id="lk" type="password" autocomplete="current-password" placeholder="${L("Senha","Password")}"><button class="btn btn-sun" style="width:100%">${L("Entrar","Log in")}</button><p class="err" id="le" hidden></p></form></div></div>`}
-function wireLogin(){document.getElementById("lf").onsubmit=async e=>{e.preventDefault();const b=e.target.querySelector("button");KEY=document.getElementById("lk").value.trim();b.disabled=true;b.textContent="...";
-  try{await load();try{localStorage.setItem("bcn-admin-key",KEY)}catch(_){}render()}catch(err){KEY="";const le=document.getElementById("le");le.hidden=false;le.textContent=err.message==="auth"?L("Senha incorreta","Wrong password"):L("Sem conexão","Connection error");b.disabled=false;b.textContent=L("Entrar","Log in")}}}
-
-function taskRow(t,showName){
-  const s=S.shows.find(x=>String(x.id)===String(t.showId));const late=!t.done&&t.due<today();
-  return `<div class="item ${t.done?"done":""} ${late?"overdue":""}"><input type="checkbox" class="chk" data-task="${esc(t.id)}" ${t.done?"checked":""} aria-label="done">
-   <div><div class="t">${esc(t.title)}</div><div class="meta"><span class="chip c-${t.sector}">${sec(t.sector)}</span><span class="${late?"late":""} tnum">${fdate(t.due)}</span>${s&&showName!==false?`<span>· ${fdate(s.date,{day:"numeric",month:"short"})} LASC</span>`:""}</div></div>
-   <div style="display:flex;gap:6px;align-items:center"><select class="mini" data-owner="${esc(t.id)}"><option value="">${L("Quem?","Who?")}</option>${PARTNERS.map(p=>`<option ${t.owner===p?"selected":""}>${p}</option>`).join("")}</select>${t.custom?`<button class="ico" data-edit-task="${esc(t.id)}" title="Edit">&#9998;</button>`:""}</div></div>`}
-
-function vDash(){
-  const T=today(),up=shows().filter(s=>s.date>=T&&s.status!=="cancelled"),nx=up[0],tasks=allTasks(),f=finance();
-  const late=tasks.filter(t=>!t.done&&t.due<T),week=tasks.filter(t=>!t.done&&t.due>=T&&t.due<=addDays(T,7));
-  const nxT=nx?tasks.filter(t=>t.showId===nx.id):[],nxDone=nxT.filter(t=>t.done).length,nxL=nx?lineupOf(nx.id).filter(booked).length:0;
-  const debt=f.P.Max.bal>0.005?L(`Patrick deve ${eur(f.P.Max.bal)} ao Max`,`Patrick owes Max ${eur(f.P.Max.bal)}`):f.P.Patrick.bal>0.005?L(`Max deve ${eur(f.P.Patrick.bal)} ao Patrick`,`Max owes Patrick ${eur(f.P.Patrick.bal)}`):L("Contas zeradas","All square");
-  return `<div class="head"><div><h2>${L("Painel","Overview")}</h2><p>${L("Tudo o que precisa acontecer para cada show, num lugar só.","Everything each show needs, in one place.")}</p></div></div>
-  <div class="grid g4">
-   <div class="card kpi"><div class="l">${L("Próximo show","Next show")}</div><div class="v">${nx?fdate(nx.date,{day:"numeric",month:"short"}):"-"}</div><div class="s">${nx?`Lineup ${nxL}/3 · ${nxDone}/${nxT.length} ${L("tarefas","tasks")}`:""}</div></div>
-   <div class="card kpi"><div class="l">${L("Atrasadas","Overdue")}</div><div class="v ${late.length?"neg":"pos"}">${late.length}</div><div class="s">${week.length} ${L("para os próximos 7 dias","due in the next 7 days")}</div></div>
-   <div class="card kpi"><div class="l">${L("Caixa LASC","LASC fund")}</div><div class="v">${eur(f.fund)}</div><div class="s">${L("Patrocínio a receber","Sponsor to receive")}: ${eur(f.pending)}</div></div>
-   <div class="card kpi"><div class="l">${L("Sócios","Partners")}</div><div class="v" style="font-size:1.15rem;line-height:1.25">${debt}</div><div class="s">${L("ver Financeiro","see Finance")}</div></div>
-  </div>
-  <div class="grid g2" style="margin-top:12px">
-   <div class="card"><h3>${L("Atrasadas","Overdue")}</h3><div class="list">${late.length?late.map(t=>taskRow(t)).join(""):`<div class="empty">${L("Nada atrasado","Nothing overdue")}</div>`}</div></div>
-   <div class="card"><h3>${L("Próximos 7 dias","Next 7 days")}</h3><div class="list">${week.length?week.map(t=>taskRow(t)).join(""):`<div class="empty">${L("Nada para esta semana","Nothing this week")}</div>`}</div></div>
-  </div>`}
-
-function vPlan(){
-  let tasks=allTasks();if(F.sector)tasks=tasks.filter(t=>t.sector===F.sector);if(F.owner)tasks=tasks.filter(t=>F.owner==="-"?!t.owner:t.owner===F.owner);if(!F.done)tasks=tasks.filter(t=>!t.done);
-  const groups={};tasks.forEach(t=>{const d=pd(t.due);const m=new Date(d);m.setDate(d.getDate()-((d.getDay()+6)%7));const k=ymd(m);(groups[k]=groups[k]||[]).push(t)});
-  return `<div class="head"><div><h2>${L("Cronograma","Timeline")}</h2><p>${L("Lineup, ingressos, patrocínio, Instagram e financeiro de todos os shows numa linha do tempo. Cada show novo já cria o checklist padrão.","Line-up, tickets, sponsor, Instagram and finance for every show on one timeline. Each new show creates the standard checklist.")}</p></div><button class="btn btn-sun" data-new-task>+ ${L("Tarefa","Task")}</button></div>
-  <div class="filters"><select data-f="sector"><option value="">${L("Todos os setores","All sectors")}</option>${Object.keys(SECTORS).map(k=>`<option value="${k}" ${F.sector===k?"selected":""}>${sec(k)}</option>`).join("")}</select>
-   <select data-f="owner"><option value="">${L("Todos","Everyone")}</option>${PARTNERS.map(p=>`<option ${F.owner===p?"selected":""}>${p}</option>`).join("")}<option value="-" ${F.owner==="-"?"selected":""}>${L("Sem responsável","Unassigned")}</option></select>
-   <label><input type="checkbox" data-f="done" ${F.done?"checked":""}> ${L("Mostrar concluídas","Show done")}</label></div>
-  ${Object.keys(groups).length?Object.keys(groups).sort().map(k=>`<div class="wk">${L("Semana de","Week of")} ${fdate(k,{day:"numeric",month:"long"})}</div><div class="list">${groups[k].map(t=>taskRow(t)).join("")}</div>`).join(""):`<div class="empty">${L("Nenhuma tarefa","No tasks")}</div>`}`}
-
-function vShows(){
-  const T=today(),list=shows();
-  return `<div class="head"><div><h2>Shows</h2><p>${L("Lineup, checklist e bilheteria de cada data. Clique num show para abrir.","Line-up, checklist and box office for each date. Click a show to open it.")}</p></div><button class="btn btn-sun" data-new="shows">+ Show</button></div>
-  <div class="list">${list.length?list.slice().sort((a,b)=>{const pa=a.date<T,pb=b.date<T;return pa!==pb?(pa?1:-1):(pa?String(b.date).localeCompare(a.date):String(a.date).localeCompare(b.date))}).map(showCard).join(""):`<div class="empty">${L("Nenhum show","No shows")}</div>`}</div>`}
-function showCard(s){
-  const T=today(),past=s.date<T,ts=allTasks().filter(t=>t.showId===s.id),dn=ts.filter(t=>t.done).length,lu=lineupOf(s.id),conf=lu.filter(booked).length,open=OPEN[s.id];
-  const d=pd(s.date);
-  const st={planned:L("Planejado","Planned"),onsale:L("À venda","On sale"),done:L("Realizado","Done"),cancelled:L("Cancelado","Cancelled")}[s.status||"planned"]||s.status;
-  return `<div class="show ${past?"past":""}"><div class="show-h" data-toggle="${esc(s.id)}">
-   <div class="dbox"><div><span>${fdate(s.date,{weekday:"short"})}</span><br><b>${d.getDate()}</b><br><span>${fdate(s.date,{month:"short"})}</span></div></div>
-   <div><div style="font-weight:800">${esc(showTitle(s))}</div><div class="meta muted" style="font-size:.85rem;display:flex;gap:8px;flex-wrap:wrap;margin-top:2px"><span class="chip">${st}</span><span>Lineup ${conf}/3</span><span>${dn}/${ts.length} ${L("tarefas","tasks")}</span>${past||income(s)?`<span>${L("Resultado","Net")}: <b style="color:var(--sun)">${eur(net(s))}</b></span>`:""}</div><div class="bar"><i style="width:${ts.length?Math.round(dn/ts.length*100):0}%"></i></div></div>
-   <span class="muted">${open?"&#9650;":"&#9660;"}</span></div>
-  ${open?`<div class="show-b">
-    <div><div class="wk" style="margin-top:0">Lineup</div><div class="slots">${[0,1,2].map(i=>{const l=lu[i];return l?`<div class="slot f" data-edit="lineup" data-id="${esc(l.id)}"><div class="n">${esc(l.artist)}</div><div class="r">${esc(l.spot||"Guest")} · ${eur(num(l.fee))} · ${esc(l.payment||L("a confirmar","to confirm"))}</div></div>`:`<div class="slot" data-add-lineup="${esc(s.date)}"><div class="dim">+ ${L("Convidado","Guest")} ${i+1}</div></div>`}).join("")}</div>
-     ${lu.length>=3?`<button class="btn btn-line btn-sm" style="margin-top:8px" data-add-lineup="${esc(s.date)}">+ ${L("Mais um","Add one")}</button>`:""}${lu.slice(3).map(l=>`<div class="item" style="margin-top:6px;cursor:pointer" data-edit="lineup" data-id="${esc(l.id)}"><span></span><div>${esc(l.artist)} <span class="dim">· ${esc(l.spot)} · ${esc(l.payment)}</span></div><span>${eur(num(l.fee))}</span></div>`).join("")}
-     <p class="dim" style="font-size:.8rem;margin:8px 0 0">${L("Status do comediante: To book (a convidar) → Confirmed → Paid. Com 3 confirmados, a tarefa do lineup marca sozinha.","Comedian status: To book → Confirmed → Paid. With 3 confirmed the line-up task ticks itself.")}</p></div>
-    <div><div class="wk" style="margin-top:0">Checklist</div><div class="list">${ts.map(t=>taskRow(t,false)).join("")}</div></div>
-    <div class="grid g4">
-     <div class="card kpi"><div class="l">${L("Bilheteria","Box office")}</div><div class="v" style="font-size:1.4rem">${eur(income(s))}</div><div class="s">${L("Dinheiro","Cash")} ${num(s.cashTickets)} · Bizum ${num(s.bizumTickets)} · Eventbrite ${num(s.ebTickets)}</div></div>
-     <div class="card kpi"><div class="l">Chandrío</div><div class="v" style="font-size:1.4rem">${eur(num(s.sponsor))}</div><div class="s">${yes(s.sponsorPaid)?L("recebido","received"):L("a receber","to receive")}</div></div>
-     <div class="card kpi"><div class="l">${L("Cachês","Fees")}</div><div class="v neg" style="font-size:1.4rem">${eur(fees(s))}</div><div class="s">${num(s.headliners)}x ${eur(num(s.headlinerFee))} + ${num(s.guests)}x ${eur(num(s.guestFee))} · ${L("dinheiro com","cash held by")}: ${esc(s.heldBy||"-")}</div></div>
-     <div class="card kpi"><div class="l">${L("Resultado","Net")}</div><div class="v" style="font-size:1.4rem">${eur(net(s))}</div><div class="s">${L("caixa 20%","20% fund")}: ${eur(Math.max(net(s),0)*FUND_PCT)}</div></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sun btn-sm" data-edit="shows" data-id="${esc(s.id)}">${L("Editar show e bilheteria","Edit show & box office")}</button>${s.ebUrl?`<a class="btn btn-line btn-sm" href="${esc(s.ebUrl)}" target="_blank" rel="noopener">Eventbrite</a>`:""}<button class="btn btn-line btn-sm" data-new-post="${esc(s.id)}">+ ${L("Post do Instagram","Instagram post")}</button></div>
-  </div>`:""}</div>`}
-
-function vIG(){
-  const T=today(),items=[];
-  allTasks().filter(t=>t.sector==="instagram").forEach(t=>items.push({kind:"task",date:t.due,t}));
-  S.instagram.forEach(p=>items.push({kind:"post",date:p.date,p}));
-  items.sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-  const up=items.filter(i=>i.date>=addDays(T,-7)&&!(i.kind==="task"&&i.t.done&&i.date<T));
-  const pub=S.instagram.filter(p=>/publish/i.test(p.status));
-  return `<div class="head"><div><h2>Instagram</h2><p>${L("Cronograma de conteúdo: posts do checklist de cada show + posts extras. Lance as métricas depois de publicar.","Content calendar: checklist posts for each show + extra posts. Log metrics after publishing.")}</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sun" data-new="instagram">+ Post</button><button class="btn btn-line" data-new="igstats">+ ${L("Números da conta","Account stats")}</button></div></div>
-  <div class="list">${up.length?up.map(i=>i.kind==="task"?taskRow(i.t):postRow(i.p)).join(""):`<div class="empty">${L("Nada programado","Nothing scheduled")}</div>`}</div>
-  <div class="wk">${L("Publicados e métricas","Published and metrics")}</div>
-  ${pub.length?`<div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>${L("Tipo","Type")}</th><th>${L("Título","Title")}</th><th class="r">${L("Alcance","Reach")}</th><th class="r">Likes</th><th class="r">${L("Salvos","Saves")}</th><th class="r">${L("Envios","Shares")}</th></tr></thead><tbody>${pub.sort((a,b)=>String(b.date).localeCompare(a.date)).map(p=>`<tr data-edit="instagram" data-id="${esc(p.id)}"><td>${fdate(p.date)}</td><td>${esc(p.format)}</td><td>${esc(p.title)}</td><td class="r">${num(p.reach)}</td><td class="r">${num(p.likes)}</td><td class="r">${num(p.saves)}</td><td class="r">${num(p.shares)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Nenhum post publicado lançado ainda","No published posts logged yet")}</div>`}
-  <div class="wk">${L("Números da conta","Account stats")}</div>
-  ${S.igstats.length?`<div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th class="r">${L("Seguidores","Followers")}</th><th class="r">${L("Alcance","Reach")}</th><th class="r">${L("Visitas ao perfil","Profile visits")}</th><th>${L("Notas","Notes")}</th></tr></thead><tbody>${S.igstats.slice().sort((a,b)=>String(b.date).localeCompare(a.date)).map(x=>`<tr data-edit="igstats" data-id="${esc(x.id)}"><td>${fdate(x.date)}</td><td class="r">${num(x.followers)}</td><td class="r">${num(x.reach)}</td><td class="r">${num(x.profileVisits)}</td><td>${esc(x.notes)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Lance os números do Instagram uma vez por semana para acompanhar o crescimento","Log Instagram numbers weekly to track growth")}</div>`}`}
-function postRow(p){const st={idea:L("Ideia","Idea"),draft:L("Rascunho","Draft"),scheduled:L("Agendado","Scheduled"),published:L("Publicado","Published")}[p.status||"idea"]||p.status;
-  return `<div class="item ${/publish/i.test(p.status)?"done":""}" data-edit="instagram" data-id="${esc(p.id)}" style="cursor:pointer"><span class="chip c-instagram">${esc(p.format||"Post")}</span><div><div class="t">${esc(p.title||"(sem título)")}</div><div class="meta"><span class="tnum">${fdate(p.date)}</span><span class="chip">${st}</span>${p.time?`<span>${esc(p.time)}</span>`:""}${p.pillar?`<span>· ${esc(p.pillar)}</span>`:""}${p.owner?`<span>· ${esc(p.owner)}</span>`:""}</div></div><span class="dim">&#9998;</span></div>`}
-
-function vFin(){
-  const f=finance(),list=shows().filter(s=>s.date<=today()||income(s));
-  const debt=f.P.Max.bal>0.005?L(`<b>Patrick</b> deve <b>${eur(f.P.Max.bal)}</b> ao <b>Max</b>`,`<b>Patrick</b> owes <b>Max ${eur(f.P.Max.bal)}</b>`):f.P.Patrick.bal>0.005?L(`<b>Max</b> deve <b>${eur(f.P.Patrick.bal)}</b> ao <b>Patrick</b>`,`<b>Max</b> owes <b>Patrick ${eur(f.P.Patrick.bal)}</b>`):L("Contas entre os sócios zeradas","Partners are all square");
-  return `<div class="head"><div><h2>${L("Financeiro","Finance")}</h2><p>${L("Bilheteria por show, gastos, caixa do LASC e acerto entre os sócios (50/50).","Box office per show, expenses, LASC fund and partner settlement (50/50).")}</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sun" data-new="expenses">+ ${L("Gasto","Expense")}</button><button class="btn btn-line" data-new="payments">+ ${L("Transferência","Transfer")}</button></div></div>
-  <div class="grid g4">
-   <div class="card kpi"><div class="l">${L("Receitas recebidas","Income received")}</div><div class="v">${eur(f.totIncome)}</div><div class="s">${L("a receber do Chandrío","Chandrío to receive")}: ${eur(f.pending)}</div></div>
-   <div class="card kpi"><div class="l">${L("Cachês","Artist fees")}</div><div class="v neg">${eur(f.totFees)}</div></div>
-   <div class="card kpi"><div class="l">${L("Gastos","Expenses")}</div><div class="v neg">${eur(f.totExp)}</div></div>
-   <div class="card kpi"><div class="l">${L("Caixa LASC","LASC fund")}</div><div class="v">${eur(f.fund)}</div></div>
-  </div>
-  <div class="card" style="margin-top:12px"><h3>${L("Acerto entre sócios","Partner settlement")}</h3><p class="bal">${debt}</p>
-   <p class="muted" style="font-size:.88rem">${PARTNERS.map(p=>`${p}: ${L("pagou","paid")} ${eur(f.P[p].paid)} · ${L("ficou com itens de","keeps items worth")} ${eur(f.P[p].kept)} · ${L("está com","holds")} ${eur(f.P[p].held)} ${L("dos shows","from shows")}`).join("<br>")}<br>${L("Gastos divididos","Shared expenses")}: ${eur(f.shared)}. ${L("Ao fazer o acerto, lance uma Transferência.","When you settle up, log a Transfer.")}</p></div>
-  <div class="wk">${L("Resultado por show","Result per show")}</div>
-  <div class="tw"><table><thead><tr><th>Show</th><th class="r">${L("Ingressos","Tickets")}</th><th class="r">${L("Bilheteria","Box office")}</th><th class="r">Chandrío</th><th class="r">${L("Cachês","Fees")}</th><th class="r">${L("Resultado","Net")}</th><th>${L("Com quem","Held by")}</th></tr></thead>
-   <tbody>${list.map(s=>`<tr data-edit="shows" data-id="${esc(s.id)}"><td>${fdate(s.date,{day:"numeric",month:"short",year:"2-digit"})}</td><td class="r">${num(s.cashTickets)+num(s.bizumTickets)+num(s.ebTickets)}${num(s.freeTickets)?` <span class="dim">+${num(s.freeTickets)}</span>`:""}</td><td class="r">${eur(income(s))}</td><td class="r">${eur(num(s.sponsor))}${yes(s.sponsorPaid)?"":` <span class="late">*</span>`}</td><td class="r">${eur(fees(s))}</td><td class="r"><b>${eur(net(s))}</b></td><td>${esc(s.heldBy||"-")}</td></tr>`).join("")}</tbody>
-   <tfoot><tr><td colspan="5">Total</td><td class="r">${eur(list.reduce((a,s)=>a+net(s),0))}</td><td></td></tr></tfoot></table></div>
-  <p class="dim" style="font-size:.8rem;margin-top:6px">* ${L("patrocínio ainda não recebido (fica fora do resultado até ser marcado como recebido)","sponsorship not received yet (kept out of the net until marked received)")}</p>
-  <div class="wk">${L("Gastos","Expenses")}</div>
-  <div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>Item</th><th class="r">${L("Valor","Amount")}</th><th>${L("Pago por","Paid by")}</th><th>${L("Fica com","Kept by")}</th></tr></thead><tbody>${S.expenses.slice().sort((a,b)=>String(b.date).localeCompare(a.date)).map(e=>`<tr data-edit="expenses" data-id="${esc(e.id)}"><td>${fdate(e.date,{day:"numeric",month:"short",year:"2-digit"})}</td><td>${esc(e.item)}</td><td class="r">${eur(num(e.amount))}</td><td>${esc(e.paidBy)}</td><td>${e.keeper&&e.keeper!=="Shared"?esc(e.keeper):L("Dividido","Shared")}</td></tr>`).join("")}</tbody><tfoot><tr><td colspan="2">Total</td><td class="r">${eur(f.totExp)}</td><td colspan="2"></td></tr></tfoot></table></div>
-  <div class="wk">${L("Transferências","Transfers")}</div>
-  ${S.payments.length?`<div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>${L("De","From")}</th><th>${L("Para","To")}</th><th class="r">${L("Valor","Amount")}</th><th>${L("Nota","Note")}</th></tr></thead><tbody>${S.payments.map(t=>`<tr data-edit="payments" data-id="${esc(t.id)}"><td>${fdate(t.date)}</td><td>${esc(t.from)}</td><td>${esc(t.to)}</td><td class="r">${eur(num(t.amount))}</td><td>${esc(t.notes)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Nenhuma transferência lançada","No transfers logged")}</div>`}`}
-
-function vCoupons(){
-  const act=c=>/active|ativo/i.test(String(c.status));
-  return `<div class="head"><div><h2>${L("Cupons","Coupons")}</h2><p>${L("Códigos de desconto do Eventbrite. O BCNCOMEDY25 é o que o site entrega para quem se inscreve na lista.","Eventbrite discount codes. BCNCOMEDY25 is the one the website gives to list signups.")}</p></div><button class="btn btn-sun" data-new="coupons">+ ${L("Cupom","Coupon")}</button></div>
-  <div class="tw"><table><thead><tr><th>${L("Código","Code")}</th><th class="r">%</th><th>${L("Shows","Shows")}</th><th class="r">${L("Usos","Uses")}</th><th>Status</th><th>${L("Notas","Notes")}</th></tr></thead><tbody>${S.coupons.slice().sort((a,b)=>(act(b)-act(a))||String(a.code).localeCompare(b.code)).map(c=>`<tr data-edit="coupons" data-id="${esc(c.id)}"><td><b>${esc(c.code)}</b></td><td class="r">${num(c.percent)}%</td><td>${esc(c.scope)}</td><td class="r">${num(c.uses)}${c.limit?" / "+esc(c.limit):""}</td><td>${act(c)?`<span class="chip c-finance">${L("Ativo","Active")}</span>`:/review/i.test(c.status)?`<span class="chip c-tickets">${L("Revisar","Review")}</span>`:`<span class="chip">${L("Inativo","Inactive")}</span>`}</td><td class="muted">${esc(c.notes)}</td></tr>`).join("")}</tbody></table></div>
-  <p class="dim" style="font-size:.82rem;margin-top:8px">${L("Os cupons são criados em cada evento do Eventbrite (Ingressos > Promoções). Ao duplicar um evento, os códigos vão junto. Atualize os usos aqui depois de cada show.","Coupons live in each Eventbrite event (Tickets > Promotions). Duplicating an event copies them. Update uses here after each show.")}</p>
-  <div class="wk">${L("Quem recebeu o BCNCOMEDY25 pelo site","Who got BCNCOMEDY25 from the website")} (${S.signups.length})</div>
-  ${S.signups.length?`<button class="btn btn-line btn-sm" data-copy-emails style="margin-bottom:8px">${L("Copiar todos os e-mails","Copy all emails")}</button><div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>${L("Nome","Name")}</th><th>E-mail</th><th>${L("Idioma","Language")}</th></tr></thead><tbody>${S.signups.slice().reverse().map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.name)}</td><td>${esc(x.email)}</td><td>${esc(x.lang)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Ninguém se inscreveu ainda","No signups yet")}</div>`}`}
-
-function vArtists(){
-  const by={};S.lineup.forEach(l=>{const k=String(l.artist||"").trim();if(!k)return;const o=by[k.toLowerCase()]=by[k.toLowerCase()]||{name:k,spot:l.spot,contact:l.contact,shows:[],pool:null};if(l.date)o.shows.push(l.date);else o.pool=l;if(l.contact)o.contact=l.contact});
-  const list=Object.values(by).sort((a,b)=>a.name.localeCompare(b.name));
-  return `<div class="head"><div><h2>${L("Comediantes","Comedians")}</h2><p>${L("Banco de comediantes para montar os lineups. Quem está sem data fica na lista de convidáveis.","Comedian roster for line-ups. Anyone without a date stays in the pool.")}</p></div><button class="btn btn-sun" data-new="artist">+ ${L("Comediante","Comedian")}</button></div>
-  <div class="tw"><table><thead><tr><th>${L("Nome","Name")}</th><th>${L("Papel","Spot")}</th><th>${L("Contato","Contact")}</th><th>${L("Shows","Shows")}</th></tr></thead><tbody>${list.map(a=>`<tr ${a.pool?`data-edit="lineup" data-id="${esc(a.pool.id)}"`:""}><td><b>${esc(a.name)}</b></td><td>${esc(a.spot)}</td><td>${esc(a.contact)}</td><td>${a.shows.length?a.shows.sort().map(d=>fdate(d,{day:"numeric",month:"short"})).join(", "):`<span class="dim">${L("na lista","in pool")}</span>`}</td></tr>`).join("")}</tbody></table></div>`}
-
-/* ================= forms ================= */
-const OPT={status:[["planned","Planejado / Planned"],["onsale","À venda / On sale"],["done","Realizado / Done"],["cancelled","Cancelado / Cancelled"]],
- holder:[["",""],["Patrick","Patrick"],["Max","Max"],["Caixa","Caixa LASC"]],payer:[["Patrick","Patrick"],["Max","Max"],["Caixa","Caixa LASC"]],
- kept:[["Shared","Dividido / Shared"],["Max","Max"],["Patrick","Patrick"]],spot:[["Guest","Guest spot"],["Headliner","Headliner"],["MC","MC / host"]],
- pay:[["To book","To book (a convidar)"],["Confirmed","Confirmed (confirmado)"],["Paid","Paid (pago)"],["Declined","Declined (não pode)"]],
- yn:[["no","Não / No"],["yes","Sim / Yes"]],cat:[["Equipment","Equipment"],["Marketing","Marketing"],["Consumables","Consumables"],["Artists","Artists"],["Other","Other"]],
- cst:[["active","Ativo / Active"],["review","Revisar / Review"],["inactive","Inativo / Inactive"]],
- ptype:[["Post","Post"],["Reel","Reel"],["Carrossel","Carrossel"],["Story","Story"]],pstatus:[["idea","Ideia / Idea"],["draft","Rascunho / Draft"],["scheduled","Agendado / Scheduled"],["published","Publicado / Published"]],
- pillar:[["",""],["Show date","Data do show"],["Line-up","Lineup"],["Clip","Clipe do show"],["Behind the scenes","Bastidores"],["Sketch","Esquete / vídeo"],["Other","Outro"]],
- owner:[["",""],["Patrick","Patrick"],["Max","Max"]],sector:Object.keys(SECTORS).map(k=>[k,SECTORS[k][0]+" / "+SECTORS[k][1]])};
-const SCHEMA={
- shows:[["date","Data / Date","date"],["time","Hora / Time","text"],["status","Status","select",OPT.status],["title","Título / Title","text"],["ebUrl","Link Eventbrite","text","full"],
-  ["freeTickets","Ingressos grátis / Free","number"],["cashTickets","Dinheiro: ingressos","number"],["cashPrice","Dinheiro: preço €","number"],["bizumTickets","Bizum: ingressos","number"],["bizumPrice","Bizum: preço €","number"],
-  ["ebTickets","Eventbrite: ingressos","number"],["ebNet","Eventbrite: líquido €","number"],["sponsor","Chandrío €","number"],["sponsorPaid","Chandrío recebido / received","select",OPT.yn],
-  ["headliners","Nº headliners","number"],["headlinerFee","Cachê headliner €","number"],["guests","Nº guest spots","number"],["guestFee","Cachê guest €","number"],
-  ["heldBy","Dinheiro está com / Cash held by","select",OPT.holder],["notes","Notas / Notes","textarea","full"]],
- lineup:[["artist","Comediante / Comedian","artist","full"],["date","Show","showdate"],["spot","Papel / Spot","select",OPT.spot],["fee","Cachê / Fee €","number"],["payment","Status","select",OPT.pay],["contact","Contato / Contact","text","full"],["notes","Notas / Notes","textarea","full"]],
- expenses:[["date","Data / Date","date"],["amount","Valor / Amount €","number"],["item","Item","text","full"],["paidBy","Pago por / Paid by","select",OPT.payer],["keeper","Fica com / Kept by","select",OPT.kept],["category","Categoria / Category","select",OPT.cat],["notes","Notas / Notes","textarea","full"]],
- payments:[["date","Data / Date","date"],["amount","Valor / Amount €","number"],["from","De / From","select",OPT.payer],["to","Para / To","select",OPT.payer],["notes","Nota / Note","text","full"]],
- coupons:[["code","Código / Code","text"],["percent","Desconto %","number"],["scope","Shows","text","full"],["uses","Usos / Uses","number"],["limit","Limite / Limit","text"],["status","Status","select",OPT.cst],["notes","Notas / Notes","textarea","full"]],
- instagram:[["date","Data / Date","date"],["time","Hora / Time","text"],["format","Formato / Format","select",OPT.ptype],["pillar","Tema / Pillar","select",OPT.pillar],["title","Título / Title","text","full"],["owner","Quem / Who","select",OPT.owner],["status","Status","select",OPT.pstatus],["caption","Legenda / Caption","textarea","full"],["link","Link","text","full"],
-  ["reach","Alcance / Reach","number"],["likes","Likes","number"],["saves","Salvos / Saves","number"],["shares","Envios / Shares","number"],["notes","Notas / Notes","textarea","full"]],
- igstats:[["date","Data / Date","date"],["followers","Seguidores / Followers","number"],["reach","Alcance 7 dias / Reach","number"],["profileVisits","Visitas ao perfil","number"],["notes","Notas / Notes","text","full"]],
- tasks:[["title","Tarefa / Task","text","full"],["due","Prazo / Due","date"],["sector","Setor / Sector","select",OPT.sector],["owner","Quem / Who","select",OPT.owner],["showId","Show","show"],["notes","Notas / Notes","textarea","full"]]
-};
-const TITLES=t=>({shows:"Show",lineup:"Lineup",expenses:L("Gasto","Expense"),payments:L("Transferência","Transfer"),coupons:L("Cupom","Coupon"),instagram:"Post",igstats:L("Números do Instagram","Instagram stats"),tasks:L("Tarefa","Task")})[t];
-function field([k,label,type,a,b],v){
-  const full=(a==="full"||b==="full")?"full":"";const opts=Array.isArray(a)?a:null;
-  if(type==="bool")return `<label class="cb ${full}"><input type="checkbox" name="${k}" ${yes(v)?"checked":""}> ${label}</label>`;
-  if(type==="select")return `<label class="f ${full}">${label}<select name="${k}">${opts.map(([o,l])=>`<option value="${esc(o)}" ${String(v||"")===String(o)?"selected":""}>${esc(l)}</option>`).join("")}</select></label>`;
-  if(type==="textarea")return `<label class="f ${full}">${label}<textarea name="${k}">${esc(v)}</textarea></label>`;
-  if(type==="show")return `<label class="f ${full}">${label}<select name="${k}"><option value="">-</option>${shows().map(s=>`<option value="${esc(s.id)}" ${String(v)===String(s.id)?"selected":""}>${fdate(s.date,{day:"numeric",month:"short",year:"numeric"})}</option>`).join("")}</select></label>`;
-  if(type==="artist")return `<label class="f ${full}">${label}<input name="${k}" list="artists-dl" value="${esc(v)}" autocomplete="off"><datalist id="artists-dl">${[...new Set(S.lineup.map(a=>a.artist).filter(Boolean))].map(a=>`<option value="${esc(a)}">`).join("")}</datalist></label>`;
-  if(type==="showdate")return `<label class="f ${full}">${label}<select name="${k}"><option value="">${L("Sem data (lista)","No date (pool)")}</option>${shows().map(s=>`<option value="${esc(s.date)}" ${String(v)===String(s.date)?"selected":""}>${fdate(s.date,{day:"numeric",month:"short",year:"numeric"})}</option>`).join("")}</select></label>`;
-  return `<label class="f ${full}">${label}<input name="${k}" type="${type==="number"?"text":type}" ${type==="number"?'inputmode="decimal"':""} value="${esc(v)}"></label>`}
-function openForm(table,row,isNew){
-  const ov=document.createElement("div");ov.className="ov";
-  ov.innerHTML=`<form class="modal"><h3>${isNew?"+ ":""}${TITLES(table)}</h3><div class="fields">${SCHEMA[table].map(f=>field(f,row[f[0]])).join("")}</div>
-   <div class="mact"><div>${!isNew?`<button type="button" class="btn btn-red btn-sm" data-del>${L("Apagar","Delete")}</button>`:""}</div><div style="display:flex;gap:8px"><button type="button" class="btn btn-line" data-cancel>${L("Cancelar","Cancel")}</button><button class="btn btn-sun">${L("Salvar","Save")}</button></div></div></form>`;
-  document.body.appendChild(ov);
-  const close=()=>ov.remove();
-  ov.onclick=e=>{if(e.target===ov)close()};ov.querySelector("[data-cancel]").onclick=close;
-  const d=ov.querySelector("[data-del]");if(d)d.onclick=()=>{if(confirm(L("Apagar este item?","Delete this item?"))){del(table,row.id);close()}};
-  ov.querySelector("form").onsubmit=e=>{e.preventDefault();const o={...row};
-    SCHEMA[table].forEach(([k,,type])=>{const el=e.target.elements[k];if(!el)return;o[k]=type==="bool"?String(el.checked):type==="number"?String(num(el.value)):el.value.trim()});
-    if(table==="lineup"&&o.artist&&o.date){const pool=S.lineup.find(x=>!x.date&&String(x.artist).toLowerCase()===o.artist.toLowerCase());if(pool&&!o.contact)o.contact=pool.contact||""}
-    save(table,o);close()};
-  setTimeout(()=>{const i=ov.querySelector("input,select");i&&i.focus()},50)}
-
-/* ================= wiring ================= */
-function wire(){
-  const q=(s,f)=>document.querySelectorAll(s).forEach(f);
-  q("[data-view]",b=>b.onclick=()=>{VIEW=b.dataset.view;render();scrollTo(0,0)});
-  q("[data-lang]",b=>b.onclick=()=>{LANG=LANG==="en"?"pt":"en";try{localStorage.setItem("bcn-admin-lang",LANG)}catch(_){}render()});
-  q("[data-logout]",b=>b.onclick=()=>{KEY="";try{localStorage.removeItem("bcn-admin-key")}catch(_){}render()});
-  q("[data-reload]",b=>b.onclick=async()=>{try{await load();render();toast(L("Atualizado","Updated"))}catch(e){toast(e.message)}});
-  q("[data-task]",c=>c.onchange=e=>{e.stopPropagation();const id=c.dataset.task,t=allTasks().find(x=>x.id===id),cur=S.tasks.find(x=>x.id===id)||{};
-    save("tasks",{...cur,id,done:String(c.checked),doneAt:c.checked?today():"",custom:cur.custom||(t&&t.custom?"true":"")})});
-  q("[data-owner]",s=>s.onchange=()=>{const id=s.dataset.owner,cur=S.tasks.find(x=>x.id===id)||{id};save("tasks",{...cur,owner:s.value})});
-  q("[data-f]",el=>el.onchange=()=>{F[el.dataset.f]=el.type==="checkbox"?el.checked:el.value;render()});
-  q("[data-toggle]",h=>h.onclick=()=>{OPEN[h.dataset.toggle]=!OPEN[h.dataset.toggle];render()});
-  q("[data-edit]",el=>el.onclick=e=>{e.stopPropagation();const t=el.dataset.edit,row=S[t].find(x=>String(x.id)===String(el.dataset.id));if(row)openForm(t,row,false)});
-  q("[data-edit-task]",el=>el.onclick=()=>{const row=S.tasks.find(x=>x.id===el.dataset.editTask);if(row)openForm("tasks",row,false)});
-  q("[data-new]",b=>b.onclick=()=>{const t=b.dataset.new,base={id:uid(t.slice(0,2))};
-    if(t==="artist")return openForm("lineup",{id:uid("l"),date:"",spot:"Guest",fee:"5",payment:"To book"},true);
-    if(t==="shows")Object.assign(base,{time:"20:30",status:"planned",cashPrice:"5",bizumPrice:"5",sponsor:"40",sponsorPaid:"no",headliners:"0",headlinerFee:"15",guests:"3",guestFee:"5",heldBy:""});
-    if(t==="expenses")Object.assign(base,{date:today(),paidBy:"Patrick",keeper:"Shared",category:"Other"});
-    if(t==="payments")Object.assign(base,{date:today(),from:"Max",to:"Patrick"});
-    if(t==="instagram")Object.assign(base,{date:today(),format:"Post",status:"idea"});
-    if(t==="igstats")Object.assign(base,{date:today()});
-    if(t==="coupons")Object.assign(base,{status:"active",percent:"25",uses:"0"});
-    openForm(t,base,true)});
-  q("[data-copy-emails]",b=>b.onclick=()=>{const t=S.signups.map(x=>x.email).filter(Boolean).join(", ");navigator.clipboard&&navigator.clipboard.writeText(t).then(()=>toast(L("E-mails copiados","Emails copied"))).catch(()=>prompt("",t))});
-  q("[data-new-task]",b=>b.onclick=()=>openForm("tasks",{id:uid("t"),custom:"true",due:today(),sector:"other",done:"false"},true));
-  q("[data-new-post]",b=>b.onclick=()=>{const s=showById(b.dataset.newPost);openForm("instagram",{id:uid("ig"),date:s?addDays(s.date,-7):today(),format:"Post",status:"idea",pillar:"Show date",title:s?"LASC "+fdate(s.date,{day:"numeric",month:"short"}):""},true)});
-  q("[data-add-lineup]",b=>b.onclick=e=>{e.stopPropagation();openForm("lineup",{id:uid("l"),date:b.dataset.addLineup,spot:"Guest",fee:"5",payment:"To book"},true)});
+/* ---------------- derived ---------------- */
+const shows = () => S.shows.slice().sort((a, b) => a.date.localeCompare(b.date));
+const showById = id => S.shows.find(s => s.id === id);
+const tasksOf = id => S.tasks.filter(t => t.show_id === id).sort((a, b) => (a.due || "").localeCompare(b.due || ""));
+const lineupOf = id => S.lineup.filter(l => l.show_id === id);
+const booked = l => /confirm|paid|pago/i.test(l.payment || "");
+const income = s => num(s.cash_tickets) * num(s.cash_price) + num(s.bizum_tickets) * num(s.bizum_price) + num(s.eb_net);
+const fees = s => num(s.headliners) * num(s.headliner_fee) + num(s.guests) * num(s.guest_fee);
+const sponsorIn = s => s.sponsor_paid ? num(s.sponsor) : 0;
+const net = s => income(s) + sponsorIn(s) - fees(s);
+const tickets = s => num(s.eb_tickets) + num(s.cash_tickets) + num(s.bizum_tickets) + num(s.free_tickets);
+const template = () => (S.settings.find(x => x.key === "task_template") || {}).value || [];
+const nextShow = () => shows().find(s => s.date >= today() && s.status !== "cancelled");
+function progress(showId, sector) {
+  const ts = tasksOf(showId).filter(t => !sector || t.sector === sector);
+  return { done: ts.filter(t => t.done).length, total: ts.length };
+}
+function finance() {
+  const P = {}; PARTNERS.forEach(p => P[p] = { paid: 0, kept: 0, held: 0, out: 0, in: 0 });
+  let shared = 0, profit = 0;
+  S.expenses.forEach(e => { const a = num(e.amount); if (P[e.paid_by]) P[e.paid_by].paid += a; if (P[e.keeper]) P[e.keeper].kept += a; else shared += a; });
+  shows().forEach(s => { if (s.date > today() && !income(s)) return; const n = net(s); if (P[s.held_by]) { P[s.held_by].held += n; profit += n; } });
+  S.payments.forEach(t => { const a = num(t.amount); if (P[t.from_person]) P[t.from_person].out += a; if (P[t.to_person]) P[t.to_person].in += a; });
+  PARTNERS.forEach(p => { const x = P[p]; x.bal = x.paid - x.kept - shared * SHARE[p] + (profit * SHARE[p] - x.held) + x.out - x.in; });
+  const pending = shows().filter(s => s.date <= today() && s.status !== "cancelled").reduce((a, s) => a + (s.sponsor_paid ? 0 : num(s.sponsor)), 0);
+  const totIncome = shows().reduce((a, s) => a + income(s) + sponsorIn(s), 0), totFees = shows().reduce((a, s) => a + fees(s), 0), totExp = S.expenses.reduce((a, e) => a + num(e.amount), 0);
+  return { P, shared, profit, pending, totIncome, totFees, totExp };
 }
 
-/* ================= boot ================= */
-(async()=>{if(KEY){document.getElementById("app").innerHTML=`<div class="login"><p class="muted">${L("Carregando...","Loading...")}</p></div>`;try{await load()}catch(e){if(e.message==="auth"){KEY="";try{localStorage.removeItem("bcn-admin-key")}catch(_){}}}}render()})();
+/* ---------------- auth screens ---------------- */
+function authShell(inner) {
+  return `<div class="auth"><div class="card"><div class="brand"><i></i>BCN Comedy</div>${inner}</div></div>`;
+}
+function viewLogin(note) {
+  $("#app").innerHTML = authShell(`
+    <h1>${L("Entrar", "Sign in")}</h1>
+    <p class="muted small">${L("Painel de gestão interno", "Internal management hub")}</p>
+    <form id="f">
+      ${note ? `<div class="msg ${note.ok ? "ok" : "err"}">${esc(note.text)}</div>` : ""}
+      <label class="f"><span>E-mail</span><input type="email" name="email" autocomplete="username" required></label>
+      <label class="f"><span>${L("Senha", "Password")}</span><input type="password" name="password" autocomplete="current-password" required></label>
+      <button class="btn primary" style="justify-content:center">${L("Entrar", "Sign in")}</button>
+      <button type="button" class="btn ghost" id="forgot" style="justify-content:center">${L("Esqueci a senha", "Forgot password")}</button>
+    </form>
+    <div class="row" style="margin-top:14px;justify-content:center">${langBtn()}</div>`);
+  $("#f").onsubmit = async e => {
+    e.preventDefault(); const f = new FormData(e.target), b = e.target.querySelector(".primary"); b.disabled = true;
+    const { error } = await sb.auth.signInWithPassword({ email: f.get("email").trim(), password: f.get("password") });
+    if (error) { b.disabled = false; viewLogin({ text: /invalid/i.test(error.message) ? L("E-mail ou senha incorretos.", "Wrong e-mail or password.") : error.message }); }
+  };
+  $("#forgot").onclick = viewForgot; wireLang();
+}
+function viewForgot() {
+  $("#app").innerHTML = authShell(`
+    <h1>${L("Redefinir senha", "Reset password")}</h1>
+    <p class="muted small">${L("Enviamos um link para o seu e-mail.", "We will e-mail you a link.")}</p>
+    <form id="f">
+      <label class="f"><span>E-mail</span><input type="email" name="email" required></label>
+      <button class="btn primary" style="justify-content:center">${L("Enviar link", "Send link")}</button>
+      <button type="button" class="btn ghost" id="back" style="justify-content:center">${L("Voltar", "Back")}</button>
+    </form>`);
+  $("#back").onclick = () => viewLogin();
+  $("#f").onsubmit = async e => {
+    e.preventDefault(); const b = e.target.querySelector(".primary"); b.disabled = true;
+    const { error } = await sb.auth.resetPasswordForEmail(new FormData(e.target).get("email").trim(), { redirectTo: location.origin + "/admin" });
+    viewLogin(error ? { text: error.message } : { ok: true, text: L("Se o e-mail tiver conta, o link chega em instantes. Vale 1 hora.", "If the e-mail has an account, the link arrives shortly. It is valid for 1 hour.") });
+  };
+}
+function viewSetPassword(isInvite) {
+  $("#app").innerHTML = authShell(`
+    <h1>${isInvite ? L("Criar sua senha", "Create your password") : L("Nova senha", "New password")}</h1>
+    <p class="muted small">${esc(ME?.email || "")}</p>
+    <form id="f">
+      ${isInvite ? `<label class="f"><span>${L("Seu nome", "Your name")}</span><input type="text" name="name" value="${esc(PROFILE?.name || "")}" required></label>` : ""}
+      <label class="f"><span>${L("Senha (mínimo 10 caracteres)", "Password (at least 10 characters)")}</span><input type="password" name="p1" minlength="10" autocomplete="new-password" required></label>
+      <label class="f"><span>${L("Repita a senha", "Repeat password")}</span><input type="password" name="p2" minlength="10" autocomplete="new-password" required></label>
+      <div id="err"></div>
+      <button class="btn primary" style="justify-content:center">${L("Salvar e entrar", "Save and continue")}</button>
+    </form>`);
+  $("#f").onsubmit = async e => {
+    e.preventDefault(); const f = new FormData(e.target);
+    if (f.get("p1") !== f.get("p2")) { $("#err").innerHTML = `<div class="msg err">${L("As senhas não são iguais.", "Passwords do not match.")}</div>`; return; }
+    const b = e.target.querySelector(".primary"); b.disabled = true;
+    const { error } = await sb.auth.updateUser({ password: f.get("p1") });
+    if (error) { b.disabled = false; $("#err").innerHTML = `<div class="msg err">${esc(error.message)}</div>`; return; }
+    if (isInvite && f.get("name")) { await sb.from("profiles").update({ name: f.get("name").trim() }).eq("id", ME.id); }
+    AUTH_TYPE = null; history.replaceState(null, "", location.pathname); logAct(isInvite ? "password_created" : "password_reset");
+    await boot();
+  };
+}
+const langBtn = () => `<button class="btn ghost sm" data-lang>${LANG === "en" ? "PT" : "EN"}</button>`;
+function wireLang() { document.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => { LANG = LANG === "en" ? "pt" : "en"; localStorage.setItem("bcn-lang", LANG); PROFILE ? render() : viewLogin(); }); }
+
+/* ---------------- shell ---------------- */
+const NAV = [["home", "Início", "Home"], ["fin", "Financeiro", "Finance"], ["coupons", "Cupons e público", "Coupons & audience"], ["team", "Equipe", "Team"]];
+function themeIcon() { const t = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); return t === "dark" ? L("Claro", "Light") : L("Escuro", "Dark"); }
+function render() {
+  const main = { home: vHome, show: vShow, fin: vFin, coupons: vCoupons, team: vTeam }[R.view] || vHome;
+  $("#app").innerHTML = `
+  <header class="top"><div class="top-in">
+    <div class="brand"><i></i>BCN Comedy</div>
+    <nav class="nav">${NAV.map(([k, pt, en]) => `<button data-nav="${k}" class="${(R.view === k || (k === "home" && R.view === "show")) ? "on" : ""}">${L(pt, en)}</button>`).join("")}</nav>
+    <div class="grow"></div>
+    <span class="small muted hide-m">${esc(PROFILE?.name || ME?.email || "")}</span>
+    ${langBtn()}
+    <button class="btn ghost sm" id="theme">${themeIcon()}</button>
+    <button class="btn ghost sm" id="out">${L("Sair", "Sign out")}</button>
+  </div></header>
+  <main class="main">${main()}</main>`;
+  document.querySelectorAll("[data-nav]").forEach(b => b.onclick = () => go({ view: b.dataset.nav }));
+  $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+  $("#theme").onclick = () => { const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); const nx = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = nx; localStorage.setItem("bcn-theme", nx); render(); };
+  wireLang(); wireCommon();
+  ({ home: wireHome, show: wireShow, fin: wireFin, coupons: wireCoupons, team: wireTeam }[R.view] || (() => {}))();
+}
+function go(patch) { R = { ...R, ...patch }; if (patch.view && patch.view !== "show") R.showId = null; const h = R.view === "show" ? "#show/" + R.showId + "/" + R.tab : "#" + R.view; history.replaceState(null, "", h); render(); scrollTo(0, 0); }
+
+/* ---------------- shared bits ---------------- */
+function taskItem(t, opts = {}) {
+  const late = !t.done && t.due && t.due < today();
+  const s = t.show_id ? showById(t.show_id) : null;
+  const sub = [opts.showName && s ? fdate(s.date, { day: "numeric", month: "short" }) : "", opts.sector ? SECTOR_NAME(t.sector) : "", opts.due && t.due ? fdate(t.due) : "", t.owner || ""].filter(Boolean).join(" · ");
+  return `<div class="task ${t.done ? "done" : ""} ${late ? "late" : ""}">
+    <input type="checkbox" data-task="${esc(t.id)}" ${t.done ? "checked" : ""} aria-label="${esc(taskTitle(t))}">
+    <div class="grow"><span class="t-main"><span class="dot" style="background:${SECTOR_COLOR(t.sector)}"></span>${esc(taskTitle(t))}</span>${sub ? `<span class="t-sub">${esc(sub)}</span>` : ""}</div>
+    ${opts.edit ? `<button class="btn ghost sm" data-edit-task="${esc(t.id)}">${L("Editar", "Edit")}</button>` : ""}
+  </div>`;
+}
+function wireCommon() {
+  document.querySelectorAll("[data-task]").forEach(c => c.onchange = async () => {
+    const t = S.tasks.find(x => x.id === c.dataset.task); if (!t) return;
+    await save("tasks", { ...t, done: c.checked, done_at: c.checked ? new Date().toISOString() : null });
+    logAct(c.checked ? "task_done" : "task_reopened", { id: t.id, by: PROFILE?.name }); render();
+  });
+  document.querySelectorAll("[data-edit-task]").forEach(b => b.onclick = () => editTask(S.tasks.find(x => x.id === b.dataset.editTask)));
+}
+function modal(title, fields, row, onSave, extra) {
+  const ov = document.createElement("div"); ov.className = "ov";
+  ov.innerHTML = `<div class="card modal"><h2>${esc(title)}</h2><form id="mf">
+    <div class="grid2">${fields.map(f => field(f, row?.[f.k])).join("")}</div>
+    <div id="merr"></div>
+    <div class="acts">${extra ? `<button type="button" class="btn danger" id="mdel" style="margin-right:auto">${L("Excluir", "Delete")}</button>` : ""}<button type="button" class="btn" id="mcancel">${L("Cancelar", "Cancel")}</button><button class="btn primary">${L("Salvar", "Save")}</button></div>
+  </form></div>`;
+  document.body.appendChild(ov);
+  const close = () => ov.remove();
+  ov.onclick = e => { if (e.target === ov) close(); };
+  ov.querySelector("#mcancel").onclick = close;
+  if (extra) ov.querySelector("#mdel").onclick = async () => { if (confirm(L("Excluir este item?", "Delete this item?"))) { await extra(); close(); render(); } };
+  ov.querySelector("#mf").onsubmit = async e => {
+    e.preventDefault(); const fd = new FormData(e.target), out = { ...(row || {}) };
+    fields.forEach(f => { let v = fd.get(f.k); if (f.t === "check") v = fd.get(f.k) === "on"; else if (f.t === "number") v = v === "" ? null : num(v); else if (v === "") v = null; out[f.k] = v; });
+    const b = e.target.querySelector(".primary"); b.disabled = true;
+    try { await onSave(out); close(); render(); } catch (err) { b.disabled = false; ov.querySelector("#merr").innerHTML = `<div class="msg err">${esc(err.message || err)}</div>`; }
+  };
+  setTimeout(() => ov.querySelector("input,select,textarea")?.focus(), 30);
+}
+function field(f, v) {
+  const cls = f.full ? "full" : "";
+  if (f.t === "select") return `<label class="f ${cls}"><span>${esc(f.l)}</span><select name="${f.k}">${f.o.map(o => { const [val, lab] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(val)}" ${String(v ?? "") === String(val) ? "selected" : ""}>${esc(lab)}</option>`; }).join("")}</select></label>`;
+  if (f.t === "check") return `<label class="f ${cls}" style="display:flex;align-items:center;gap:8px;height:36px;margin-top:18px"><input type="checkbox" name="${f.k}" ${v ? "checked" : ""}> ${esc(f.l)}</label>`;
+  if (f.t === "area") return `<label class="f full"><span>${esc(f.l)}</span><textarea name="${f.k}">${esc(v)}</textarea></label>`;
+  return `<label class="f ${cls}"><span>${esc(f.l)}</span><input type="${f.t || "text"}" name="${f.k}" value="${esc(v)}" ${f.t === "number" ? 'step="any"' : ""} ${f.req ? "required" : ""}></label>`;
+}
+const OWNERS = () => [["", "—"], ...S.profiles.filter(p => p.active).map(p => [p.name, p.name])];
+function editTask(t) {
+  const isNew = !t;
+  modal(isNew ? L("Nova tarefa", "New task") : L("Editar tarefa", "Edit task"), [
+    { k: "title", l: L("Tarefa", "Task"), full: true, req: true },
+    { k: "due", l: L("Prazo", "Due"), t: "date" },
+    { k: "owner", l: L("Responsável", "Owner"), t: "select", o: OWNERS() },
+    { k: "sector", l: L("Setor", "Sector"), t: "select", o: [...SECTORS.map(s => [s[0], L(s[1], s[2])]), ["Patrocinio", L("Patrocínio", "Sponsor")]] },
+    { k: "done", l: L("Feita", "Done"), t: "check" },
+    { k: "notes", l: L("Notas", "Notes"), t: "area" },
+  ], t || { show_id: R.showId, sector: R.tab && SECTORS.some(s => s[0] === R.tab) ? R.tab : "Show", custom: true, due: today() },
+  async row => { if (isNew) row.id = (row.show_id || "x") + ":c" + uid(); row.done_at = row.done ? (row.done_at || new Date().toISOString()) : null; await save("tasks", row); },
+  isNew ? null : async () => del("tasks", t.id));
+}
+
+/* ---------------- home: timeline + week ---------------- */
+function showCard(s, isNext) {
+  const past = s.date < today();
+  const lu = lineupOf(s.id), bk = lu.filter(booked).length;
+  const rows = SECTORS.map(([k]) => { const p = progress(s.id, k); if (!p.total) return ""; const pct = Math.round(p.done / p.total * 100); return `<div class="sc-row"><span>${SECTOR_NAME(k)}</span><div class="bar ${pct === 100 ? "done" : ""}"><i style="width:${pct}%"></i></div><em>${p.done}/${p.total}</em></div>`; }).join("");
+  const late = tasksOf(s.id).filter(t => !t.done && t.due && t.due < today()).length;
+  const d = daysTo(s.date);
+  return `<div class="card sc ${isNext ? "next" : ""} ${past ? "past" : ""}" data-open="${s.id}" ${isNext ? 'id="nextcard"' : ""}>
+    <div><div class="sc-date"><b>${fdate(s.date, { day: "numeric", month: "short" })}</b><span class="muted small">${fdate(s.date, { weekday: "long" })} · ${esc(s.time || "")}</span></div>
+    <div class="sc-title">${esc(s.title)}</div></div>
+    <div class="sc-rows">${rows}</div>
+    <div class="sc-foot">
+      ${s.status === "cancelled" ? `<span class="chip bad">${L("Cancelado", "Cancelled")}</span>` : past ? `<span class="chip">${L("Realizado", "Done")}</span>` : d === 0 ? `<span class="chip warn">${L("Hoje", "Tonight")}</span>` : `<span class="chip">${L("em", "in")} ${d} ${L("dias", "days")}</span>`}
+      <span class="chip ${bk >= 3 ? "ok" : ""}">${L("Lineup", "Lineup")} ${bk}/3</span>
+      ${tickets(s) ? `<span class="chip">${tickets(s)} ${L("ingressos", "tickets")}</span>` : ""}
+      ${late ? `<span class="chip bad">${late} ${L("atrasada", "late")}${late > 1 ? "s" : ""}</span>` : ""}
+    </div>
+  </div>`;
+}
+function weekStart(d) { const x = pd(d || today()); const wd = (x.getDay() + 6) % 7; x.setDate(x.getDate() - wd); return ymd(x); }
+function vHome() {
+  const list = shows(), nx = nextShow();
+  let html = "", placed = false;
+  list.forEach(s => { if (!placed && s.date >= today()) { html += `<div class="tl-today"><span>${L("hoje", "today")}</span></div>`; placed = true; } html += showCard(s, nx && s.id === nx.id); });
+  if (!placed) html += `<div class="tl-today"><span>${L("hoje", "today")}</span></div>`;
+  html += `<button class="tl-add" id="addshow">+ ${L("Novo show", "New show")}</button>`;
+  const ws = R.weekStart || weekStart();
+  const days = Array.from({ length: 7 }, (_, i) => addDays(ws, i));
+  const mine = t => !R.mine || !t.owner || t.owner === PROFILE?.name;
+  const late = S.tasks.filter(t => !t.done && t.due && t.due < today() && t.due < ws && mine(t)).sort((a, b) => a.due.localeCompare(b.due));
+  const dayCol = d => { const ts = S.tasks.filter(t => t.due === d && mine(t)).sort((a, b) => (a.done - b.done)); return `<div class="day ${d === today() ? "today" : ""}"><div class="day-h"><span>${fdate(d, { weekday: "short", day: "numeric" })}</span><span class="faint">${ts.filter(t => !t.done).length || ""}</span></div><div class="day-b">${ts.map(t => taskItem(t, { showName: true, sector: true })).join("") || `<div class="empty">—</div>`}</div></div>`; };
+  return `
+  <div class="row wrap"><h1 class="grow">${L("Linha do tempo", "Timeline")}</h1><span class="muted small hide-m">${L("Clique num show para abrir os setores", "Click a show to open its sectors")}</span></div>
+  <div class="tl" id="tl">${html}</div>
+  <div class="sec">
+    <div class="sec-h wrap"><h2>${L("Semana", "Week")}</h2><span class="muted small">${fdate(ws, { day: "numeric", month: "short" })} – ${fdate(addDays(ws, 6), { day: "numeric", month: "short" })}</span>
+      <div class="grow"></div>
+      <label class="small row"><input type="checkbox" id="mine" ${R.mine ? "checked" : ""}> ${L("Só as minhas", "Only mine")}</label>
+      <button class="btn sm" id="wprev">←</button><button class="btn sm" id="wnow">${L("Esta semana", "This week")}</button><button class="btn sm" id="wnext">→</button>
+      <button class="btn sm" id="addtask">+ ${L("Tarefa", "Task")}</button></div>
+    ${late.length ? `<div class="card pad" style="margin-bottom:10px"><h3 style="color:var(--danger);margin-bottom:8px">${L("Atrasadas", "Overdue")} (${late.length})</h3><div class="list">${late.map(t => taskItem(t, { showName: true, sector: true, due: true })).join("")}</div></div>` : ""}
+    <div class="week">${days.map(dayCol).join("")}</div>
+  </div>`;
+}
+function wireHome() {
+  document.querySelectorAll("[data-open]").forEach(c => c.onclick = () => go({ view: "show", showId: c.dataset.open, tab: "overview" }));
+  const tl = $("#tl"), td = tl && tl.querySelector(".tl-today"); if (tl && td) { tl.style.scrollSnapType = "none"; tl.scrollLeft = Math.max(0, td.offsetLeft - 8); requestAnimationFrame(() => tl.style.scrollSnapType = ""); }
+  $("#addshow").onclick = newShow;
+  $("#mine").onchange = e => { R.mine = e.target.checked; render(); };
+  $("#wprev").onclick = () => { R.weekStart = addDays(R.weekStart || weekStart(), -7); render(); };
+  $("#wnext").onclick = () => { R.weekStart = addDays(R.weekStart || weekStart(), 7); render(); };
+  $("#wnow").onclick = () => { R.weekStart = null; render(); };
+  $("#addtask").onclick = () => editTask(null);
+}
+const SHOW_FIELDS = () => [
+  { k: "date", l: L("Data", "Date"), t: "date", req: true }, { k: "time", l: L("Horário", "Time"), t: "time" },
+  { k: "title", l: L("Nome do show", "Show name"), full: true },
+  { k: "venue", l: L("Local", "Venue") },
+  { k: "status", l: "Status", t: "select", o: [["planned", L("Planejado", "Planned")], ["done", L("Realizado", "Done")], ["cancelled", L("Cancelado", "Cancelled")]] },
+  { k: "eb_url", l: L("Link do Eventbrite", "Eventbrite link"), t: "url", full: true },
+  { k: "notes", l: L("Notas", "Notes"), t: "area" },
+];
+function newShow() {
+  const last = shows().at(-1);
+  modal(L("Novo show", "New show"), SHOW_FIELDS(), { date: last ? addDays(last.date, 7) : today(), time: "20:30", title: "Laughin American Social Club", venue: "Bar AlgoRitmo", status: "planned", sponsor: 40, headliners: 1, headliner_fee: 15, guests: 2, guest_fee: 5 }, async row => {
+    if (S.shows.some(s => s.date === row.date)) throw new Error(L("Já existe um show nessa data.", "There is already a show on that date."));
+    row.id = "s" + uid();
+    const s = await save("shows", row);
+    const tasks = template().map(t => ({ id: s.id + ":" + t.key, show_id: s.id, template_key: t.key, title: t.title, sector: t.sector, due: addDays(s.date, t.offset), done: false }));
+    const m = s.date.slice(0, 7), cid = "chandrio:" + m;
+    if (!S.tasks.some(t => t.id === cid)) { const d = pd(m + "-01"); d.setMonth(d.getMonth() - 1); d.setDate(10); tasks.push({ id: cid, template_key: "chandrio", title: "Enviar flyers do mês ao Chandrío (" + m + ")", sector: "Patrocinio", due: ymd(d), done: false }); }
+    const { data, error } = await sb.from("tasks").upsert(tasks).select(); if (error) throw error;
+    data.forEach(t => { const i = S.tasks.findIndex(x => x.id === t.id); if (i >= 0) S.tasks[i] = t; else S.tasks.push(t); });
+    logAct("show_created", { date: s.date, by: PROFILE?.name });
+    R.view = "show"; R.showId = s.id; R.tab = "overview";
+  });
+}
+
+/* ---------------- event page ---------------- */
+const TABS = () => [["overview", L("Visão geral", "Overview")], ...SECTORS.map(s => [s[0], L(s[1], s[2])])];
+function vShow() {
+  const s = showById(R.showId); if (!s) { R.view = "home"; return vHome(); }
+  const d = daysTo(s.date);
+  const tabChip = k => { if (k === "overview") return ""; const p = progress(s.id, k); return p.total ? `<span class="chip ${p.done === p.total ? "ok" : ""}">${p.done}/${p.total}</span>` : ""; };
+  const body = { overview: tOverview, Show: tLineup, Instagram: tInstagram, Anuncios: tAds, Cupons: tCoupons, Ingressos: tTickets, Financeiro: tMoney }[R.tab] || tOverview;
+  return `
+  <button class="btn ghost sm" id="back">← ${L("Linha do tempo", "Timeline")}</button>
+  <div class="ev-head" style="margin-top:10px">
+    <div class="grow"><h1>${fdate(s.date, { weekday: "long", day: "numeric", month: "long" })} · ${esc(s.time)}</h1>
+      <div class="muted" style="margin-top:4px">${esc(s.title)} · ${esc(s.venue || "")}</div>
+      <div class="row wrap" style="margin-top:10px">${s.status === "cancelled" ? `<span class="chip bad">${L("Cancelado", "Cancelled")}</span>` : d < 0 ? `<span class="chip">${L("Realizado", "Done")}</span>` : `<span class="chip warn">${d === 0 ? L("Hoje", "Tonight") : L("em ", "in ") + d + L(" dias", " days")}</span>`}
+      ${s.eb_url ? `<a class="chip" href="${esc(s.eb_url)}" target="_blank" rel="noopener">Eventbrite</a>` : `<span class="chip bad">${L("Sem link do Eventbrite", "No Eventbrite link")}</span>`}</div></div>
+    <div class="row"><button class="btn" id="editshow">${L("Editar show", "Edit show")}</button><button class="btn" id="addt">+ ${L("Tarefa", "Task")}</button></div>
+  </div>
+  <div class="tabs">${TABS().map(([k, lab]) => `<button data-tab="${k}" class="${R.tab === k ? "on" : ""}">${lab}${tabChip(k)}</button>`).join("")}</div>
+  ${body(s)}`;
+}
+function sectorTasks(s, sector) {
+  const ts = tasksOf(s.id).filter(t => t.sector === sector);
+  return `<div class="card pad"><div class="sec-h"><h3 class="grow">${L("Tarefas", "Tasks")}</h3></div><div class="list">${ts.map(t => taskItem(t, { due: true, edit: true })).join("") || `<div class="empty">${L("Nenhuma tarefa", "No tasks")}</div>`}</div></div>`;
+}
+function tOverview(s) {
+  const open = tasksOf(s.id).filter(t => !t.done);
+  return `<div class="sectors">${SECTORS.map(([k]) => { const p = progress(s.id, k); const pct = p.total ? Math.round(p.done / p.total * 100) : 0; return `<div class="card sector" data-tab="${k}"><div class="row"><span class="dot" style="background:${SECTOR_COLOR(k)}"></span><b class="grow">${SECTOR_NAME(k)}</b><span class="faint small">${p.done}/${p.total}</span></div><div class="bar ${pct === 100 ? "done" : ""}" style="margin-top:10px"><i style="width:${pct}%"></i></div></div>`; }).join("")}</div>
+  <div class="cols sec">
+    <div class="card pad"><h3 style="margin-bottom:10px">${L("Próximas tarefas", "Open tasks")} (${open.length})</h3><div class="list">${open.map(t => taskItem(t, { sector: true, due: true, edit: true })).join("") || `<div class="empty">${L("Tudo feito", "All done")}</div>`}</div></div>
+    <div class="card pad"><h3 style="margin-bottom:10px">${L("Resumo", "Summary")}</h3>
+      <table><tr><td class="muted">Lineup</td><td class="num">${lineupOf(s.id).filter(booked).length}/3</td></tr>
+      <tr><td class="muted">${L("Ingressos", "Tickets")}</td><td class="num">${tickets(s)}</td></tr>
+      <tr><td class="muted">${L("Receita", "Income")}</td><td class="num">${eur(income(s) + sponsorIn(s))}</td></tr>
+      <tr><td class="muted">${L("Cachês", "Fees")}</td><td class="num">${eur(fees(s))}</td></tr>
+      <tr><td><b>${s.date > today() ? L("Resultado previsto", "Expected result") : L("Resultado", "Result")}</b></td><td class="num"><b>${eur(net(s))}</b></td></tr></table>
+      ${s.notes ? `<p class="muted small" style="margin:12px 0 0">${esc(s.notes)}</p>` : ""}</div>
+  </div>`;
+}
+const PAY = () => [["Invited", L("Convidado", "Invited")], ["Confirmed", L("Confirmado", "Confirmed")], ["Paid", L("Pago", "Paid")], ["Declined", L("Recusou", "Declined")]];
+function tLineup(s) {
+  const lu = lineupOf(s.id);
+  return `<div class="cols"><div class="card pad">
+    <div class="sec-h"><h3 class="grow">Lineup (${lu.filter(booked).length}/3 ${L("confirmados", "confirmed")})</h3><button class="btn sm primary" id="addlu">+ ${L("Comediante", "Comedian")}</button></div>
+    ${lu.length ? `<div class="tablewrap"><table><tr><th>${L("Nome", "Name")}</th><th>${L("Posição", "Spot")}</th><th class="num">${L("Cachê", "Fee")}</th><th>Status</th><th>${L("Cupom", "Coupon")}</th><th></th></tr>
+    ${lu.map(l => { const c = S.comedians.find(x => x.id === l.comedian_id); return `<tr><td><b>${esc(l.artist)}</b>${c?.email ? `<div class="faint small">${esc(c.email)}</div>` : ""}</td><td>${esc(l.spot === "headliner" ? "Headliner" : L("Convidado", "Guest"))}</td><td class="num">${eur(l.fee)}</td><td><span class="chip ${booked(l) ? "ok" : ""}">${esc((PAY().find(p => p[0] === l.payment) || [0, l.payment])[1])}</span></td><td>${l.coupon_code ? `<span class="chip">${esc(l.coupon_code)}</span>` : ""}</td><td class="num"><button class="btn ghost sm" data-lu="${l.id}">${L("Editar", "Edit")}</button></td></tr>`; }).join("")}</table></div>` : `<div class="empty">${L("Ninguém no lineup ainda", "No one booked yet")}</div>`}
+    <p class="faint small" style="margin:12px 0 0">${L("Ao adicionar um comediante com e-mail, o sistema cria um cupom de 10% com o nome dele.", "Adding a comedian with an e-mail creates a 10% coupon with their name.")}</p>
+  </div>${sectorTasks(s, "Show")}</div>`;
+}
+function couponCodeFor(name) {
+  const base = String(name || "").normalize("NFD").replace(/[̀-ͯ]/g, "").split(/\s+/)[0].replace(/[^A-Za-z0-9]/g, "").toUpperCase().slice(0, 12) || "AMIGO";
+  let code = base + "10", i = 2; while (S.coupons.some(c => c.code.toUpperCase() === code)) code = base + i++ + "10";
+  return code;
+}
+function editLineup(s, l) {
+  const isNew = !l; const c = l ? S.comedians.find(x => x.id === l.comedian_id) : null;
+  const known = S.comedians.slice().sort((a, b) => a.name.localeCompare(b.name));
+  modal(isNew ? L("Adicionar comediante", "Add comedian") : L("Editar comediante", "Edit comedian"), [
+    ...(isNew ? [{ k: "pick", l: L("Do banco de comediantes", "From the comedian list"), t: "select", full: true, o: [["", L("Novo comediante", "New comedian")], ...known.map(k => [k.id, k.name])] }] : []),
+    { k: "artist", l: L("Nome", "Name"), full: true },
+    { k: "email", l: "E-mail", t: "email" }, { k: "phone", l: "WhatsApp" },
+    { k: "instagram", l: "Instagram" },
+    { k: "spot", l: L("Posição", "Spot"), t: "select", o: [["guest", L("Convidado", "Guest")], ["headliner", "Headliner"]] },
+    { k: "fee", l: L("Cachê (€)", "Fee (€)"), t: "number" },
+    { k: "payment", l: "Status", t: "select", o: PAY() },
+    { k: "notes", l: L("Notas", "Notes"), t: "area" },
+  ], l ? { ...l, email: c?.email, phone: c?.phone, instagram: c?.instagram } : { spot: "guest", fee: s.guest_fee || 5, payment: "Invited" }, async row => {
+    let com = row.pick ? S.comedians.find(x => x.id === row.pick) : c;
+    const name = (row.artist || com?.name || "").trim(); if (!name) throw new Error(L("Informe o nome.", "Enter a name."));
+    com = await save("comedians", { ...(com || {}), name, email: row.email ?? com?.email ?? null, phone: row.phone ?? com?.phone ?? null, instagram: row.instagram ?? com?.instagram ?? null });
+    const lu = { id: l?.id || "l" + uid(), show_id: s.id, comedian_id: com.id, artist: name, spot: row.spot, fee: row.fee, payment: row.payment, notes: row.notes, coupon_code: l?.coupon_code || null };
+    if (!lu.coupon_code && com.email) {
+      const code = couponCodeFor(name);
+      await save("coupons", { id: "c" + uid(), code, percent: 10, scope: L("Todos os shows", "All shows"), comedian_id: com.id, show_id: s.id, status: "Pending", notes: L("Criar no Eventbrite e enviar por e-mail", "Create on Eventbrite and e-mail it") });
+      lu.coupon_code = code;
+    }
+    await save("lineup", lu);
+    const all = lineupOf(s.id).filter(booked).length; const lt = S.tasks.find(t => t.id === s.id + ":lineup");
+    if (lt && all >= 3 && !lt.done) await save("tasks", { ...lt, done: true, done_at: new Date().toISOString() });
+    logAct("lineup_saved", { show: s.date, artist: name, by: PROFILE?.name });
+  }, isNew ? null : async () => del("lineup", l.id));
+}
+function tInstagram(s) {
+  const posts = S.instagram.filter(p => p.show_id === s.id).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+  return `<div class="cols">${sectorTasks(s, "Instagram")}<div class="card pad">
+    <div class="sec-h"><h3 class="grow">${L("Posts e stories", "Posts and stories")}</h3><button class="btn sm primary" id="addpost">+ Post</button></div>
+    ${posts.length ? `<table><tr><th>${L("Data", "Date")}</th><th>${L("Formato", "Format")}</th><th>${L("Título", "Title")}</th><th>Status</th><th></th></tr>${posts.map(p => `<tr><td>${fdate(p.date)}</td><td>${esc(p.format || "")}</td><td>${esc(p.title || "")}</td><td><span class="chip ${p.status === "Published" ? "ok" : ""}">${esc(p.status || "")}</span></td><td class="num"><button class="btn ghost sm" data-post="${p.id}">${L("Editar", "Edit")}</button></td></tr>`).join("")}</table>` : `<div class="empty">${L("Nenhum post planejado", "No posts planned")}</div>`}
+  </div></div>`;
+}
+function editPost(s, p) {
+  modal(p ? L("Editar post", "Edit post") : L("Novo post", "New post"), [
+    { k: "date", l: L("Data", "Date"), t: "date" }, { k: "time", l: L("Hora", "Time"), t: "time" },
+    { k: "format", l: L("Formato", "Format"), t: "select", o: ["Reel", "Carrossel", "Post", "Stories"] },
+    { k: "status", l: "Status", t: "select", o: [["Idea", L("Ideia", "Idea")], ["Draft", L("Rascunho", "Draft")], ["Scheduled", L("Agendado", "Scheduled")], ["Published", L("Publicado", "Published")]] },
+    { k: "title", l: L("Título", "Title"), full: true }, { k: "caption", l: L("Legenda", "Caption"), t: "area" },
+    { k: "owner", l: L("Responsável", "Owner"), t: "select", o: OWNERS() }, { k: "link", l: "Link", t: "url" },
+    { k: "reach", l: L("Alcance", "Reach"), t: "number" }, { k: "likes", l: L("Curtidas", "Likes"), t: "number" },
+    { k: "saves", l: L("Salvamentos", "Saves"), t: "number" }, { k: "shares", l: L("Compartilhamentos", "Shares"), t: "number" },
+  ], p || { show_id: s.id, date: addDays(s.date, -7), status: "Idea", format: "Reel" }, async row => { row.id = row.id || "p" + uid(); row.show_id = s.id; await save("instagram", row); }, p ? async () => del("instagram", p.id) : null);
+}
+function tAds(s) {
+  const ads = S.ads.filter(a => a.show_id === s.id);
+  return `<div class="cols">${sectorTasks(s, "Anuncios")}<div class="card pad">
+    <div class="sec-h"><h3 class="grow">${L("Anúncios", "Ads")}</h3><button class="btn sm primary" id="addad">+ ${L("Anúncio", "Ad")}</button></div>
+    ${ads.length ? `<table><tr><th>${L("Período", "Period")}</th><th class="num">${L("Verba", "Budget")}</th><th class="num">${L("Gasto", "Spent")}</th><th>Status</th><th></th></tr>${ads.map(a => `<tr><td>${fdate(a.start_date, { day: "numeric", month: "short" })} – ${fdate(a.end_date, { day: "numeric", month: "short" })}</td><td class="num">${eur(a.budget)}</td><td class="num">${eur(a.spent)}</td><td><span class="chip">${esc(a.status)}</span></td><td class="num"><button class="btn ghost sm" data-ad="${a.id}">${L("Editar", "Edit")}</button></td></tr>`).join("")}</table>` : `<div class="empty">${L("Nenhum anúncio", "No ads yet")}</div>`}
+  </div></div>`;
+}
+function editAd(s, a) {
+  modal(a ? L("Editar anúncio", "Edit ad") : L("Novo anúncio", "New ad"), [
+    { k: "platform", l: L("Plataforma", "Platform"), t: "select", o: ["Meta", "Instagram", "Facebook", "TikTok", "Google"] },
+    { k: "status", l: "Status", t: "select", o: ["Draft", "Running", "Finished"] },
+    { k: "start_date", l: L("Início", "Start"), t: "date" }, { k: "end_date", l: L("Fim", "End"), t: "date" },
+    { k: "budget", l: L("Verba (€)", "Budget (€)"), t: "number" }, { k: "spent", l: L("Gasto (€)", "Spent (€)"), t: "number" },
+    { k: "results", l: L("Resultados", "Results"), full: true }, { k: "notes", l: L("Notas", "Notes"), t: "area" },
+  ], a || { show_id: s.id, platform: "Meta", status: "Draft", start_date: addDays(s.date, -10), end_date: addDays(s.date, -1) }, async row => { row.id = row.id || "a" + uid(); row.show_id = s.id; await save("ads", row); }, a ? async () => del("ads", a.id) : null);
+}
+function couponRows(list) {
+  return list.length ? `<div class="tablewrap"><table><tr><th>${L("Código", "Code")}</th><th class="num">%</th><th>${L("Validade", "Scope")}</th><th>${L("Usos", "Uses")}</th><th>Status</th><th></th></tr>${list.map(c => `<tr><td><b>${esc(c.code)}</b>${c.comedian_id ? `<div class="faint small">${esc(S.comedians.find(x => x.id === c.comedian_id)?.name || "")}</div>` : ""}</td><td class="num">${num(c.percent)}%</td><td class="small">${esc(c.scope || "")}</td><td>${num(c.uses)}${c.usage_limit ? " / " + c.usage_limit : ""}</td><td><span class="chip ${c.status === "Active" ? "ok" : c.status === "Pending" ? "warn" : c.status === "Review" ? "bad" : ""}">${esc(c.status)}</span></td><td class="num"><button class="btn ghost sm" data-coupon="${c.id}">${L("Editar", "Edit")}</button></td></tr>`).join("")}</table></div>` : `<div class="empty">${L("Nenhum cupom", "No coupons")}</div>`;
+}
+function tCoupons(s) {
+  const mine = S.coupons.filter(c => c.show_id === s.id || !c.show_id).sort((a, b) => (b.show_id === s.id) - (a.show_id === s.id) || a.code.localeCompare(b.code));
+  return `<div class="cols">${sectorTasks(s, "Cupons")}<div class="card pad"><div class="sec-h"><h3 class="grow">${L("Cupons válidos para este show", "Coupons for this show")}</h3><button class="btn sm primary" id="addcoupon">+ ${L("Cupom", "Coupon")}</button></div>${couponRows(mine)}</div></div>`;
+}
+function tTickets(s) {
+  const ords = S.orders.filter(o => o.show_id === s.id);
+  return `<div class="cols">${sectorTasks(s, "Ingressos")}<div class="card pad">
+    <div class="sec-h"><h3 class="grow">${L("Ingressos", "Tickets")}</h3><button class="btn sm" id="edittix">${L("Editar números", "Edit numbers")}</button></div>
+    <div class="kpis"><div class="card kpi"><span class="muted small">Eventbrite</span><b>${num(s.eb_tickets)}</b></div><div class="card kpi"><span class="muted small">${L("Porta (dinheiro)", "Door (cash)")}</span><b>${num(s.cash_tickets)}</b></div><div class="card kpi"><span class="muted small">Bizum</span><b>${num(s.bizum_tickets)}</b></div><div class="card kpi"><span class="muted small">${L("Cortesia", "Free")}</span><b>${num(s.free_tickets)}</b></div></div>
+    <p class="faint small" style="margin:12px 0 0">${ords.length ? ords.length + L(" pedidos importados do Eventbrite.", " orders imported from Eventbrite.") : L("A importação automática do Eventbrite entra na próxima etapa; por enquanto os números são digitados.", "Automatic Eventbrite import comes in the next step; for now numbers are typed in.")}</p>
+  </div></div>`;
+}
+function tMoney(s) {
+  return `<div class="cols">${sectorTasks(s, "Financeiro")}<div class="card pad">
+    <div class="sec-h"><h3 class="grow">${L("Caixa do show", "Show money")}</h3><button class="btn sm" id="editmoney">${L("Editar", "Edit")}</button></div>
+    <table>
+      <tr><td class="muted">Eventbrite (${L("líquido", "net")})</td><td class="num">${eur(s.eb_net)}</td></tr>
+      <tr><td class="muted">${L("Porta", "Door")} (${num(s.cash_tickets)} × ${eur(s.cash_price)})</td><td class="num">${eur(num(s.cash_tickets) * num(s.cash_price))}</td></tr>
+      <tr><td class="muted">Bizum (${num(s.bizum_tickets)} × ${eur(s.bizum_price)})</td><td class="num">${eur(num(s.bizum_tickets) * num(s.bizum_price))}</td></tr>
+      <tr><td class="muted">Chandrío ${s.sponsor_paid ? "" : `<span class="chip bad">${L("a receber", "unpaid")}</span>`}</td><td class="num">${eur(s.sponsor)}</td></tr>
+      <tr><td class="muted">${L("Cachês", "Fees")} (${num(s.headliners)} × ${eur(s.headliner_fee)} + ${num(s.guests)} × ${eur(s.guest_fee)})</td><td class="num">−${eur(fees(s))}</td></tr>
+      <tr><td><b>${L("Resultado", "Result")}</b></td><td class="num"><b>${eur(net(s))}</b></td></tr>
+      <tr><td class="muted">${L("Dinheiro com", "Money held by")}</td><td class="num">${esc(s.held_by || "—")}</td></tr>
+    </table></div></div>`;
+}
+function wireShow() {
+  const s = showById(R.showId); if (!s) return;
+  $("#back").onclick = () => go({ view: "home" });
+  document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => go({ view: "show", showId: s.id, tab: b.dataset.tab }));
+  $("#editshow").onclick = () => modal(L("Editar show", "Edit show"), SHOW_FIELDS(), s, async row => {
+    const moved = row.date !== s.date; await save("shows", row);
+    if (moved) { const off = Object.fromEntries(template().map(t => [t.key, t.offset])); const ups = tasksOf(s.id).filter(t => !t.done && off[t.template_key] !== undefined).map(t => ({ ...t, due: addDays(row.date, off[t.template_key]) })); if (ups.length) { const { data } = await sb.from("tasks").upsert(ups).select(); (data || []).forEach(t => { const i = S.tasks.findIndex(x => x.id === t.id); S.tasks[i] = t; }); } }
+  }, async () => { await del("shows", s.id); S.tasks = S.tasks.filter(t => t.show_id !== s.id); R.view = "home"; });
+  $("#addt").onclick = () => editTask(null);
+  const on = (id, fn) => { const el = $(id); if (el) el.onclick = fn; };
+  on("#addlu", () => editLineup(s, null));
+  document.querySelectorAll("[data-lu]").forEach(b => b.onclick = () => editLineup(s, S.lineup.find(l => l.id === b.dataset.lu)));
+  on("#addpost", () => editPost(s, null));
+  document.querySelectorAll("[data-post]").forEach(b => b.onclick = () => editPost(s, S.instagram.find(p => p.id === b.dataset.post)));
+  on("#addad", () => editAd(s, null));
+  document.querySelectorAll("[data-ad]").forEach(b => b.onclick = () => editAd(s, S.ads.find(a => a.id === b.dataset.ad)));
+  on("#addcoupon", () => editCoupon(null, s.id));
+  document.querySelectorAll("[data-coupon]").forEach(b => b.onclick = () => editCoupon(S.coupons.find(c => c.id === b.dataset.coupon)));
+  on("#edittix", () => modal(L("Ingressos", "Tickets"), [
+    { k: "eb_tickets", l: "Eventbrite", t: "number" }, { k: "eb_net", l: L("Eventbrite líquido (€)", "Eventbrite net (€)"), t: "number" },
+    { k: "cash_tickets", l: L("Porta (qtd)", "Door (qty)"), t: "number" }, { k: "cash_price", l: L("Preço porta (€)", "Door price (€)"), t: "number" },
+    { k: "bizum_tickets", l: L("Bizum (qtd)", "Bizum (qty)"), t: "number" }, { k: "bizum_price", l: L("Preço Bizum (€)", "Bizum price (€)"), t: "number" },
+    { k: "free_tickets", l: L("Cortesias", "Free"), t: "number" }, { k: "eb_url", l: L("Link do Eventbrite", "Eventbrite link"), t: "url" },
+  ], s, row => save("shows", row)));
+  on("#editmoney", () => modal(L("Caixa do show", "Show money"), [
+    { k: "sponsor", l: L("Patrocínio Chandrío (€)", "Chandrío sponsorship (€)"), t: "number" }, { k: "sponsor_paid", l: L("Chandrío já pagou", "Chandrío has paid"), t: "check" },
+    { k: "headliners", l: "Headliners", t: "number" }, { k: "headliner_fee", l: L("Cachê headliner (€)", "Headliner fee (€)"), t: "number" },
+    { k: "guests", l: L("Convidados", "Guests"), t: "number" }, { k: "guest_fee", l: L("Cachê convidado (€)", "Guest fee (€)"), t: "number" },
+    { k: "held_by", l: L("Dinheiro com", "Money held by"), t: "select", o: [["", "—"], ...PARTNERS.map(p => [p, p])] },
+  ], s, row => save("shows", row)));
+}
+
+/* ---------------- coupons & audience ---------------- */
+function editCoupon(c, showId) {
+  modal(c ? L("Editar cupom", "Edit coupon") : L("Novo cupom", "New coupon"), [
+    { k: "code", l: L("Código", "Code"), req: true }, { k: "percent", l: L("Desconto (%)", "Discount (%)"), t: "number" },
+    { k: "scope", l: L("Validade", "Scope"), full: true },
+    { k: "usage_limit", l: L("Limite de usos", "Usage limit"), t: "number" }, { k: "uses", l: L("Usos", "Uses"), t: "number" },
+    { k: "status", l: "Status", t: "select", o: [["Active", L("Ativo", "Active")], ["Pending", L("Pendente", "Pending")], ["Review", L("Revisar", "Review")], ["Inactive", L("Inativo", "Inactive")]] },
+    { k: "notes", l: L("Notas", "Notes"), t: "area" },
+  ], c || { status: "Active", percent: 10, show_id: showId || null }, async row => { row.id = row.id || "c" + uid(); row.code = String(row.code).trim(); await save("coupons", row); }, c ? async () => del("coupons", c.id) : null);
+}
+function vCoupons() {
+  const ss = S.signups.slice().sort((a, b) => b.created_at.localeCompare(a.created_at));
+  return `<div class="row wrap"><h1 class="grow">${L("Cupons e público", "Coupons & audience")}</h1><button class="btn primary" id="addcoupon">+ ${L("Cupom", "Coupon")}</button></div>
+  <div class="card pad sec">${couponRows(S.coupons.slice().sort((a, b) => a.code.localeCompare(b.code)))}</div>
+  <div class="sec"><div class="sec-h"><h2 class="grow">${L("Cadastros do site", "Site sign-ups")} (${ss.length})</h2><button class="btn sm" id="copyemails">${L("Copiar e-mails", "Copy e-mails")}</button></div>
+  <div class="card pad"><div class="tablewrap"><table><tr><th>${L("Data", "Date")}</th><th>${L("Nome", "Name")}</th><th>E-mail</th><th>${L("Idioma", "Lang")}</th><th>${L("Cupom", "Coupon")}</th></tr>${ss.map(x => `<tr><td>${fdate(x.created_at.slice(0, 10), { day: "numeric", month: "short" })}</td><td>${esc(x.name || "")}</td><td>${esc(x.email)}</td><td>${esc(x.lang || "")}</td><td>${esc(x.coupon || "")}</td></tr>`).join("") || `<tr><td colspan="5" class="empty">—</td></tr>`}</table></div></div></div>`;
+}
+function wireCoupons() {
+  $("#addcoupon").onclick = () => editCoupon(null);
+  document.querySelectorAll("[data-coupon]").forEach(b => b.onclick = () => editCoupon(S.coupons.find(c => c.id === b.dataset.coupon)));
+  $("#copyemails").onclick = () => { navigator.clipboard.writeText(S.signups.filter(x => !x.unsubscribed).map(x => x.email).join(", ")); toast(L("E-mails copiados", "E-mails copied")); };
+}
+
+/* ---------------- finance ---------------- */
+function vFin() {
+  const F = finance(), pay = PARTNERS.find(p => F.P[p].bal < -0.005), rec = PARTNERS.find(p => F.P[p].bal > 0.005);
+  const exps = S.expenses.slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  const past = shows().filter(s => s.date <= today() || income(s));
+  return `<div class="row wrap"><h1 class="grow">${L("Financeiro", "Finance")}</h1><button class="btn" id="addpay">+ ${L("Transferência", "Transfer")}</button><button class="btn primary" id="addexp">+ ${L("Despesa", "Expense")}</button></div>
+  <div class="kpis sec">
+    <div class="card kpi"><span class="muted small">${L("Receita total", "Total income")}</span><b>${eur(F.totIncome)}</b></div>
+    <div class="card kpi"><span class="muted small">${L("Cachês", "Fees")}</span><b>${eur(F.totFees)}</b></div>
+    <div class="card kpi"><span class="muted small">${L("Despesas", "Expenses")}</span><b>${eur(F.totExp)}</b></div>
+    <div class="card kpi"><span class="muted small">${L("Chandrío a receber", "Chandrío owed")}</span><b>${eur(F.pending)}</b></div>
+  </div>
+  <div class="card pad sec"><h2>${L("Acerto entre sócios", "Partner settlement")}</h2>
+    <p style="font-size:16px;margin:10px 0 14px">${pay && rec ? `<b>${pay}</b> ${L("deve", "owes")} <b>${rec}</b> <b style="color:var(--accent-text)">${eur(Math.abs(F.P[pay].bal))}</b>` : L("Contas zeradas.", "All square.")}</p>
+    <div class="tablewrap"><table><tr><th></th>${PARTNERS.map(p => `<th class="num">${p}</th>`).join("")}</tr>
+      <tr><td class="muted">${L("Pagou em despesas", "Paid in expenses")}</td>${PARTNERS.map(p => `<td class="num">${eur(F.P[p].paid)}</td>`).join("")}</tr>
+      <tr><td class="muted">${L("Itens que ficaram com ele", "Items they kept")}</td>${PARTNERS.map(p => `<td class="num">${eur(F.P[p].kept)}</td>`).join("")}</tr>
+      <tr><td class="muted">${L("Dinheiro de shows com ele", "Show money held")}</td>${PARTNERS.map(p => `<td class="num">${eur(F.P[p].held)}</td>`).join("")}</tr>
+      <tr><td class="muted">${L("Transferências enviadas / recebidas", "Transfers sent / received")}</td>${PARTNERS.map(p => `<td class="num">${eur(F.P[p].out)} / ${eur(F.P[p].in)}</td>`).join("")}</tr>
+      <tr><td><b>${L("Saldo", "Balance")}</b></td>${PARTNERS.map(p => `<td class="num"><b>${eur(F.P[p].bal)}</b></td>`).join("")}</tr></table></div>
+    <p class="faint small" style="margin:10px 0 0">${L("Divisão 50/50, sem fundo de caixa. Dinheiro do Chandrío só entra quando pago.", "50/50 split, no cash fund. Chandrío money only counts once paid.")}</p></div>
+  <div class="cols sec">
+    <div class="card pad"><h2 style="margin-bottom:10px">${L("Shows", "Shows")}</h2><div class="tablewrap"><table><tr><th>${L("Data", "Date")}</th><th class="num">${L("Receita", "Income")}</th><th class="num">${L("Cachês", "Fees")}</th><th class="num">${L("Resultado", "Result")}</th></tr>${past.map(s => `<tr data-open="${s.id}" style="cursor:pointer"><td>${fdate(s.date, { day: "numeric", month: "short", year: "2-digit" })}</td><td class="num">${eur(income(s) + sponsorIn(s))}</td><td class="num">${eur(fees(s))}</td><td class="num"><b>${eur(net(s))}</b></td></tr>`).join("")}</table></div></div>
+    <div class="card pad"><h2 style="margin-bottom:10px">${L("Despesas", "Expenses")}</h2><div class="tablewrap"><table><tr><th>${L("Item", "Item")}</th><th>${L("Pagou", "Paid by")}</th><th class="num">${L("Valor", "Amount")}</th><th></th></tr>${exps.map(e => `<tr><td>${esc(e.item)}${e.keeper && e.keeper !== "Shared" ? `<div class="faint small">${L("Fica com ", "Kept by ")}${esc(e.keeper)}</div>` : ""}</td><td>${esc(e.paid_by || "")}</td><td class="num">${eur(e.amount)}</td><td class="num"><button class="btn ghost sm" data-exp="${e.id}">${L("Editar", "Edit")}</button></td></tr>`).join("")}</table></div>
+    ${S.payments.length ? `<h3 style="margin:16px 0 8px">${L("Transferências", "Transfers")}</h3><table>${S.payments.map(p => `<tr><td>${fdate(p.date)}</td><td>${esc(p.from_person)} → ${esc(p.to_person)}</td><td class="num">${eur(p.amount)}</td><td class="num"><button class="btn ghost sm" data-paym="${p.id}">${L("Editar", "Edit")}</button></td></tr>`).join("")}</table>` : ""}</div>
+  </div>`;
+}
+function wireFin() {
+  const expF = [{ k: "item", l: "Item", full: true, req: true }, { k: "amount", l: L("Valor (€)", "Amount (€)"), t: "number", req: true }, { k: "date", l: L("Data", "Date"), t: "date" },
+    { k: "paid_by", l: L("Quem pagou", "Paid by"), t: "select", o: PARTNERS }, { k: "keeper", l: L("Fica com", "Kept by"), t: "select", o: [["Shared", L("Dos dois", "Shared")], ...PARTNERS.map(p => [p, p])] },
+    { k: "category", l: L("Categoria", "Category"), t: "select", o: ["Equipment", "Marketing", "Consumables", "Venue", "Other"] }, { k: "notes", l: L("Notas", "Notes"), t: "area" }];
+  const payF = [{ k: "date", l: L("Data", "Date"), t: "date" }, { k: "amount", l: L("Valor (€)", "Amount (€)"), t: "number", req: true }, { k: "from_person", l: L("De", "From"), t: "select", o: PARTNERS }, { k: "to_person", l: L("Para", "To"), t: "select", o: PARTNERS.slice().reverse() }, { k: "notes", l: L("Notas", "Notes"), t: "area" }];
+  $("#addexp").onclick = () => modal(L("Nova despesa", "New expense"), expF, { date: today(), paid_by: PROFILE?.name, keeper: "Shared", category: "Equipment" }, async r => { r.id = "e" + uid(); await save("expenses", r); });
+  document.querySelectorAll("[data-exp]").forEach(b => b.onclick = () => { const e = S.expenses.find(x => x.id === b.dataset.exp); modal(L("Editar despesa", "Edit expense"), expF, e, r => save("expenses", r), async () => del("expenses", e.id)); });
+  $("#addpay").onclick = () => modal(L("Nova transferência", "New transfer"), payF, { date: today() }, async r => { r.id = "t" + uid(); await save("payments", r); });
+  document.querySelectorAll("[data-paym]").forEach(b => b.onclick = () => { const p = S.payments.find(x => x.id === b.dataset.paym); modal(L("Editar transferência", "Edit transfer"), payF, p, r => save("payments", r), async () => del("payments", p.id)); });
+  document.querySelectorAll("[data-open]").forEach(c => c.onclick = () => go({ view: "show", showId: c.dataset.open, tab: "Financeiro" }));
+}
+
+/* ---------------- team ---------------- */
+const ROLES = () => [["admin", "Admin"], ["producao", L("Produção", "Production")], ["social", "Social media"]];
+function vTeam() {
+  const isAdmin = PROFILE?.role === "admin";
+  return `<div class="row wrap"><h1 class="grow">${L("Equipe", "Team")}</h1>${isAdmin ? `<button class="btn primary" id="invite">+ ${L("Convidar pessoa", "Invite someone")}</button>` : ""}</div>
+  <div class="card pad sec"><div class="tablewrap"><table><tr><th>${L("Nome", "Name")}</th><th>E-mail</th><th>${L("Papel", "Role")}</th><th>Status</th><th></th></tr>
+  ${S.profiles.map(p => `<tr><td><b>${esc(p.name)}</b>${p.id === ME.id ? ` <span class="chip">${L("você", "you")}</span>` : ""}</td><td>${esc(p.email)}</td><td>${esc((ROLES().find(r => r[0] === p.role) || [0, p.role])[1])}</td><td><span class="chip ${p.active ? "ok" : "bad"}">${p.active ? L("Ativo", "Active") : L("Desativado", "Disabled")}</span></td><td class="num">${isAdmin && p.id !== ME.id ? `<button class="btn ghost sm" data-prof="${p.id}">${L("Editar", "Edit")}</button>` : ""}</td></tr>`).join("")}</table></div>
+  <p class="faint small" style="margin:12px 0 0">${L("O convite chega por e-mail com um link para a pessoa criar a própria senha. Comediantes não têm acesso ao painel.", "The invite arrives by e-mail with a link to create a password. Comedians have no access to the hub.")}</p></div>`;
+}
+function wireTeam() {
+  const inv = $("#invite"); if (inv) inv.onclick = () => modal(L("Convidar pessoa", "Invite someone"), [
+    { k: "name", l: L("Nome", "Name"), req: true }, { k: "email", l: "E-mail", t: "email", req: true }, { k: "role", l: L("Papel", "Role"), t: "select", o: ROLES() },
+  ], { role: "admin" }, async r => {
+    const { data, error } = await sb.functions.invoke("invite-user", { body: { email: r.email.trim(), name: r.name.trim(), role: r.role } });
+    if (error || data?.error) throw new Error(data?.error || error.message);
+    await loadAll(); toast(L("Convite enviado para ", "Invite sent to ") + r.email); logAct("user_invited", { email: r.email, by: PROFILE?.name });
+  });
+  document.querySelectorAll("[data-prof]").forEach(b => b.onclick = () => { const p = S.profiles.find(x => x.id === b.dataset.prof); modal(L("Editar pessoa", "Edit person"), [
+    { k: "name", l: L("Nome", "Name"), req: true }, { k: "role", l: L("Papel", "Role"), t: "select", o: ROLES() }, { k: "active", l: L("Acesso ativo", "Access active"), t: "check" },
+  ], p, r => save("profiles", { id: r.id, name: r.name, role: r.role, active: r.active, email: r.email, lang: r.lang })); });
+}
+
+/* ---------------- boot ---------------- */
+function readHashRoute() {
+  const h = location.hash.slice(1); if (!h || h.includes("access_token") || h.includes("error")) return;
+  const [v, id, tab] = h.split("/");
+  if (v === "show" && id) R = { ...R, view: "show", showId: id, tab: tab || "overview" }; else if (NAV.some(n => n[0] === v)) R.view = v;
+}
+async function boot() {
+  const { data: { session } } = await sb.auth.getSession();
+  ME = session?.user || null;
+  if (!ME) { viewLogin(AUTH_ERR ? { text: /expired|invalid/i.test(AUTH_ERR) ? L("Este link expirou ou já foi usado. Peça um novo.", "This link has expired or was already used. Ask for a new one.") : AUTH_ERR } : null); return; }
+  const { data: prof } = await sb.from("profiles").select("*").eq("id", ME.id).maybeSingle();
+  PROFILE = prof;
+  if (!PROFILE || !PROFILE.active) { await sb.auth.signOut(); PROFILE = null; viewLogin({ text: L("Seu acesso está desativado. Fale com um admin.", "Your access is disabled. Talk to an admin.") }); return; }
+  if (AUTH_TYPE === "invite" || AUTH_TYPE === "recovery") { viewSetPassword(AUTH_TYPE === "invite"); return; }
+  $("#app").innerHTML = `<div class="loading">${L("Carregando...", "Loading...")}</div>`;
+  try { await loadAll(); } catch (e) { $("#app").innerHTML = `<div class="loading">${esc(e.message)}</div>`; return; }
+  readHashRoute(); render();
+}
+sb.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") { AUTH_TYPE = "recovery"; } if (ev === "SIGNED_IN" && !PROFILE) setTimeout(boot, 0); });
+boot();
 </script>
 </body>
 </html>
