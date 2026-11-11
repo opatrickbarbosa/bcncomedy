@@ -75,8 +75,12 @@ td.num,th.num{text-align:right}
 /* auth */
 .auth{min-height:100vh;display:grid;place-items:center;padding:24px}
 .auth .card{width:100%;max-width:380px;padding:28px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:-.01em}
-.brand i{width:10px;height:10px;border-radius:3px;background:var(--accent);display:inline-block}
+.logo{display:inline-flex;align-items:center;flex:0 0 auto;cursor:pointer;border:0;background:none;padding:0}
+.logo img{height:36px;width:auto;display:block}
+.logo .l-light{display:none}
+:root[data-theme="dark"] .logo .l-light{display:block}:root[data-theme="dark"] .logo .l-ink{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo .l-light{display:block}:root:not([data-theme="light"]) .logo .l-ink{display:none}}
+.auth .logo img{height:64px}
 .auth h1{margin:18px 0 4px}
 .auth form{display:grid;gap:12px;margin-top:18px}
 .msg{font-size:13px;padding:8px 10px;border-radius:8px}
@@ -261,8 +265,9 @@ function finance() {
 }
 
 /* ---------------- auth screens ---------------- */
+const LOGO = `<span class="logo"><img class="l-ink" src="/assets/bcn-logo-ink.webp" alt="BCN Comedy"><img class="l-light" src="/assets/bcn-logo-s.webp" alt="BCN Comedy"></span>`;
 function authShell(inner) {
-  return `<div class="auth"><div class="card"><div class="brand"><i></i>BCN Comedy</div>${inner}</div></div>`;
+  return `<div class="auth"><div class="card">${LOGO}${inner}</div></div>`;
 }
 function viewLogin(note) {
   $("#app").innerHTML = authShell(`
@@ -331,7 +336,7 @@ function render() {
   const main = { home: vHome, show: vShow, fin: vFin, coupons: vCoupons, team: vTeam }[R.view] || vHome;
   $("#app").innerHTML = `
   <header class="top"><div class="top-in">
-    <div class="brand"><i></i>BCN Comedy</div>
+    <a class="logo" href="#home" id="homelogo" aria-label="BCN Comedy, ${L("in\u00edcio", "home")}"><img class="l-ink" src="/assets/bcn-logo-ink.webp" alt="BCN Comedy"><img class="l-light" src="/assets/bcn-logo-s.webp" alt="BCN Comedy"></a>
     <nav class="nav">${NAV.map(([k, pt, en]) => `<button data-nav="${k}" class="${(R.view === k || (k === "home" && R.view === "show")) ? "on" : ""}">${L(pt, en)}</button>`).join("")}</nav>
     <div class="grow"></div>
     <span class="small muted hide-m">${esc(PROFILE?.name || ME?.email || "")}</span>
@@ -341,6 +346,7 @@ function render() {
   </div></header>
   <main class="main">${main()}</main>`;
   document.querySelectorAll("[data-nav]").forEach(b => b.onclick = () => go({ view: b.dataset.nav }));
+  $("#homelogo").onclick = e => { e.preventDefault(); R.weekStart = null; go({ view: "home" }); };
   $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
   $("#theme").onclick = () => { const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); const nx = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = nx; localStorage.setItem("bcn-theme", nx); render(); };
   wireLang(); wireCommon();
