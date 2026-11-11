@@ -15,7 +15,8 @@ const CFG = {
   INSTAGRAM: 'https://www.instagram.com/bcncomedy/',
   LOGO: 'https://www.bcncomedy.com/assets/email/bcn-logo.png',
   LASC: 'https://www.bcncomedy.com/assets/email/lasc-logo.png',
-  SHEET_NAME: 'BCN Comedy · Website forms'
+  SHEET_NAME: 'BCN Comedy · Website forms',
+  COUPON: 'BCNCOMEDY25'                  // 25% off on Eventbrite, sent to every show-alerts signup
 };
 
 // Brand palette (same in light and dark mode on purpose)
@@ -102,31 +103,31 @@ function notifyInbox_(type, d) {
 
 const T = {
   en: {
-    alerts: { s: "You're on the list! 🎤", h: "You're on the list", p: "Thanks{n}! We'll let you know about new dates, guest line-ups and special nights of the Laughin American Social Club." },
+    alerts: { s: "Your 25% discount code · BCN Comedy", h: "You're on the list", p: "Thanks{n}! Here is your 25% discount for the Laughin American Social Club. We'll also let you know about new dates, guest line-ups and special nights." },
     book: { s: 'We got your request · BCN Comedy', h: 'Request received', p: "Thanks{n}! We've got your request and will get back to you within 48 hours with a proposal." },
     contact: { s: 'Thanks for your message · BCN Comedy', h: 'Message received', p: "Thanks{n}! We've got your message and will reply soon." },
-    next: 'Next show', tickets: 'Get tickets', every: 'Live stand-up comedy in English · Thursdays 8:30PM · Bar AlgoRitmo, Gràcia',
+    next: 'Next show', coupon: 'Your 25% discount code', couponHow: 'Enter it on Eventbrite at checkout.', tickets: 'Get tickets', every: 'Live stand-up comedy in English · Thursdays 8:30PM · Bar AlgoRitmo, Gràcia',
     foot: 'You are receiving this email because you filled in a form on bcncomedy.com.', unsub: 'Unsubscribe: just reply “unsubscribe”.', follow: 'Follow us on Instagram'
   },
   es: {
-    alerts: { s: '¡Ya estás en la lista! 🎤', h: 'Ya estás en la lista', p: '¡Gracias{n}! Te avisaremos de nuevas fechas, invitados y noches especiales del Laughin American Social Club.' },
+    alerts: { s: 'Tu código del 25% de descuento · BCN Comedy', h: 'Ya estás en la lista', p: '¡Gracias{n}! Aquí tienes tu 25% de descuento para el Laughin American Social Club. También te avisaremos de nuevas fechas, invitados y noches especiales.' },
     book: { s: 'Hemos recibido tu solicitud · BCN Comedy', h: 'Solicitud recibida', p: '¡Gracias{n}! Hemos recibido tu solicitud y te responderemos en 48 horas con una propuesta.' },
     contact: { s: 'Gracias por tu mensaje · BCN Comedy', h: 'Mensaje recibido', p: '¡Gracias{n}! Hemos recibido tu mensaje y te responderemos pronto.' },
-    next: 'Próximo show', tickets: 'Comprar entradas', every: 'Stand-up en inglés · jueves 20:30 · Bar AlgoRitmo, Gràcia',
+    next: 'Próximo show', coupon: 'Tu código de descuento del 25%', couponHow: 'Introdúcelo en Eventbrite al pagar.', tickets: 'Comprar entradas', every: 'Stand-up en inglés · jueves 20:30 · Bar AlgoRitmo, Gràcia',
     foot: 'Recibes este email porque rellenaste un formulario en bcncomedy.com.', unsub: 'Para darte de baja, responde “baja”.', follow: 'Síguenos en Instagram'
   },
   ca: {
-    alerts: { s: 'Ja ets a la llista! 🎤', h: 'Ja ets a la llista', p: 'Gràcies{n}! T’avisarem de noves dates, convidats i nits especials del Laughin American Social Club.' },
+    alerts: { s: 'El teu codi del 25% de descompte · BCN Comedy', h: 'Ja ets a la llista', p: 'Gràcies{n}! Aquí tens el teu 25% de descompte per al Laughin American Social Club. També t’avisarem de noves dates, convidats i nits especials.' },
     book: { s: 'Hem rebut la teva sol·licitud · BCN Comedy', h: 'Sol·licitud rebuda', p: 'Gràcies{n}! Hem rebut la teva sol·licitud i et respondrem en 48 hores amb una proposta.' },
     contact: { s: 'Gràcies pel teu missatge · BCN Comedy', h: 'Missatge rebut', p: 'Gràcies{n}! Hem rebut el teu missatge i et respondrem aviat.' },
-    next: 'Proper show', tickets: 'Compra entrades', every: 'Stand-up en anglès · dijous 20:30 · Bar AlgoRitmo, Gràcia',
+    next: 'Proper show', coupon: 'El teu codi de descompte del 25%', couponHow: 'Introdueix-lo a Eventbrite en pagar.', tickets: 'Compra entrades', every: 'Stand-up en anglès · dijous 20:30 · Bar AlgoRitmo, Gràcia',
     foot: 'Reps aquest email perquè vas omplir un formulari a bcncomedy.com.', unsub: 'Per donar-te de baixa, respon “baixa”.', follow: 'Segueix-nos a Instagram'
   },
   pt: {
-    alerts: { s: 'Você está na lista! 🎤', h: 'Você está na lista', p: 'Valeu{n}! Vamos te avisar das novas datas, convidados e noites especiais do Laughin American Social Club.' },
+    alerts: { s: 'Seu cupom de 25% de desconto · BCN Comedy', h: 'Você está na lista', p: 'Valeu{n}! Aqui está seu cupom de 25% de desconto para o Laughin American Social Club. Também vamos te avisar das novas datas, convidados e noites especiais.' },
     book: { s: 'Recebemos seu pedido · BCN Comedy', h: 'Pedido recebido', p: 'Valeu{n}! Recebemos seu pedido e respondemos em até 48 horas com uma proposta.' },
     contact: { s: 'Obrigado pela mensagem · BCN Comedy', h: 'Mensagem recebida', p: 'Valeu{n}! Recebemos sua mensagem e respondemos em breve.' },
-    next: 'Próximo show', tickets: 'Garantir ingressos', every: 'Stand-up em inglês · quintas 20:30 · Bar AlgoRitmo, Gràcia',
+    next: 'Próximo show', coupon: 'Seu cupom de 25% de desconto', couponHow: 'Use no Eventbrite na hora de pagar.', tickets: 'Garantir ingressos', every: 'Stand-up em inglês · quintas 20:30 · Bar AlgoRitmo, Gràcia',
     foot: 'Você recebeu este e-mail porque preencheu um formulário em bcncomedy.com.', unsub: 'Para sair da lista, responda “sair”.', follow: 'Siga no Instagram'
   }
 };
@@ -138,6 +139,14 @@ function confirmVisitor_(type, lang, d) {
   let body =
     '<tr><td align="center" style="padding:6px 28px 4px"><img src="' + CFG.LASC + '" width="260" alt="Laughin American Social Club" style="display:block;width:260px;max-width:80%;height:auto;border:0"></td></tr>' +
     h1_(m.h) + p_(m.p.replace('{n}', n));
+  if (type === 'alerts' && CFG.COUPON) {
+    body +=
+      '<tr><td style="padding:10px 28px 6px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:2px dashed ' + C.sun + ';border-radius:14px;background:#17150a" bgcolor="#17150a">' +
+      '<tr><td align="center" style="padding:18px 20px;font-family:Arial,Helvetica,sans-serif">' +
+      '<div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:' + C.muted + ';font-weight:bold">' + t.coupon + '</div>' +
+      '<div style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:32px;letter-spacing:3px;color:' + C.sun + ';font-weight:900;margin:8px 0 6px">' + CFG.COUPON + '</div>' +
+      '<div style="font-size:14px;color:' + C.muted + '">' + t.couponHow + '</div></td></tr></table></td></tr>';
+  }
   if (d.nextShow) {
     body +=
       '<tr><td style="padding:10px 28px 6px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C.card + ';border:1px solid ' + C.line + ';border-radius:14px">' +
@@ -149,7 +158,7 @@ function confirmVisitor_(type, lang, d) {
   }
   body += '<tr><td align="center" style="padding:14px 28px 4px;font-family:Arial,Helvetica,sans-serif;font-size:14px"><a href="' + CFG.INSTAGRAM + '" style="color:' + C.sun + ';text-decoration:none;font-weight:bold">' + t.follow + ' → @bcncomedy</a></td></tr>';
   const foot = t.foot + (type === 'alerts' ? ' ' + t.unsub : '');
-  GmailApp.sendEmail(d.email, m.s, m.h + '\n\n' + m.p.replace('{n}', first ? ', ' + first : '') + '\n\n' + CFG.SITE, Object.assign({
+  GmailApp.sendEmail(d.email, m.s, m.h + '\n\n' + m.p.replace('{n}', first ? ', ' + first : '') + (type === 'alerts' ? '\n\n' + t.coupon + ': ' + CFG.COUPON : '') + '\n\n' + CFG.SITE, Object.assign({
     htmlBody: layout_(body, m.s, foot), name: CFG.FROM_NAME, replyTo: CFG.INBOX
   }, from_()));
 }

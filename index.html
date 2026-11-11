@@ -258,6 +258,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sun);box
 .ok-line{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--muted)}
 .ok-line input{width:20px;min-height:20px;height:20px;margin-top:2px;accent-color:var(--sun)}
 .err{color:#ff7a66;font-weight:600;font-size:.92rem}
+.coupon-done{display:grid;gap:12px}
+.coupon{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 18px;border-radius:12px;border:2px dashed var(--sun);background:rgba(236,193,34,.08)}
+.coupon .code{font-family:var(--display);font-size:1.6rem;letter-spacing:.06em;color:var(--sun)}
+.coupon-done .how{color:var(--muted);font-weight:500;font-size:.92rem}
 .done{padding:22px;border-radius:var(--r);background:rgba(230,251,148,.1);border:1px solid rgba(230,251,148,.4);color:var(--lime);font-weight:600}
 .panel{background:rgba(19,23,23,.9);border:1px solid var(--line);border-radius:var(--r);padding:28px}
 .alerts{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:center}
@@ -334,6 +338,10 @@ const SITE={
   },
   INSTAGRAM:"https://www.instagram.com/bcncomedy/",
   EMAIL:"info@bcncomedy.com",
+  // Discount code given to everyone who signs up for show alerts (create the same code on Eventbrite).
+  COUPON:"BCNCOMEDY25", COUPON_PCT:25,
+  // Last date shown on the site (extend when new months are confirmed).
+  SHOW_UNTIL:"2027-01-31",
   // Forms: Google Apps Script web app running on info@bcncomedy.com (see apps-script/Code.gs).
   FORM_URL:"https://script.google.com/macros/s/AKfycbyIMRITKG4F2vbANBkS8ikbDcC8wayR51_rBJyu1VpW78ggzIznTRRqyZEEkrfZDECNrw/exec",
   // Ticket sales: the next show is always on sale; later shows open SALES_WINDOW days before.
@@ -360,7 +368,7 @@ const ymd=x=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+Stri
 function todayStr(){return ymd(new Date())}
 function buildDates(){const out=[...DEC];const x=new Date(WEEKLY_FROM+"T12:00:00");const end=new Date();end.setDate(end.getDate()+190);
   const endW=new Date(WEEKLY_FROM+"T12:00:00");endW.setDate(endW.getDate()+7*20);const lim=end>endW?end:endW;
-  while(x<=lim){out.push(ymd(x));x.setDate(x.getDate()+7)}return out}
+  while(x<=lim){out.push(ymd(x));x.setDate(x.getDate()+7)}return out.filter(d=>d<=SITE.SHOW_UNTIL)}
 const SHOWS=buildDates().map(dd=>({id:"lasc-"+dd,data:dd,hora:SITE.TIME,url:SITE.EB[dd]||SITE.TICKETS,special:SPECIAL[dd]||null}));
 function status(s){const o=SITE.STATUS[s.data];if(o==="soldout")return "sold";
   const n=daysTo(s);const isNext=upcoming()[0]===s;
@@ -394,16 +402,16 @@ en:{onsaleB:"On sale",lastB:"Last tickets",tonightB:"Tonight",soonB:"Coming soon
  showP:["Two comedians from opposite ends of the Americas host a night of live stand-up comedy in English in the heart of Gràcia.","Patrick Barbosa (Brazil) and Maximilian Robert Lockwood (USA) bring the best English-speaking comics in Barcelona, plus guests passing through town. Grab a drink, sit close and laugh at everything that happens when two continents share one tiny bar."],
  showList:["Stand-up comedy in English, every Thursday","Doors 8:00PM · show 8:30PM","Hosts + rotating line-up of local and touring comics","Natural wine, drinks and food at AlgoRitmo"],
  hostsT:"Your hosts",hostsH:"Who's on the mic",
- C:{patrick:{flag:"🇧🇷 Brazil",bio:"Comedian from Mauá, São Paulo, on stage since 2022. Based in Barcelona, he performs in English, Spanish and Portuguese, mixing stories, music and the chaos of being an immigrant in Europe. Co-founder of BCN Comedy."},
-    max:{flag:"🇺🇸 USA",bio:"American comedian living in Barcelona. Co-founder and co-host of the Laughin American Social Club, bringing the North American half of the joke every Thursday."}},
+ C:{patrick:{flag:"Brazil",bio:"Comedian from Mauá, São Paulo, on stage since 2022. Based in Barcelona, he performs in English, Spanish and Portuguese, mixing stories, music and the chaos of being an immigrant in Europe. Co-founder of BCN Comedy."},
+    max:{flag:"USA",bio:"American comedian living in Barcelona. Co-founder and co-host of the Laughin American Social Club, bringing the North American half of the joke every Thursday."}},
  galT:"Moments",galH:"From the room",
  venueT:"The venue",venueP:"A cosy, independent neighbourhood bar in Gràcia. Small room, close to the stage: arrive early for the best seats.",directions:"Directions",
  hubT:"The production house",hubH:"What is BCN Comedy?",
  hubP:["BCN Comedy is a comedy production house based in Barcelona. We create and run live shows, bring together comedians from all over the world and produce the content that takes those nights beyond the room.","The Laughin American Social Club is our weekly English night. Want comedy at your company, bar or private party? We can build a show for you."],
  hubCta:"Book a show",
- alertsH:"Never miss a Thursday",alertsP:"New dates, guest line-ups and special nights straight to your inbox.",
- name:"Name",email:"Email",notify:"Notify me",consent:"I agree to receive show alerts from BCN Comedy. Unsubscribe anytime.",
- errMail:"Please enter a valid email.",errOk:"Please tick the box to receive alerts.",alertDone:"Done! You're on the list.",
+ alertsH:"Get 25% off your next show",alertsP:"Join the list and get a 25% discount code right away, plus new dates, guest line-ups and special nights in your inbox.",
+ name:"Name",email:"Email",notify:"Get my 25% off",consent:"I agree to receive show alerts from BCN Comedy. Unsubscribe anytime.",
+ errMail:"Please enter a valid email.",errOk:"Please tick the box to receive alerts.",alertDone:"You're on the list. Your 25% discount code:",couponHow:"Enter it on Eventbrite at checkout. We also sent it to your email.",
  sendFail:"Couldn't send right now. Please try again in a few minutes.",sending:"Sending…",
  agendaH:"Dates",agendaP:"Every Laughin American Social Club night. Tickets are sold on Eventbrite.",noDates:"No dates open right now.",
  castH:"Comedians",castP:"The faces behind BCN Comedy and the Laughin American Social Club.",
@@ -432,16 +440,16 @@ es:{onsaleB:"A la venta",lastB:"Últimas entradas",tonightB:"Hoy",soonB:"Próxim
  showP:["Dos cómicos de los extremos opuestos de América presentan una noche de stand-up en inglés en pleno Gràcia.","Patrick Barbosa (Brasil) y Maximilian Robert Lockwood (EE. UU.) traen a los mejores cómicos de habla inglesa de Barcelona y a invitados de paso por la ciudad. Pide algo, siéntate cerca y ríete de todo lo que pasa cuando dos continentes comparten un bar pequeñito."],
  showList:["Stand-up en inglés, todos los jueves","Puertas 20:00 · show 20:30","Presentadores + cartel rotativo de cómicos locales e internacionales","Vino natural, bebidas y comida en AlgoRitmo"],
  hostsT:"Presentadores",hostsH:"Quién lleva el micro",
- C:{patrick:{flag:"🇧🇷 Brasil",bio:"Cómico de Mauá, São Paulo, en los escenarios desde 2022. Vive en Barcelona y actúa en inglés, español y portugués, mezclando historias, música y el caos de ser inmigrante en Europa. Cofundador de BCN Comedy."},
-    max:{flag:"🇺🇸 EE. UU.",bio:"Cómico estadounidense que vive en Barcelona. Cofundador y copresentador del Laughin American Social Club; pone la mitad norteamericana del chiste cada jueves."}},
+ C:{patrick:{flag:"Brasil",bio:"Cómico de Mauá, São Paulo, en los escenarios desde 2022. Vive en Barcelona y actúa en inglés, español y portugués, mezclando historias, música y el caos de ser inmigrante en Europa. Cofundador de BCN Comedy."},
+    max:{flag:"EE. UU.",bio:"Cómico estadounidense que vive en Barcelona. Cofundador y copresentador del Laughin American Social Club; pone la mitad norteamericana del chiste cada jueves."}},
  galT:"Momentos",galH:"Desde la sala",
  venueT:"El local",venueP:"Un bar de barrio acogedor e independiente en Gràcia. Sala pequeña, cerca del escenario: llega pronto para los mejores sitios.",directions:"Cómo llegar",
  hubT:"La productora",hubH:"¿Qué es BCN Comedy?",
  hubP:["BCN Comedy es una productora de comedia con base en Barcelona. Creamos y producimos shows en directo, reunimos a cómicos de todo el mundo y generamos el contenido que lleva esas noches más allá de la sala.","El Laughin American Social Club es nuestra noche semanal en inglés. ¿Quieres comedia en tu empresa, bar o fiesta privada? Montamos un show para ti."],
  hubCta:"Contratar un show",
- alertsH:"No te pierdas ningún jueves",alertsP:"Nuevas fechas, invitados y noches especiales directamente en tu correo.",
- name:"Nombre",email:"Email",notify:"Avisarme",consent:"Acepto recibir avisos de shows de BCN Comedy. Me doy de baja cuando quiera.",
- errMail:"Introduce un email válido.",errOk:"Marca la casilla para recibir los avisos.",alertDone:"¡Listo! Ya estás en la lista.",
+ alertsH:"25% de descuento en tu próximo show",alertsP:"Apúntate a la lista y recibe al momento un código del 25% de descuento, además de nuevas fechas, invitados y noches especiales en tu correo.",
+ name:"Nombre",email:"Email",notify:"Quiero mi 25%",consent:"Acepto recibir avisos de shows de BCN Comedy. Me doy de baja cuando quiera.",
+ errMail:"Introduce un email válido.",errOk:"Marca la casilla para recibir los avisos.",alertDone:"Ya estás en la lista. Tu código del 25% de descuento:",couponHow:"Úsalo en Eventbrite al pagar. También te lo hemos enviado por email.",
  sendFail:"No se ha podido enviar. Inténtalo de nuevo en unos minutos.",sending:"Enviando…",
  agendaH:"Fechas",agendaP:"Todas las noches del Laughin American Social Club. Las entradas se venden en Eventbrite.",noDates:"No hay fechas abiertas ahora mismo.",
  castH:"Cómicos",castP:"Las caras detrás de BCN Comedy y del Laughin American Social Club.",
@@ -470,16 +478,16 @@ ca:{onsaleB:"A la venda",lastB:"Últimes entrades",tonightB:"Avui",soonB:"Aviat"
  showP:["Dos còmics dels extrems oposats d'Amèrica presenten una nit de stand-up en anglès al cor de Gràcia.","Patrick Barbosa (Brasil) i Maximilian Robert Lockwood (EUA) porten els millors còmics de parla anglesa de Barcelona i convidats de pas per la ciutat. Demana alguna cosa, seu a prop i riu de tot el que passa quan dos continents comparteixen un bar petitet."],
  showList:["Stand-up en anglès, cada dijous","Portes 20:00 · show 20:30","Presentadors + cartell rotatiu de còmics locals i internacionals","Vi natural, begudes i menjar a AlgoRitmo"],
  hostsT:"Presentadors",hostsH:"Qui porta el micro",
- C:{patrick:{flag:"🇧🇷 Brasil",bio:"Còmic de Mauá, São Paulo, als escenaris des del 2022. Viu a Barcelona i actua en anglès, castellà i portuguès, barrejant històries, música i el caos de ser immigrant a Europa. Cofundador de BCN Comedy."},
-    max:{flag:"🇺🇸 EUA",bio:"Còmic nord-americà que viu a Barcelona. Cofundador i copresentador del Laughin American Social Club; posa la meitat nord-americana de l'acudit cada dijous."}},
+ C:{patrick:{flag:"Brasil",bio:"Còmic de Mauá, São Paulo, als escenaris des del 2022. Viu a Barcelona i actua en anglès, castellà i portuguès, barrejant històries, música i el caos de ser immigrant a Europa. Cofundador de BCN Comedy."},
+    max:{flag:"EUA",bio:"Còmic nord-americà que viu a Barcelona. Cofundador i copresentador del Laughin American Social Club; posa la meitat nord-americana de l'acudit cada dijous."}},
  galT:"Moments",galH:"Des de la sala",
  venueT:"El local",venueP:"Un bar de barri acollidor i independent a Gràcia. Sala petita, a prop de l'escenari: arriba d'hora per als millors llocs.",directions:"Com arribar",
  hubT:"La productora",hubH:"Què és BCN Comedy?",
  hubP:["BCN Comedy és una productora de comèdia amb base a Barcelona. Creem i produïm shows en directe, reunim còmics de tot el món i generem el contingut que porta aquestes nits més enllà de la sala.","El Laughin American Social Club és la nostra nit setmanal en anglès. Vols comèdia a la teva empresa, bar o festa privada? Muntem un show per a tu."],
  hubCta:"Contracta un show",
- alertsH:"No et perdis cap dijous",alertsP:"Noves dates, convidats i nits especials directament al teu correu.",
- name:"Nom",email:"Email",notify:"Avisa'm",consent:"Accepto rebre avisos de shows de BCN Comedy. Em puc donar de baixa quan vulgui.",
- errMail:"Introdueix un email vàlid.",errOk:"Marca la casella per rebre els avisos.",alertDone:"Fet! Ja ets a la llista.",
+ alertsH:"25% de descompte al teu proper show",alertsP:"Apunta’t a la llista i rep al moment un codi del 25% de descompte, a més de noves dates, convidats i nits especials al teu correu.",
+ name:"Nom",email:"Email",notify:"Vull el meu 25%",consent:"Accepto rebre avisos de shows de BCN Comedy. Em puc donar de baixa quan vulgui.",
+ errMail:"Introdueix un email vàlid.",errOk:"Marca la casella per rebre els avisos.",alertDone:"Ja ets a la llista. El teu codi del 25% de descompte:",couponHow:"Fes-lo servir a Eventbrite en pagar. També te l’hem enviat per email.",
  sendFail:"No s'ha pogut enviar. Torna-ho a provar d'aquí a uns minuts.",sending:"Enviant…",
  agendaH:"Dates",agendaP:"Totes les nits del Laughin American Social Club. Les entrades es venen a Eventbrite.",noDates:"No hi ha dates obertes ara mateix.",
  castH:"Còmics",castP:"Les cares darrere de BCN Comedy i del Laughin American Social Club.",
@@ -508,16 +516,16 @@ pt:{onsaleB:"Vendas abertas",lastB:"Últimos ingressos",tonightB:"É hoje",soonB
  showP:["Dois comediantes de pontas opostas das Américas apresentam uma noite de stand-up em inglês no coração de Gràcia.","Patrick Barbosa (Brasil) e Maximilian Robert Lockwood (EUA) trazem os melhores comediantes de língua inglesa de Barcelona e convidados de passagem pela cidade. Pegue uma bebida, sente perto e ria de tudo o que acontece quando dois continentes dividem um barzinho."],
  showList:["Stand-up em inglês, toda quinta","Portas 20:00 · show 20:30","Apresentadores + line-up rotativo de comediantes locais e internacionais","Vinho natural, drinks e comida no AlgoRitmo"],
  hostsT:"Apresentadores",hostsH:"Quem segura o microfone",
- C:{patrick:{flag:"🇧🇷 Brasil",bio:"Comediante de Mauá, São Paulo, nos palcos desde 2022. Mora em Barcelona e se apresenta em inglês, espanhol e português, misturando histórias, música e o caos de ser imigrante na Europa. Cofundador da BCN Comedy."},
-    max:{flag:"🇺🇸 EUA",bio:"Comediante americano que mora em Barcelona. Cofundador e coapresentador do Laughin American Social Club, a metade norte-americana da piada toda quinta."}},
+ C:{patrick:{flag:"Brasil",bio:"Comediante de Mauá, São Paulo, nos palcos desde 2022. Mora em Barcelona e se apresenta em inglês, espanhol e português, misturando histórias, música e o caos de ser imigrante na Europa. Cofundador da BCN Comedy."},
+    max:{flag:"EUA",bio:"Comediante americano que mora em Barcelona. Cofundador e coapresentador do Laughin American Social Club, a metade norte-americana da piada toda quinta."}},
  galT:"Momentos",galH:"Direto da plateia",
  venueT:"O local",venueP:"Um bar de bairro aconchegante e independente em Gràcia. Sala pequena, perto do palco: chegue cedo para os melhores lugares.",directions:"Como chegar",
  hubT:"A produtora",hubH:"O que é a BCN Comedy?",
  hubP:["A BCN Comedy é uma produtora de comédia baseada em Barcelona. Criamos e produzimos shows ao vivo, reunimos comediantes do mundo todo e produzimos o conteúdo que leva essas noites para além da sala.","O Laughin American Social Club é a nossa noite semanal em inglês. Quer comédia na sua empresa, bar ou festa privada? A gente monta um show para você."],
  hubCta:"Contratar um show",
- alertsH:"Não perca nenhuma quinta",alertsP:"Datas novas, convidados e noites especiais direto no seu e-mail.",
- name:"Nome",email:"E-mail",notify:"Avisar-me",consent:"Aceito receber avisos de shows da BCN Comedy. Saio quando quiser.",
- errMail:"Coloque um e-mail válido.",errOk:"Marque o aceite para receber os avisos.",alertDone:"Pronto! Você está na lista.",
+ alertsH:"Ganhe 25% de desconto no próximo show",alertsP:"Entre na lista e receba na hora um cupom de 25% de desconto, além de datas novas, convidados e noites especiais no seu e-mail.",
+ name:"Nome",email:"E-mail",notify:"Quero meus 25%",consent:"Aceito receber avisos de shows da BCN Comedy. Saio quando quiser.",
+ errMail:"Coloque um e-mail válido.",errOk:"Marque o aceite para receber os avisos.",alertDone:"Você está na lista. Seu cupom de 25% de desconto:",couponHow:"Use no Eventbrite na hora de pagar. Também mandamos para o seu e-mail.",
  sendFail:"Não foi possível enviar agora. Tente de novo em alguns minutos.",sending:"Enviando…",
  agendaH:"Datas",agendaP:"Todas as noites do Laughin American Social Club. Os ingressos são vendidos pela Eventbrite.",noDates:"Sem datas abertas no momento.",
  castH:"Comediantes",castP:"As caras por trás da BCN Comedy e do Laughin American Social Club.",
@@ -593,7 +601,7 @@ function alertsForm(id){return `<form class="form" data-alert="${id}" novalidate
   <div class="vm-row"><input name="name" autocomplete="given-name" placeholder="${t("name")}" aria-label="${t("name")}"><input name="email" type="email" inputmode="email" autocomplete="email" placeholder="${t("email")}" aria-label="${t("email")}"><button class="btn btn-sun btn-sm" type="submit">${t("notify")}</button></div>
   <label class="ok-line"><input type="checkbox" name="ok"><span>${t("consent")}</span></label><p class="err" hidden></p></form>`}
 function alertsBlock(){return `<section class="section" style="padding-top:20px"><div class="wrap"><div class="stamp"><div class="in panel alerts">
-  <div><p class="eyebrow">Social Club</p><h3>${t("alertsH")}</h3><p>${t("alertsP")}</p></div>${alertsForm("block")}</div></div></div></section>`}
+  <div><p class="eyebrow">Social Club · 25% off</p><h3>${t("alertsH")}</h3><p>${t("alertsP")}</p></div>${alertsForm("block")}</div></div></div></section>`}
 
 function header(r){
   const keys=["","agenda","show","comedians","book","contact"];
@@ -740,7 +748,7 @@ function wireForms(){
     if(!okMail(fd.email||"")){err.textContent=t("errMail");err.hidden=false;return}
     if(!f.ok.checked){err.textContent=t("errOk");err.hidden=false;return}
     err.hidden=true;btn.disabled=true;btn.textContent=t("sending");
-    try{await sendForm("alerts",{name:fd.name||"",email:fd.email,source:f.dataset.alert,website:fd.website||""});f.outerHTML=`<div class="done">${t("alertDone")}</div>`}
+    try{await sendForm("alerts",{name:fd.name||"",email:fd.email,source:f.dataset.alert,website:fd.website||""});f.outerHTML=`<div class="done coupon-done"><p>${t("alertDone")}</p><div class="coupon"><span class="code">${SITE.COUPON}</span><button type="button" class="btn btn-sun btn-sm" onclick="navigator.clipboard&&navigator.clipboard.writeText('${SITE.COUPON}').then(()=>this.textContent='OK').catch(()=>{})">${LANG==="en"?"Copy":"Copiar"}</button></div><p class="how">${t("couponHow")}</p></div>`}
     catch(_){err.textContent=t("sendFail");err.hidden=false;btn.disabled=false;btn.textContent=t("notify")}}));
   document.querySelectorAll("form[data-form]").forEach(f=>f.addEventListener("submit",async e=>{e.preventDefault();
     const err=f.querySelector(".err"),btn=f.querySelector("button[type=submit]");const fd=Object.fromEntries(new FormData(f));
