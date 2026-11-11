@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>BCN Comedy · Painel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#070909">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070909'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='26' text-anchor='middle' fill='%23ECC122'%3EBCN%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+@font-face{font-family:"Panton Rust";src:url(assets/PantonRustHeavy-GrSh.woff) format("woff");font-display:swap}
+:root{--ink:#070909;--ink2:#0d1010;--card:#131717;--card2:#181d1d;--line:#2a2f2f;--paper:#f4f1e6;--muted:#b9b6aa;--dim:#8a877d;--sun:#ECC122;--sunInk:#14120a;--lime:#E6FB94;--red:#DF260E;--sky:#6EE6FF;--ok:#8fd16a;
+--display:"Panton Rust","Arial Black",Impact,sans-serif;--body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--ink);color:var(--paper);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased;min-height:100vh}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url(assets/grunge.webp) center/cover;opacity:.25}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--sun)}
+[hidden]{display:none!important}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-transform:uppercase;margin:0;line-height:1.05;letter-spacing:.01em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(14px,env(safe-area-inset-left)) 0 max(14px,env(safe-area-inset-right))}
+.tnum{font-variant-numeric:tabular-nums}
+/* top */
+.top{position:sticky;top:0;z-index:20;background:rgba(7,9,9,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-block:10px}
+.top img{height:32px}
+.top .ttl{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem;color:var(--dim)}
+.top .sp{flex:1}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:8px 0 10px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-weight:700;font-size:.9rem;cursor:pointer;color:#dcd9cd}
+.tab[aria-selected="true"]{background:var(--sun);border-color:var(--sun);color:var(--sunInk)}
+.tab .n{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--red);color:#fff;font-size:.72rem}
+/* ui */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 16px;border-radius:999px;border:0;font-weight:800;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn-sun{background:var(--sun);color:var(--sunInk);box-shadow:0 3px 0 #9c7e10}
+.btn-line{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--muted)}
+.btn-red{background:transparent;color:#ff8b78;box-shadow:inset 0 0 0 1.5px rgba(223,38,14,.5)}
+.btn-sm{min-height:34px;padding:0 12px;font-size:.85rem}
+.ico{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;display:inline-grid;place-items:center;color:var(--muted)}
+main{padding:26px 0 80px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:6px 0 16px}
+.head h2{font-size:clamp(1.7rem,4vw,2.4rem)}
+.head p{color:var(--muted);margin:6px 0 0;max-width:640px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:900px){.g4{grid-template-columns:1fr 1fr}.g3,.g2{grid-template-columns:1fr}}
+.card{background:rgba(19,23,23,.94);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h3{font-size:1.1rem;margin-bottom:10px}
+.kpi .l{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:800}
+.kpi .v{font-family:var(--display);font-size:1.9rem;color:var(--sun);margin-top:4px}
+.kpi .s{color:var(--muted);font-size:.85rem}
+.v.neg{color:#ff8b78}.v.pos{color:var(--ok)}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:rgba(255,255,255,.08);color:#dcd9cd;white-space:nowrap}
+.c-lineup{background:rgba(110,230,255,.14);color:var(--sky)}
+.c-tickets{background:rgba(236,193,34,.16);color:var(--sun)}
+.c-sponsor{background:rgba(230,251,148,.14);color:var(--lime)}
+.c-instagram{background:rgba(223,38,14,.18);color:#ff8b78}
+.c-design{background:rgba(190,150,255,.16);color:#cdb4ff}
+.c-finance{background:rgba(143,209,106,.16);color:var(--ok)}
+.c-other{background:rgba(255,255,255,.08)}
+.late{color:#ff8b78;font-weight:700}
+.muted{color:var(--muted)}.dim{color:var(--dim)}
+/* lists */
+.list{display:grid;gap:6px}
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.item.done{opacity:.55}.item.done .t{text-decoration:line-through}
+.item.overdue{border-color:rgba(223,38,14,.55)}
+.item .t{font-weight:600}
+.item .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:3px;font-size:.82rem;color:var(--muted)}
+.chk{appearance:none;width:24px;height:24px;border-radius:7px;border:2px solid var(--muted);background:transparent;cursor:pointer;display:grid;place-items:center;margin:0}
+.chk:checked{background:var(--sun);border-color:var(--sun)}
+.chk:checked::after{content:"";width:7px;height:12px;border:solid var(--sunInk);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.wk{margin:18px 0 8px;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:800}
+select.mini{min-height:32px;border-radius:8px;border:1px solid var(--line);background:var(--ink2);padding:0 8px;font-size:.82rem}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filters select,.filters label{min-height:38px;border-radius:999px;border:1px solid var(--line);background:var(--card);padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:.88rem}
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:rgba(19,23,23,.94)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+td.r,th.r{text-align:right}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}tbody tr:hover{background:rgba(255,255,255,.03)}
+tfoot td{font-weight:800;border-top:1px solid var(--line)}
+/* show cards */
+.show{border:1px solid var(--line);border-radius:14px;background:rgba(19,23,23,.94);overflow:hidden}
+.show-h{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px;cursor:pointer}
+.dbox{width:64px;height:70px;border-radius:10px;background:var(--sun);color:var(--sunInk);display:grid;place-items:center;text-align:center;line-height:1;box-shadow:3px 3px 0 var(--red)}
+.dbox b{font-family:var(--display);font-size:1.8rem;font-weight:400}.dbox span{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.show.past .dbox{background:#2a2f2f;color:var(--muted);box-shadow:3px 3px 0 #1b1f1f}
+.bar{height:6px;border-radius:9px;background:#2a2f2f;overflow:hidden;margin-top:6px;max-width:260px}.bar i{display:block;height:100%;background:var(--sun)}
+.show-b{border-top:1px solid var(--line);padding:14px;display:grid;gap:16px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:760px){.slots{grid-template-columns:1fr}}
+.slot{border:1px dashed var(--line);border-radius:12px;padding:10px;min-height:78px;cursor:pointer}
+.slot.f{border-style:solid;background:var(--card2)}
+.slot .n{font-weight:700}.slot .r{font-size:.8rem;color:var(--muted)}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:50;display:grid;place-items:end center}
+@media (min-width:700px){.ov{place-items:center}}
+.modal{width:min(560px,100%);max-height:92vh;overflow:auto;background:var(--ink2);border:1px solid var(--line);border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom))}
+@media (min-width:700px){.modal{border-radius:18px}}
+.modal h3{font-size:1.4rem;margin-bottom:14px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fields .full{grid-column:1/-1}
+@media (max-width:520px){.fields{grid-template-columns:1fr}}
+label.f{display:grid;gap:4px;font-size:.78rem;font-weight:700;color:var(--muted)}
+label.f input,label.f select,label.f textarea{min-height:42px;border-radius:10px;border:1px solid var(--line);background:#0a0d0d;color:var(--paper);padding:8px 10px;font-weight:500;font-size:.95rem}
+label.f textarea{min-height:90px;resize:vertical}
+label.f input:focus,label.f select:focus,label.f textarea:focus{outline:none;border-color:var(--sun)}
+label.cb{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.9rem}
+.mact{display:flex;gap:8px;justify-content:space-between;margin-top:16px;flex-wrap:wrap}
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login .card{width:min(380px,100%);text-align:center;padding:26px}
+.login img{width:140px;margin:0 auto 14px;display:block}
+.login input{width:100%;min-height:48px;border-radius:12px;border:1px solid var(--line);background:#0a0d0d;padding:0 14px;margin:14px 0 10px;font-size:1rem}
+.err{color:#ff8b78;font-weight:600;font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--card2);border:1px solid var(--line);padding:10px 16px;border-radius:999px;z-index:60;font-weight:600;font-size:.9rem}
+.bal{font-size:1.05rem;font-weight:700}
+.bal b{color:var(--sun)}
+.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+.lang{min-height:34px;border-radius:999px;border:1px solid var(--line);background:var(--card);padding:0 10px;font-weight:800;font-size:.8rem;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ================= config ================= */
+const API="https://script.google.com/macros/s/AKfycbyIMRITKG4F2vbANBkS8ikbDcC8wayR51_rBJyu1VpW78ggzIznTRRqyZEEkrfZDECNrw/exec";
+const PARTNERS=["Patrick","Max"];
+const SHARE_PATRICK=0.5, FUND_PCT=0.2;
+// Standard checklist created for every show. d = days relative to show date (negative = before).
+const TEMPLATE=[
+ {k:"lineup",s:"lineup",d:-21,pt:"Definir lineup (3 comediantes convidados)",en:"Confirm line-up (3 guest comedians)"},
+ {k:"eb",s:"tickets",d:-21,pt:"Criar evento no Eventbrite + cupom BCNCOMEDY25",en:"Create Eventbrite event + BCNCOMEDY25 code"},
+ {k:"flyer",s:"design",d:-18,pt:"Flyer da data pronto (feed + stories)",en:"Date flyer ready (feed + stories)"},
+ {k:"sales",s:"tickets",d:-14,pt:"Abrir vendas (publicar evento)",en:"Open sales (publish event)"},
+ {k:"ig_date",s:"instagram",d:-14,pt:"Post no feed anunciando a data",en:"Feed post announcing the date"},
+ {k:"ig_lineup",s:"instagram",d:-7,pt:"Post de conteúdo / apresentação do lineup",en:"Content post / line-up reveal"},
+ {k:"st3",s:"instagram",d:-3,pt:"Stories com link do ingresso",en:"Stories with ticket link"},
+ {k:"st1",s:"instagram",d:-1,pt:"Stories: é amanhã + link do ingresso",en:"Stories: tomorrow + ticket link"},
+ {k:"st0",s:"instagram",d:0,pt:"Stories no dia: últimos ingressos + link",en:"Show-day stories: last tickets + link"},
+ {k:"cash",s:"finance",d:1,pt:"Lançar bilheteria, cachês e quem ficou com o dinheiro",en:"Log box office, fees and who holds the cash"},
+ {k:"pay",s:"finance",d:2,pt:"Pagar os comediantes",en:"Pay the comedians"},
+ {k:"clips",s:"instagram",d:4,pt:"Postar clipes / fotos do show",en:"Post show clips / photos"}
+];
+const SECTORS={lineup:["Lineup","Line-up"],tickets:["Ingressos","Tickets"],sponsor:["Patrocínio","Sponsor"],instagram:["Instagram","Instagram"],design:["Arte","Design"],finance:["Financeiro","Finance"],other:["Outros","Other"]};
+
+/* ================= state ================= */
+let LANG="pt",KEY="",S={shows:[],lineup:[],tasks:[],expenses:[],payments:[],coupons:[],instagram:[],igstats:[],signups:[]},SHEET="",VIEW="dash",OPEN={},F={sector:"",owner:"",done:false};
+try{LANG=localStorage.getItem("bcn-admin-lang")||"pt";KEY=localStorage.getItem("bcn-admin-key")||""}catch(_){}
+const L=(pt,en)=>LANG==="en"?en:pt;
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const num=v=>{const n=parseFloat(String(v==null?"":v).replace(",","."));return isNaN(n)?0:n};
+const yes=v=>v===true||/^(true|yes|sim|1|paid)$/i.test(String(v));
+const eur=n=>(n<0?"-":"")+"€"+Math.abs(n).toFixed(2).replace(".",",");
+const uid=p=>(p||"x")+"-"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const pd=s=>{const[y,m,d]=String(s).slice(0,10).split("-").map(Number);return new Date(y,(m||1)-1,d||1)};
+const addDays=(s,n)=>{const d=pd(s);d.setDate(d.getDate()+n);return ymd(d)};
+const today=()=>ymd(new Date());
+const fdate=(s,o)=>s?new Intl.DateTimeFormat(LANG==="en"?"en-GB":"pt-BR",o||{weekday:"short",day:"numeric",month:"short"}).format(pd(s)).replace(".",""):"";
+const sec=k=>(SECTORS[k]||SECTORS.other)[LANG==="en"?1:0];
+
+/* ================= API ================= */
+async function api(body){
+  const r=await fetch(API,{method:"POST",body:JSON.stringify({key:KEY,...body})});
+  const j=await r.json().catch(()=>({ok:false,error:"net"}));
+  if(!j.ok)throw new Error(j.error||"error");return j}
+async function load(){const j=await api({action:"load"});S=Object.assign(S,j.data);SHEET=j.sheet||"";}
+async function save(table,row){
+  const list=S[table];const i=list.findIndex(x=>String(x.id)===String(row.id));
+  if(i>=0)list[i]={...list[i],...row};else list.push(row);
+  render();
+  try{await api({action:"save",collection:table,row})}catch(e){toast(L("Erro ao salvar","Save failed")+": "+e.message)}}
+async function del(table,id){S[table]=S[table].filter(x=>String(x.id)!==String(id));render();
+  try{await api({action:"delete",collection:table,id})}catch(e){toast(L("Erro ao apagar","Delete failed"))}}
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+
+/* ================= derived ================= */
+const shows=()=>S.shows.slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+const showById=id=>S.shows.find(s=>String(s.id)===String(id));
+const lineupOf=id=>{const s=showById(id);return s?S.lineup.filter(l=>String(l.date)===String(s.date)):[]};
+const booked=l=>/confirm|paid|pago/i.test(String(l.payment));
+function showTitle(s){return s.title||"Laughin American Social Club"}
+function income(s){return num(s.cashTickets)*num(s.cashPrice)+num(s.bizumTickets)*num(s.bizumPrice)+num(s.ebNet)}
+function fees(s){return num(s.headliners)*num(s.headlinerFee)+num(s.guests)*num(s.guestFee)}
+function chandrioReceived(s){return yes(s.sponsorPaid)?num(s.sponsor):0}
+function net(s){return income(s)+chandrioReceived(s)-fees(s)}
+function allTasks(){
+  const out=[];const st={};S.tasks.forEach(t=>st[t.id]=t);
+  shows().forEach(s=>{if(s.status==="cancelled")return;
+    TEMPLATE.forEach(tp=>{const id=s.id+":"+tp.k,o=st[id]||{};
+      let done=yes(o.done);
+      if(tp.k==="lineup"&&lineupOf(s.id).filter(booked).length>=3)done=true;
+      out.push({id,showId:s.id,k:tp.k,title:L(tp.pt,tp.en),sector:tp.s,due:o.due||addDays(s.date,tp.d),owner:o.owner||"",done,auto:true})});
+  });
+  // monthly: flyers to the sponsor on the 10th of the month before
+  const months=[...new Set(shows().filter(s=>s.status!=="cancelled").map(s=>String(s.date).slice(0,7)))];
+  months.forEach(m=>{const d=pd(m+"-01");d.setMonth(d.getMonth()-1);d.setDate(10);const id="chandrio:"+m,o=st[id]||{};
+    const label=new Intl.DateTimeFormat(LANG==="en"?"en-GB":"pt-BR",{month:"long"}).format(pd(m+"-01"));
+    out.push({id,showId:"",k:"chandrio",title:L("Enviar flyers dos shows de "+label+" ao Chandrío","Send "+label+" flyers to Chandrío"),sector:"sponsor",due:o.due||ymd(d),owner:o.owner||"",done:yes(o.done),auto:true})});
+  S.tasks.filter(t=>yes(t.custom)).forEach(t=>out.push({...t,done:yes(t.done),custom:true}));
+  return out.sort((a,b)=>String(a.due).localeCompare(String(b.due)))}
+function finance(){
+  const P={},T=today();PARTNERS.forEach(p=>P[p]={paid:0,kept:0,held:0,out:0,in:0});
+  let shared=0,fundIn=0,fundOut=0,profit=0;
+  S.expenses.forEach(e=>{const a=num(e.amount);
+    if(e.paidBy==="Caixa"){fundOut+=a;return}
+    if(P[e.paidBy])P[e.paidBy].paid+=a;
+    if(P[e.keeper])P[e.keeper].kept+=a;else shared+=a});
+  shows().forEach(s=>{if(String(s.date)>T&&!income(s))return;const n=net(s);
+    if(s.heldBy==="Caixa")fundIn+=n;else if(P[s.heldBy]){P[s.heldBy].held+=n;profit+=n}});
+  S.payments.forEach(t=>{const a=num(t.amount);if(t.from==="Caixa")fundOut+=a;if(t.to==="Caixa")fundIn+=a;if(P[t.from])P[t.from].out+=a;if(P[t.to])P[t.to].in+=a});
+  const share={Patrick:SHARE_PATRICK,Max:1-SHARE_PATRICK};
+  PARTNERS.forEach(p=>{const x=P[p];x.bal=x.paid-x.kept-shared*share[p]+(profit*share[p]-x.held)+x.out-x.in});
+  const pending=shows().filter(s=>s.date<=T&&s.status!=="cancelled").reduce((a,s)=>a+(yes(s.sponsorPaid)?0:num(s.sponsor)),0);
+  const totIncome=shows().reduce((a,s)=>a+income(s)+chandrioReceived(s),0),totFees=shows().reduce((a,s)=>a+fees(s),0),totExp=S.expenses.reduce((a,e)=>a+num(e.amount),0);
+  return{P,shared,fund:fundIn-fundOut,profit,pending,totIncome,totFees,totExp}}
+
+/* ================= views ================= */
+const VIEWS=[["dash",["Painel","Overview"]],["plan",["Cronograma","Timeline"]],["shows",["Shows","Shows"]],["ig",["Instagram","Instagram"]],["fin",["Financeiro","Finance"]],["coupons",["Cupons","Coupons"]],["artists",["Comediantes","Comedians"]]];
+function render(){
+  const app=document.getElementById("app");
+  if(!KEY){app.innerHTML=loginView();wireLogin();return}
+  const late=allTasks().filter(t=>!t.done&&t.due<today()).length;
+  app.innerHTML=`<header class="top"><div class="wrap"><img src="assets/bcn-logo-s.webp" alt="BCN Comedy"><span class="ttl">${L("Painel do projeto","Project hub")}</span><span class="sp"></span>
+   <button class="lang" data-lang>${LANG==="en"?"PT":"EN"}</button>${SHEET?`<a class="ico" href="${SHEET}" target="_blank" rel="noopener" title="Google Sheet">&#8599;</a>`:""}<button class="ico" data-reload title="Reload">&#8635;</button><button class="ico" data-logout title="Logout">&#x2715;</button></div>
+   <div class="wrap tabs" role="tablist">${VIEWS.map(([k,l])=>`<button class="tab" role="tab" data-view="${k}" aria-selected="${VIEW===k}">${l[LANG==="en"?1:0]}${k==="plan"&&late?`<span class="n">${late}</span>`:""}</button>`).join("")}</div></header>
+   <main class="wrap">${({dash:vDash,plan:vPlan,shows:vShows,ig:vIG,fin:vFin,coupons:vCoupons,artists:vArtists}[VIEW]||vDash)()}</main>`;
+  wire()}
+function loginView(){return `<div class="login"><div class="card"><img src="assets/bcn-logo.webp" alt="BCN Comedy"><h2 style="font-size:1.5rem">${L("Painel do projeto","Project hub")}</h2>
+  <form id="lf"><input id="lk" type="password" autocomplete="current-password" placeholder="${L("Senha","Password")}"><button class="btn btn-sun" style="width:100%">${L("Entrar","Log in")}</button><p class="err" id="le" hidden></p></form></div></div>`}
+function wireLogin(){document.getElementById("lf").onsubmit=async e=>{e.preventDefault();const b=e.target.querySelector("button");KEY=document.getElementById("lk").value.trim();b.disabled=true;b.textContent="...";
+  try{await load();try{localStorage.setItem("bcn-admin-key",KEY)}catch(_){}render()}catch(err){KEY="";const le=document.getElementById("le");le.hidden=false;le.textContent=err.message==="auth"?L("Senha incorreta","Wrong password"):L("Sem conexão","Connection error");b.disabled=false;b.textContent=L("Entrar","Log in")}}}
+
+function taskRow(t,showName){
+  const s=S.shows.find(x=>String(x.id)===String(t.showId));const late=!t.done&&t.due<today();
+  return `<div class="item ${t.done?"done":""} ${late?"overdue":""}"><input type="checkbox" class="chk" data-task="${esc(t.id)}" ${t.done?"checked":""} aria-label="done">
+   <div><div class="t">${esc(t.title)}</div><div class="meta"><span class="chip c-${t.sector}">${sec(t.sector)}</span><span class="${late?"late":""} tnum">${fdate(t.due)}</span>${s&&showName!==false?`<span>· ${fdate(s.date,{day:"numeric",month:"short"})} LASC</span>`:""}</div></div>
+   <div style="display:flex;gap:6px;align-items:center"><select class="mini" data-owner="${esc(t.id)}"><option value="">${L("Quem?","Who?")}</option>${PARTNERS.map(p=>`<option ${t.owner===p?"selected":""}>${p}</option>`).join("")}</select>${t.custom?`<button class="ico" data-edit-task="${esc(t.id)}" title="Edit">&#9998;</button>`:""}</div></div>`}
+
+function vDash(){
+  const T=today(),up=shows().filter(s=>s.date>=T&&s.status!=="cancelled"),nx=up[0],tasks=allTasks(),f=finance();
+  const late=tasks.filter(t=>!t.done&&t.due<T),week=tasks.filter(t=>!t.done&&t.due>=T&&t.due<=addDays(T,7));
+  const nxT=nx?tasks.filter(t=>t.showId===nx.id):[],nxDone=nxT.filter(t=>t.done).length,nxL=nx?lineupOf(nx.id).filter(booked).length:0;
+  const debt=f.P.Max.bal>0.005?L(`Patrick deve ${eur(f.P.Max.bal)} ao Max`,`Patrick owes Max ${eur(f.P.Max.bal)}`):f.P.Patrick.bal>0.005?L(`Max deve ${eur(f.P.Patrick.bal)} ao Patrick`,`Max owes Patrick ${eur(f.P.Patrick.bal)}`):L("Contas zeradas","All square");
+  return `<div class="head"><div><h2>${L("Painel","Overview")}</h2><p>${L("Tudo o que precisa acontecer para cada show, num lugar só.","Everything each show needs, in one place.")}</p></div></div>
+  <div class="grid g4">
+   <div class="card kpi"><div class="l">${L("Próximo show","Next show")}</div><div class="v">${nx?fdate(nx.date,{day:"numeric",month:"short"}):"-"}</div><div class="s">${nx?`Lineup ${nxL}/3 · ${nxDone}/${nxT.length} ${L("tarefas","tasks")}`:""}</div></div>
+   <div class="card kpi"><div class="l">${L("Atrasadas","Overdue")}</div><div class="v ${late.length?"neg":"pos"}">${late.length}</div><div class="s">${week.length} ${L("para os próximos 7 dias","due in the next 7 days")}</div></div>
+   <div class="card kpi"><div class="l">${L("Caixa LASC","LASC fund")}</div><div class="v">${eur(f.fund)}</div><div class="s">${L("Patrocínio a receber","Sponsor to receive")}: ${eur(f.pending)}</div></div>
+   <div class="card kpi"><div class="l">${L("Sócios","Partners")}</div><div class="v" style="font-size:1.15rem;line-height:1.25">${debt}</div><div class="s">${L("ver Financeiro","see Finance")}</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+   <div class="card"><h3>${L("Atrasadas","Overdue")}</h3><div class="list">${late.length?late.map(t=>taskRow(t)).join(""):`<div class="empty">${L("Nada atrasado","Nothing overdue")}</div>`}</div></div>
+   <div class="card"><h3>${L("Próximos 7 dias","Next 7 days")}</h3><div class="list">${week.length?week.map(t=>taskRow(t)).join(""):`<div class="empty">${L("Nada para esta semana","Nothing this week")}</div>`}</div></div>
+  </div>`}
+
+function vPlan(){
+  let tasks=allTasks();if(F.sector)tasks=tasks.filter(t=>t.sector===F.sector);if(F.owner)tasks=tasks.filter(t=>F.owner==="-"?!t.owner:t.owner===F.owner);if(!F.done)tasks=tasks.filter(t=>!t.done);
+  const groups={};tasks.forEach(t=>{const d=pd(t.due);const m=new Date(d);m.setDate(d.getDate()-((d.getDay()+6)%7));const k=ymd(m);(groups[k]=groups[k]||[]).push(t)});
+  return `<div class="head"><div><h2>${L("Cronograma","Timeline")}</h2><p>${L("Lineup, ingressos, patrocínio, Instagram e financeiro de todos os shows numa linha do tempo. Cada show novo já cria o checklist padrão.","Line-up, tickets, sponsor, Instagram and finance for every show on one timeline. Each new show creates the standard checklist.")}</p></div><button class="btn btn-sun" data-new-task>+ ${L("Tarefa","Task")}</button></div>
+  <div class="filters"><select data-f="sector"><option value="">${L("Todos os setores","All sectors")}</option>${Object.keys(SECTORS).map(k=>`<option value="${k}" ${F.sector===k?"selected":""}>${sec(k)}</option>`).join("")}</select>
+   <select data-f="owner"><option value="">${L("Todos","Everyone")}</option>${PARTNERS.map(p=>`<option ${F.owner===p?"selected":""}>${p}</option>`).join("")}<option value="-" ${F.owner==="-"?"selected":""}>${L("Sem responsável","Unassigned")}</option></select>
+   <label><input type="checkbox" data-f="done" ${F.done?"checked":""}> ${L("Mostrar concluídas","Show done")}</label></div>
+  ${Object.keys(groups).length?Object.keys(groups).sort().map(k=>`<div class="wk">${L("Semana de","Week of")} ${fdate(k,{day:"numeric",month:"long"})}</div><div class="list">${groups[k].map(t=>taskRow(t)).join("")}</div>`).join(""):`<div class="empty">${L("Nenhuma tarefa","No tasks")}</div>`}`}
+
+function vShows(){
+  const T=today(),list=shows();
+  return `<div class="head"><div><h2>Shows</h2><p>${L("Lineup, checklist e bilheteria de cada data. Clique num show para abrir.","Line-up, checklist and box office for each date. Click a show to open it.")}</p></div><button class="btn btn-sun" data-new="shows">+ Show</button></div>
+  <div class="list">${list.length?list.slice().sort((a,b)=>{const pa=a.date<T,pb=b.date<T;return pa!==pb?(pa?1:-1):(pa?String(b.date).localeCompare(a.date):String(a.date).localeCompare(b.date))}).map(showCard).join(""):`<div class="empty">${L("Nenhum show","No shows")}</div>`}</div>`}
+function showCard(s){
+  const T=today(),past=s.date<T,ts=allTasks().filter(t=>t.showId===s.id),dn=ts.filter(t=>t.done).length,lu=lineupOf(s.id),conf=lu.filter(booked).length,open=OPEN[s.id];
+  const d=pd(s.date);
+  const st={planned:L("Planejado","Planned"),onsale:L("À venda","On sale"),done:L("Realizado","Done"),cancelled:L("Cancelado","Cancelled")}[s.status||"planned"]||s.status;
+  return `<div class="show ${past?"past":""}"><div class="show-h" data-toggle="${esc(s.id)}">
+   <div class="dbox"><div><span>${fdate(s.date,{weekday:"short"})}</span><br><b>${d.getDate()}</b><br><span>${fdate(s.date,{month:"short"})}</span></div></div>
+   <div><div style="font-weight:800">${esc(showTitle(s))}</div><div class="meta muted" style="font-size:.85rem;display:flex;gap:8px;flex-wrap:wrap;margin-top:2px"><span class="chip">${st}</span><span>Lineup ${conf}/3</span><span>${dn}/${ts.length} ${L("tarefas","tasks")}</span>${past||income(s)?`<span>${L("Resultado","Net")}: <b style="color:var(--sun)">${eur(net(s))}</b></span>`:""}</div><div class="bar"><i style="width:${ts.length?Math.round(dn/ts.length*100):0}%"></i></div></div>
+   <span class="muted">${open?"&#9650;":"&#9660;"}</span></div>
+  ${open?`<div class="show-b">
+    <div><div class="wk" style="margin-top:0">Lineup</div><div class="slots">${[0,1,2].map(i=>{const l=lu[i];return l?`<div class="slot f" data-edit="lineup" data-id="${esc(l.id)}"><div class="n">${esc(l.artist)}</div><div class="r">${esc(l.spot||"Guest")} · ${eur(num(l.fee))} · ${esc(l.payment||L("a confirmar","to confirm"))}</div></div>`:`<div class="slot" data-add-lineup="${esc(s.date)}"><div class="dim">+ ${L("Convidado","Guest")} ${i+1}</div></div>`}).join("")}</div>
+     ${lu.length>=3?`<button class="btn btn-line btn-sm" style="margin-top:8px" data-add-lineup="${esc(s.date)}">+ ${L("Mais um","Add one")}</button>`:""}${lu.slice(3).map(l=>`<div class="item" style="margin-top:6px;cursor:pointer" data-edit="lineup" data-id="${esc(l.id)}"><span></span><div>${esc(l.artist)} <span class="dim">· ${esc(l.spot)} · ${esc(l.payment)}</span></div><span>${eur(num(l.fee))}</span></div>`).join("")}
+     <p class="dim" style="font-size:.8rem;margin:8px 0 0">${L("Status do comediante: To book (a convidar) → Confirmed → Paid. Com 3 confirmados, a tarefa do lineup marca sozinha.","Comedian status: To book → Confirmed → Paid. With 3 confirmed the line-up task ticks itself.")}</p></div>
+    <div><div class="wk" style="margin-top:0">Checklist</div><div class="list">${ts.map(t=>taskRow(t,false)).join("")}</div></div>
+    <div class="grid g4">
+     <div class="card kpi"><div class="l">${L("Bilheteria","Box office")}</div><div class="v" style="font-size:1.4rem">${eur(income(s))}</div><div class="s">${L("Dinheiro","Cash")} ${num(s.cashTickets)} · Bizum ${num(s.bizumTickets)} · Eventbrite ${num(s.ebTickets)}</div></div>
+     <div class="card kpi"><div class="l">Chandrío</div><div class="v" style="font-size:1.4rem">${eur(num(s.sponsor))}</div><div class="s">${yes(s.sponsorPaid)?L("recebido","received"):L("a receber","to receive")}</div></div>
+     <div class="card kpi"><div class="l">${L("Cachês","Fees")}</div><div class="v neg" style="font-size:1.4rem">${eur(fees(s))}</div><div class="s">${num(s.headliners)}x ${eur(num(s.headlinerFee))} + ${num(s.guests)}x ${eur(num(s.guestFee))} · ${L("dinheiro com","cash held by")}: ${esc(s.heldBy||"-")}</div></div>
+     <div class="card kpi"><div class="l">${L("Resultado","Net")}</div><div class="v" style="font-size:1.4rem">${eur(net(s))}</div><div class="s">${L("caixa 20%","20% fund")}: ${eur(Math.max(net(s),0)*FUND_PCT)}</div></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sun btn-sm" data-edit="shows" data-id="${esc(s.id)}">${L("Editar show e bilheteria","Edit show & box office")}</button>${s.ebUrl?`<a class="btn btn-line btn-sm" href="${esc(s.ebUrl)}" target="_blank" rel="noopener">Eventbrite</a>`:""}<button class="btn btn-line btn-sm" data-new-post="${esc(s.id)}">+ ${L("Post do Instagram","Instagram post")}</button></div>
+  </div>`:""}</div>`}
+
+function vIG(){
+  const T=today(),items=[];
+  allTasks().filter(t=>t.sector==="instagram").forEach(t=>items.push({kind:"task",date:t.due,t}));
+  S.instagram.forEach(p=>items.push({kind:"post",date:p.date,p}));
+  items.sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const up=items.filter(i=>i.date>=addDays(T,-7)&&!(i.kind==="task"&&i.t.done&&i.date<T));
+  const pub=S.instagram.filter(p=>/publish/i.test(p.status));
+  return `<div class="head"><div><h2>Instagram</h2><p>${L("Cronograma de conteúdo: posts do checklist de cada show + posts extras. Lance as métricas depois de publicar.","Content calendar: checklist posts for each show + extra posts. Log metrics after publishing.")}</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sun" data-new="instagram">+ Post</button><button class="btn btn-line" data-new="igstats">+ ${L("Números da conta","Account stats")}</button></div></div>
+  <div class="list">${up.length?up.map(i=>i.kind==="task"?taskRow(i.t):postRow(i.p)).join(""):`<div class="empty">${L("Nada programado","Nothing scheduled")}</div>`}</div>
+  <div class="wk">${L("Publicados e métricas","Published and metrics")}</div>
+  ${pub.length?`<div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>${L("Tipo","Type")}</th><th>${L("Título","Title")}</th><th class="r">${L("Alcance","Reach")}</th><th class="r">Likes</th><th class="r">${L("Salvos","Saves")}</th><th class="r">${L("Envios","Shares")}</th></tr></thead><tbody>${pub.sort((a,b)=>String(b.date).localeCompare(a.date)).map(p=>`<tr data-edit="instagram" data-id="${esc(p.id)}"><td>${fdate(p.date)}</td><td>${esc(p.format)}</td><td>${esc(p.title)}</td><td class="r">${num(p.reach)}</td><td class="r">${num(p.likes)}</td><td class="r">${num(p.saves)}</td><td class="r">${num(p.shares)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Nenhum post publicado lançado ainda","No published posts logged yet")}</div>`}
+  <div class="wk">${L("Números da conta","Account stats")}</div>
+  ${S.igstats.length?`<div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th class="r">${L("Seguidores","Followers")}</th><th class="r">${L("Alcance","Reach")}</th><th class="r">${L("Visitas ao perfil","Profile visits")}</th><th>${L("Notas","Notes")}</th></tr></thead><tbody>${S.igstats.slice().sort((a,b)=>String(b.date).localeCompare(a.date)).map(x=>`<tr data-edit="igstats" data-id="${esc(x.id)}"><td>${fdate(x.date)}</td><td class="r">${num(x.followers)}</td><td class="r">${num(x.reach)}</td><td class="r">${num(x.profileVisits)}</td><td>${esc(x.notes)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Lance os números do Instagram uma vez por semana para acompanhar o crescimento","Log Instagram numbers weekly to track growth")}</div>`}`}
+function postRow(p){const st={idea:L("Ideia","Idea"),draft:L("Rascunho","Draft"),scheduled:L("Agendado","Scheduled"),published:L("Publicado","Published")}[p.status||"idea"]||p.status;
+  return `<div class="item ${/publish/i.test(p.status)?"done":""}" data-edit="instagram" data-id="${esc(p.id)}" style="cursor:pointer"><span class="chip c-instagram">${esc(p.format||"Post")}</span><div><div class="t">${esc(p.title||"(sem título)")}</div><div class="meta"><span class="tnum">${fdate(p.date)}</span><span class="chip">${st}</span>${p.time?`<span>${esc(p.time)}</span>`:""}${p.pillar?`<span>· ${esc(p.pillar)}</span>`:""}${p.owner?`<span>· ${esc(p.owner)}</span>`:""}</div></div><span class="dim">&#9998;</span></div>`}
+
+function vFin(){
+  const f=finance(),list=shows().filter(s=>s.date<=today()||income(s));
+  const debt=f.P.Max.bal>0.005?L(`<b>Patrick</b> deve <b>${eur(f.P.Max.bal)}</b> ao <b>Max</b>`,`<b>Patrick</b> owes <b>Max ${eur(f.P.Max.bal)}</b>`):f.P.Patrick.bal>0.005?L(`<b>Max</b> deve <b>${eur(f.P.Patrick.bal)}</b> ao <b>Patrick</b>`,`<b>Max</b> owes <b>Patrick ${eur(f.P.Patrick.bal)}</b>`):L("Contas entre os sócios zeradas","Partners are all square");
+  return `<div class="head"><div><h2>${L("Financeiro","Finance")}</h2><p>${L("Bilheteria por show, gastos, caixa do LASC e acerto entre os sócios (50/50).","Box office per show, expenses, LASC fund and partner settlement (50/50).")}</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sun" data-new="expenses">+ ${L("Gasto","Expense")}</button><button class="btn btn-line" data-new="payments">+ ${L("Transferência","Transfer")}</button></div></div>
+  <div class="grid g4">
+   <div class="card kpi"><div class="l">${L("Receitas recebidas","Income received")}</div><div class="v">${eur(f.totIncome)}</div><div class="s">${L("a receber do Chandrío","Chandrío to receive")}: ${eur(f.pending)}</div></div>
+   <div class="card kpi"><div class="l">${L("Cachês","Artist fees")}</div><div class="v neg">${eur(f.totFees)}</div></div>
+   <div class="card kpi"><div class="l">${L("Gastos","Expenses")}</div><div class="v neg">${eur(f.totExp)}</div></div>
+   <div class="card kpi"><div class="l">${L("Caixa LASC","LASC fund")}</div><div class="v">${eur(f.fund)}</div></div>
+  </div>
+  <div class="card" style="margin-top:12px"><h3>${L("Acerto entre sócios","Partner settlement")}</h3><p class="bal">${debt}</p>
+   <p class="muted" style="font-size:.88rem">${PARTNERS.map(p=>`${p}: ${L("pagou","paid")} ${eur(f.P[p].paid)} · ${L("ficou com itens de","keeps items worth")} ${eur(f.P[p].kept)} · ${L("está com","holds")} ${eur(f.P[p].held)} ${L("dos shows","from shows")}`).join("<br>")}<br>${L("Gastos divididos","Shared expenses")}: ${eur(f.shared)}. ${L("Ao fazer o acerto, lance uma Transferência.","When you settle up, log a Transfer.")}</p></div>
+  <div class="wk">${L("Resultado por show","Result per show")}</div>
+  <div class="tw"><table><thead><tr><th>Show</th><th class="r">${L("Ingressos","Tickets")}</th><th class="r">${L("Bilheteria","Box office")}</th><th class="r">Chandrío</th><th class="r">${L("Cachês","Fees")}</th><th class="r">${L("Resultado","Net")}</th><th>${L("Com quem","Held by")}</th></tr></thead>
+   <tbody>${list.map(s=>`<tr data-edit="shows" data-id="${esc(s.id)}"><td>${fdate(s.date,{day:"numeric",month:"short",year:"2-digit"})}</td><td class="r">${num(s.cashTickets)+num(s.bizumTickets)+num(s.ebTickets)}${num(s.freeTickets)?` <span class="dim">+${num(s.freeTickets)}</span>`:""}</td><td class="r">${eur(income(s))}</td><td class="r">${eur(num(s.sponsor))}${yes(s.sponsorPaid)?"":` <span class="late">*</span>`}</td><td class="r">${eur(fees(s))}</td><td class="r"><b>${eur(net(s))}</b></td><td>${esc(s.heldBy||"-")}</td></tr>`).join("")}</tbody>
+   <tfoot><tr><td colspan="5">Total</td><td class="r">${eur(list.reduce((a,s)=>a+net(s),0))}</td><td></td></tr></tfoot></table></div>
+  <p class="dim" style="font-size:.8rem;margin-top:6px">* ${L("patrocínio ainda não recebido (fica fora do resultado até ser marcado como recebido)","sponsorship not received yet (kept out of the net until marked received)")}</p>
+  <div class="wk">${L("Gastos","Expenses")}</div>
+  <div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>Item</th><th class="r">${L("Valor","Amount")}</th><th>${L("Pago por","Paid by")}</th><th>${L("Fica com","Kept by")}</th></tr></thead><tbody>${S.expenses.slice().sort((a,b)=>String(b.date).localeCompare(a.date)).map(e=>`<tr data-edit="expenses" data-id="${esc(e.id)}"><td>${fdate(e.date,{day:"numeric",month:"short",year:"2-digit"})}</td><td>${esc(e.item)}</td><td class="r">${eur(num(e.amount))}</td><td>${esc(e.paidBy)}</td><td>${e.keeper&&e.keeper!=="Shared"?esc(e.keeper):L("Dividido","Shared")}</td></tr>`).join("")}</tbody><tfoot><tr><td colspan="2">Total</td><td class="r">${eur(f.totExp)}</td><td colspan="2"></td></tr></tfoot></table></div>
+  <div class="wk">${L("Transferências","Transfers")}</div>
+  ${S.payments.length?`<div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>${L("De","From")}</th><th>${L("Para","To")}</th><th class="r">${L("Valor","Amount")}</th><th>${L("Nota","Note")}</th></tr></thead><tbody>${S.payments.map(t=>`<tr data-edit="payments" data-id="${esc(t.id)}"><td>${fdate(t.date)}</td><td>${esc(t.from)}</td><td>${esc(t.to)}</td><td class="r">${eur(num(t.amount))}</td><td>${esc(t.notes)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Nenhuma transferência lançada","No transfers logged")}</div>`}`}
+
+function vCoupons(){
+  const act=c=>/active|ativo/i.test(String(c.status));
+  return `<div class="head"><div><h2>${L("Cupons","Coupons")}</h2><p>${L("Códigos de desconto do Eventbrite. O BCNCOMEDY25 é o que o site entrega para quem se inscreve na lista.","Eventbrite discount codes. BCNCOMEDY25 is the one the website gives to list signups.")}</p></div><button class="btn btn-sun" data-new="coupons">+ ${L("Cupom","Coupon")}</button></div>
+  <div class="tw"><table><thead><tr><th>${L("Código","Code")}</th><th class="r">%</th><th>${L("Shows","Shows")}</th><th class="r">${L("Usos","Uses")}</th><th>Status</th><th>${L("Notas","Notes")}</th></tr></thead><tbody>${S.coupons.slice().sort((a,b)=>(act(b)-act(a))||String(a.code).localeCompare(b.code)).map(c=>`<tr data-edit="coupons" data-id="${esc(c.id)}"><td><b>${esc(c.code)}</b></td><td class="r">${num(c.percent)}%</td><td>${esc(c.scope)}</td><td class="r">${num(c.uses)}${c.limit?" / "+esc(c.limit):""}</td><td>${act(c)?`<span class="chip c-finance">${L("Ativo","Active")}</span>`:/review/i.test(c.status)?`<span class="chip c-tickets">${L("Revisar","Review")}</span>`:`<span class="chip">${L("Inativo","Inactive")}</span>`}</td><td class="muted">${esc(c.notes)}</td></tr>`).join("")}</tbody></table></div>
+  <p class="dim" style="font-size:.82rem;margin-top:8px">${L("Os cupons são criados em cada evento do Eventbrite (Ingressos > Promoções). Ao duplicar um evento, os códigos vão junto. Atualize os usos aqui depois de cada show.","Coupons live in each Eventbrite event (Tickets > Promotions). Duplicating an event copies them. Update uses here after each show.")}</p>
+  <div class="wk">${L("Quem recebeu o BCNCOMEDY25 pelo site","Who got BCNCOMEDY25 from the website")} (${S.signups.length})</div>
+  ${S.signups.length?`<button class="btn btn-line btn-sm" data-copy-emails style="margin-bottom:8px">${L("Copiar todos os e-mails","Copy all emails")}</button><div class="tw"><table><thead><tr><th>${L("Data","Date")}</th><th>${L("Nome","Name")}</th><th>E-mail</th><th>${L("Idioma","Language")}</th></tr></thead><tbody>${S.signups.slice().reverse().map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.name)}</td><td>${esc(x.email)}</td><td>${esc(x.lang)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">${L("Ninguém se inscreveu ainda","No signups yet")}</div>`}`}
+
+function vArtists(){
+  const by={};S.lineup.forEach(l=>{const k=String(l.artist||"").trim();if(!k)return;const o=by[k.toLowerCase()]=by[k.toLowerCase()]||{name:k,spot:l.spot,contact:l.contact,shows:[],pool:null};if(l.date)o.shows.push(l.date);else o.pool=l;if(l.contact)o.contact=l.contact});
+  const list=Object.values(by).sort((a,b)=>a.name.localeCompare(b.name));
+  return `<div class="head"><div><h2>${L("Comediantes","Comedians")}</h2><p>${L("Banco de comediantes para montar os lineups. Quem está sem data fica na lista de convidáveis.","Comedian roster for line-ups. Anyone without a date stays in the pool.")}</p></div><button class="btn btn-sun" data-new="artist">+ ${L("Comediante","Comedian")}</button></div>
+  <div class="tw"><table><thead><tr><th>${L("Nome","Name")}</th><th>${L("Papel","Spot")}</th><th>${L("Contato","Contact")}</th><th>${L("Shows","Shows")}</th></tr></thead><tbody>${list.map(a=>`<tr ${a.pool?`data-edit="lineup" data-id="${esc(a.pool.id)}"`:""}><td><b>${esc(a.name)}</b></td><td>${esc(a.spot)}</td><td>${esc(a.contact)}</td><td>${a.shows.length?a.shows.sort().map(d=>fdate(d,{day:"numeric",month:"short"})).join(", "):`<span class="dim">${L("na lista","in pool")}</span>`}</td></tr>`).join("")}</tbody></table></div>`}
+
+/* ================= forms ================= */
+const OPT={status:[["planned","Planejado / Planned"],["onsale","À venda / On sale"],["done","Realizado / Done"],["cancelled","Cancelado / Cancelled"]],
+ holder:[["",""],["Patrick","Patrick"],["Max","Max"],["Caixa","Caixa LASC"]],payer:[["Patrick","Patrick"],["Max","Max"],["Caixa","Caixa LASC"]],
+ kept:[["Shared","Dividido / Shared"],["Max","Max"],["Patrick","Patrick"]],spot:[["Guest","Guest spot"],["Headliner","Headliner"],["MC","MC / host"]],
+ pay:[["To book","To book (a convidar)"],["Confirmed","Confirmed (confirmado)"],["Paid","Paid (pago)"],["Declined","Declined (não pode)"]],
+ yn:[["no","Não / No"],["yes","Sim / Yes"]],cat:[["Equipment","Equipment"],["Marketing","Marketing"],["Consumables","Consumables"],["Artists","Artists"],["Other","Other"]],
+ cst:[["active","Ativo / Active"],["review","Revisar / Review"],["inactive","Inativo / Inactive"]],
+ ptype:[["Post","Post"],["Reel","Reel"],["Carrossel","Carrossel"],["Story","Story"]],pstatus:[["idea","Ideia / Idea"],["draft","Rascunho / Draft"],["scheduled","Agendado / Scheduled"],["published","Publicado / Published"]],
+ pillar:[["",""],["Show date","Data do show"],["Line-up","Lineup"],["Clip","Clipe do show"],["Behind the scenes","Bastidores"],["Sketch","Esquete / vídeo"],["Other","Outro"]],
+ owner:[["",""],["Patrick","Patrick"],["Max","Max"]],sector:Object.keys(SECTORS).map(k=>[k,SECTORS[k][0]+" / "+SECTORS[k][1]])};
+const SCHEMA={
+ shows:[["date","Data / Date","date"],["time","Hora / Time","text"],["status","Status","select",OPT.status],["title","Título / Title","text"],["ebUrl","Link Eventbrite","text","full"],
+  ["freeTickets","Ingressos grátis / Free","number"],["cashTickets","Dinheiro: ingressos","number"],["cashPrice","Dinheiro: preço €","number"],["bizumTickets","Bizum: ingressos","number"],["bizumPrice","Bizum: preço €","number"],
+  ["ebTickets","Eventbrite: ingressos","number"],["ebNet","Eventbrite: líquido €","number"],["sponsor","Chandrío €","number"],["sponsorPaid","Chandrío recebido / received","select",OPT.yn],
+  ["headliners","Nº headliners","number"],["headlinerFee","Cachê headliner €","number"],["guests","Nº guest spots","number"],["guestFee","Cachê guest €","number"],
+  ["heldBy","Dinheiro está com / Cash held by","select",OPT.holder],["notes","Notas / Notes","textarea","full"]],
+ lineup:[["artist","Comediante / Comedian","artist","full"],["date","Show","showdate"],["spot","Papel / Spot","select",OPT.spot],["fee","Cachê / Fee €","number"],["payment","Status","select",OPT.pay],["contact","Contato / Contact","text","full"],["notes","Notas / Notes","textarea","full"]],
+ expenses:[["date","Data / Date","date"],["amount","Valor / Amount €","number"],["item","Item","text","full"],["paidBy","Pago por / Paid by","select",OPT.payer],["keeper","Fica com / Kept by","select",OPT.kept],["category","Categoria / Category","select",OPT.cat],["notes","Notas / Notes","textarea","full"]],
+ payments:[["date","Data / Date","date"],["amount","Valor / Amount €","number"],["from","De / From","select",OPT.payer],["to","Para / To","select",OPT.payer],["notes","Nota / Note","text","full"]],
+ coupons:[["code","Código / Code","text"],["percent","Desconto %","number"],["scope","Shows","text","full"],["uses","Usos / Uses","number"],["limit","Limite / Limit","text"],["status","Status","select",OPT.cst],["notes","Notas / Notes","textarea","full"]],
+ instagram:[["date","Data / Date","date"],["time","Hora / Time","text"],["format","Formato / Format","select",OPT.ptype],["pillar","Tema / Pillar","select",OPT.pillar],["title","Título / Title","text","full"],["owner","Quem / Who","select",OPT.owner],["status","Status","select",OPT.pstatus],["caption","Legenda / Caption","textarea","full"],["link","Link","text","full"],
+  ["reach","Alcance / Reach","number"],["likes","Likes","number"],["saves","Salvos / Saves","number"],["shares","Envios / Shares","number"],["notes","Notas / Notes","textarea","full"]],
+ igstats:[["date","Data / Date","date"],["followers","Seguidores / Followers","number"],["reach","Alcance 7 dias / Reach","number"],["profileVisits","Visitas ao perfil","number"],["notes","Notas / Notes","text","full"]],
+ tasks:[["title","Tarefa / Task","text","full"],["due","Prazo / Due","date"],["sector","Setor / Sector","select",OPT.sector],["owner","Quem / Who","select",OPT.owner],["showId","Show","show"],["notes","Notas / Notes","textarea","full"]]
+};
+const TITLES=t=>({shows:"Show",lineup:"Lineup",expenses:L("Gasto","Expense"),payments:L("Transferência","Transfer"),coupons:L("Cupom","Coupon"),instagram:"Post",igstats:L("Números do Instagram","Instagram stats"),tasks:L("Tarefa","Task")})[t];
+function field([k,label,type,a,b],v){
+  const full=(a==="full"||b==="full")?"full":"";const opts=Array.isArray(a)?a:null;
+  if(type==="bool")return `<label class="cb ${full}"><input type="checkbox" name="${k}" ${yes(v)?"checked":""}> ${label}</label>`;
+  if(type==="select")return `<label class="f ${full}">${label}<select name="${k}">${opts.map(([o,l])=>`<option value="${esc(o)}" ${String(v||"")===String(o)?"selected":""}>${esc(l)}</option>`).join("")}</select></label>`;
+  if(type==="textarea")return `<label class="f ${full}">${label}<textarea name="${k}">${esc(v)}</textarea></label>`;
+  if(type==="show")return `<label class="f ${full}">${label}<select name="${k}"><option value="">-</option>${shows().map(s=>`<option value="${esc(s.id)}" ${String(v)===String(s.id)?"selected":""}>${fdate(s.date,{day:"numeric",month:"short",year:"numeric"})}</option>`).join("")}</select></label>`;
+  if(type==="artist")return `<label class="f ${full}">${label}<input name="${k}" list="artists-dl" value="${esc(v)}" autocomplete="off"><datalist id="artists-dl">${[...new Set(S.lineup.map(a=>a.artist).filter(Boolean))].map(a=>`<option value="${esc(a)}">`).join("")}</datalist></label>`;
+  if(type==="showdate")return `<label class="f ${full}">${label}<select name="${k}"><option value="">${L("Sem data (lista)","No date (pool)")}</option>${shows().map(s=>`<option value="${esc(s.date)}" ${String(v)===String(s.date)?"selected":""}>${fdate(s.date,{day:"numeric",month:"short",year:"numeric"})}</option>`).join("")}</select></label>`;
+  return `<label class="f ${full}">${label}<input name="${k}" type="${type==="number"?"text":type}" ${type==="number"?'inputmode="decimal"':""} value="${esc(v)}"></label>`}
+function openForm(table,row,isNew){
+  const ov=document.createElement("div");ov.className="ov";
+  ov.innerHTML=`<form class="modal"><h3>${isNew?"+ ":""}${TITLES(table)}</h3><div class="fields">${SCHEMA[table].map(f=>field(f,row[f[0]])).join("")}</div>
+   <div class="mact"><div>${!isNew?`<button type="button" class="btn btn-red btn-sm" data-del>${L("Apagar","Delete")}</button>`:""}</div><div style="display:flex;gap:8px"><button type="button" class="btn btn-line" data-cancel>${L("Cancelar","Cancel")}</button><button class="btn btn-sun">${L("Salvar","Save")}</button></div></div></form>`;
+  document.body.appendChild(ov);
+  const close=()=>ov.remove();
+  ov.onclick=e=>{if(e.target===ov)close()};ov.querySelector("[data-cancel]").onclick=close;
+  const d=ov.querySelector("[data-del]");if(d)d.onclick=()=>{if(confirm(L("Apagar este item?","Delete this item?"))){del(table,row.id);close()}};
+  ov.querySelector("form").onsubmit=e=>{e.preventDefault();const o={...row};
+    SCHEMA[table].forEach(([k,,type])=>{const el=e.target.elements[k];if(!el)return;o[k]=type==="bool"?String(el.checked):type==="number"?String(num(el.value)):el.value.trim()});
+    if(table==="lineup"&&o.artist&&o.date){const pool=S.lineup.find(x=>!x.date&&String(x.artist).toLowerCase()===o.artist.toLowerCase());if(pool&&!o.contact)o.contact=pool.contact||""}
+    save(table,o);close()};
+  setTimeout(()=>{const i=ov.querySelector("input,select");i&&i.focus()},50)}
+
+/* ================= wiring ================= */
+function wire(){
+  const q=(s,f)=>document.querySelectorAll(s).forEach(f);
+  q("[data-view]",b=>b.onclick=()=>{VIEW=b.dataset.view;render();scrollTo(0,0)});
+  q("[data-lang]",b=>b.onclick=()=>{LANG=LANG==="en"?"pt":"en";try{localStorage.setItem("bcn-admin-lang",LANG)}catch(_){}render()});
+  q("[data-logout]",b=>b.onclick=()=>{KEY="";try{localStorage.removeItem("bcn-admin-key")}catch(_){}render()});
+  q("[data-reload]",b=>b.onclick=async()=>{try{await load();render();toast(L("Atualizado","Updated"))}catch(e){toast(e.message)}});
+  q("[data-task]",c=>c.onchange=e=>{e.stopPropagation();const id=c.dataset.task,t=allTasks().find(x=>x.id===id),cur=S.tasks.find(x=>x.id===id)||{};
+    save("tasks",{...cur,id,done:String(c.checked),doneAt:c.checked?today():"",custom:cur.custom||(t&&t.custom?"true":"")})});
+  q("[data-owner]",s=>s.onchange=()=>{const id=s.dataset.owner,cur=S.tasks.find(x=>x.id===id)||{id};save("tasks",{...cur,owner:s.value})});
+  q("[data-f]",el=>el.onchange=()=>{F[el.dataset.f]=el.type==="checkbox"?el.checked:el.value;render()});
+  q("[data-toggle]",h=>h.onclick=()=>{OPEN[h.dataset.toggle]=!OPEN[h.dataset.toggle];render()});
+  q("[data-edit]",el=>el.onclick=e=>{e.stopPropagation();const t=el.dataset.edit,row=S[t].find(x=>String(x.id)===String(el.dataset.id));if(row)openForm(t,row,false)});
+  q("[data-edit-task]",el=>el.onclick=()=>{const row=S.tasks.find(x=>x.id===el.dataset.editTask);if(row)openForm("tasks",row,false)});
+  q("[data-new]",b=>b.onclick=()=>{const t=b.dataset.new,base={id:uid(t.slice(0,2))};
+    if(t==="artist")return openForm("lineup",{id:uid("l"),date:"",spot:"Guest",fee:"5",payment:"To book"},true);
+    if(t==="shows")Object.assign(base,{time:"20:30",status:"planned",cashPrice:"5",bizumPrice:"5",sponsor:"40",sponsorPaid:"no",headliners:"0",headlinerFee:"15",guests:"3",guestFee:"5",heldBy:""});
+    if(t==="expenses")Object.assign(base,{date:today(),paidBy:"Patrick",keeper:"Shared",category:"Other"});
+    if(t==="payments")Object.assign(base,{date:today(),from:"Max",to:"Patrick"});
+    if(t==="instagram")Object.assign(base,{date:today(),format:"Post",status:"idea"});
+    if(t==="igstats")Object.assign(base,{date:today()});
+    if(t==="coupons")Object.assign(base,{status:"active",percent:"25",uses:"0"});
+    openForm(t,base,true)});
+  q("[data-copy-emails]",b=>b.onclick=()=>{const t=S.signups.map(x=>x.email).filter(Boolean).join(", ");navigator.clipboard&&navigator.clipboard.writeText(t).then(()=>toast(L("E-mails copiados","Emails copied"))).catch(()=>prompt("",t))});
+  q("[data-new-task]",b=>b.onclick=()=>openForm("tasks",{id:uid("t"),custom:"true",due:today(),sector:"other",done:"false"},true));
+  q("[data-new-post]",b=>b.onclick=()=>{const s=showById(b.dataset.newPost);openForm("instagram",{id:uid("ig"),date:s?addDays(s.date,-7):today(),format:"Post",status:"idea",pillar:"Show date",title:s?"LASC "+fdate(s.date,{day:"numeric",month:"short"}):""},true)});
+  q("[data-add-lineup]",b=>b.onclick=e=>{e.stopPropagation();openForm("lineup",{id:uid("l"),date:b.dataset.addLineup,spot:"Guest",fee:"5",payment:"To book"},true)});
+}
+
+/* ================= boot ================= */
+(async()=>{if(KEY){document.getElementById("app").innerHTML=`<div class="login"><p class="muted">${L("Carregando...","Loading...")}</p></div>`;try{await load()}catch(e){if(e.message==="auth"){KEY="";try{localStorage.removeItem("bcn-admin-key")}catch(_){}}}}render()})();
+</script>
+</body>
+</html>

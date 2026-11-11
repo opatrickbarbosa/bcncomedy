@@ -64,7 +64,7 @@ body.home .top{position:fixed;left:0;right:0}
 .nav a{text-decoration:none;font-weight:600;font-size:.95rem;padding:8px 12px;border-radius:999px;color:#dcd9cd;white-space:nowrap}
 .nav a:hover{background:rgba(255,255,255,.08);color:#fff}
 .nav a[aria-current="page"]{color:var(--sun)}
-.menu-btn,.nav-close{display:none}
+.menu-btn,.nav-close,.nav-lang{display:none}
 @media (max-width:900px){
   .brand img{height:32px}
   .top .cta{margin-left:auto}
@@ -78,8 +78,15 @@ body.home .top{position:fixed;left:0;right:0}
   .nav{position:fixed;left:0;right:0;top:var(--menu-top,62px);bottom:0;flex-direction:column;justify-content:flex-start;gap:0;background:var(--ink);padding:16px 20px calc(24px + env(safe-area-inset-bottom));overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .25s,visibility 0s linear .25s}
   .top.open .nav{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .25s}
   .nav a{font-family:var(--display);font-size:2rem;text-transform:uppercase;padding:12px 2px;border-radius:0;border-bottom:1px solid var(--line)}
+  .nav-lang{display:block}
   .nav-close{display:block;margin-top:20px;min-height:54px;border:0;border-radius:999px;background:var(--sun);color:var(--sun-ink);font:800 1.05rem var(--body);cursor:pointer}
   body.menu-open{overflow:hidden}
+  .top.open{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:var(--ink)!important;border-color:var(--line)!important}
+  .top > .wrap > .ldd{display:none}
+  .nav .ldd{display:block;margin-top:18px}
+  .nav .ldd summary{display:inline-flex}
+  .nav .ldd summary span{display:inline!important}
+  .nav .ldd-menu{position:static;margin-top:8px;box-shadow:none}
 }
 /* language */
 .ldd{position:relative}
@@ -91,7 +98,6 @@ body.home .top{position:fixed;left:0;right:0}
 .ldd-menu button{display:flex;gap:10px;width:100%;text-align:left;background:none;border:0;color:var(--paper);font:500 .95rem var(--body);padding:10px 12px;border-radius:8px;cursor:pointer}
 .ldd-menu button b{width:24px;color:var(--sun)}
 .ldd-menu button:hover,.ldd-menu button[aria-current="true"]{background:rgba(255,255,255,.07)}
-@media (max-width:520px){.top .ldd summary span{display:none}}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 22px;border-radius:999px;border:0;font:800 1rem/1 var(--body);cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform .12s,box-shadow .12s}
@@ -334,7 +340,9 @@ const SITE={
   // Dates without a link use TICKETS (general link).
   TICKETS:"https://www.eventbrite.es/d/spain--barcelona/laughin-american-social-club/",
   EB:{
-    // "2026-12-03":"https://www.eventbrite.es/e/....",
+    "2026-12-03":"https://www.eventbrite.com/e/2004522872873",
+    "2026-12-10":"https://www.eventbrite.com/e/2004522874879",
+    "2026-12-17":"https://www.eventbrite.com/e/2004522877888",
   },
   INSTAGRAM:"https://www.instagram.com/bcncomedy/",
   EMAIL:"info@bcncomedy.com",
@@ -607,7 +615,7 @@ function header(r){
   const keys=["","agenda","show","comedians","book","contact"];
   return `<header class="top"><div class="wrap">
    <a class="brand" href="${href("")}" data-r="" aria-label="BCN Comedy"><img src="assets/bcn-logo-s.webp" alt="BCN Comedy" width="160" height="96"></a>
-   <nav class="nav" aria-label="Menu">${keys.map((k,i)=>`<a href="${href(k)}" data-r="${k}"${r===k?' aria-current="page"':""}>${t("nav")[i]}</a>`).join("")}<button class="nav-close" type="button">${t("closeMenu")}</button></nav>
+   <nav class="nav" aria-label="Menu">${keys.map((k,i)=>`<a href="${href(k)}" data-r="${k}"${r===k?' aria-current="page"':""}>${t("nav")[i]}</a>`).join("")}<div class="nav-lang">${langSwitch()}</div><button class="nav-close" type="button">${t("closeMenu")}</button></nav>
    ${langSwitch()}
    <a class="btn btn-sun btn-sm cta" href="${href("agenda")}" data-r="agenda">${t("tickets")}</a>
    <button class="menu-btn" type="button" aria-label="${t("openMenu")}" aria-expanded="false"><span></span></button>

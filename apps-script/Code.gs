@@ -25,6 +25,7 @@ const C = { bg:'#070909', card:'#131717', line:'#2a2f2f', ink:'#f4f1e6', muted:'
 function doPost(e) {
   try {
     const d = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    if (d.action) return admin_(d);                 // management area (bcncomedy.com/admin)
     if (d.website) return json_({ ok: true });            // honeypot: bots fill it
     const type = ['alerts', 'book', 'contact'].indexOf(d.type) >= 0 ? d.type : 'contact';
     const email = String(d.email || '').trim();
